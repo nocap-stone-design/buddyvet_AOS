@@ -38,6 +38,7 @@ android {
 dependencies {
 
     api project(path: ':home')
+    api project(path: ':common-ui')
 
 
     api "androidx.navigation:navigation-fragment-ktx:$rootProject.nav_version"

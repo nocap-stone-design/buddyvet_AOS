@@ -8,8 +8,9 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.nocapstone.buddyvet.databinding.ActivityMainBinding
+import com.nocapstone.common_ui.MainViewModelUtil
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MainViewModelUtil {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -44,5 +45,9 @@ class MainActivity : AppCompatActivity() {
             setDisplayShowTitleEnabled(false)
             setDisplayHomeAsUpEnabled(true)
         }
+    }
+
+    override fun setToolbarTitle(newTitle: String) {
+        binding.toolbar.title = newTitle
     }
 }
