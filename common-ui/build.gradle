@@ -3,13 +3,15 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+
+
 android {
     namespace 'com.nocapstone.common_ui'
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         minSdk 23
-        targetSdk 32
+        targetSdk 33
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -31,6 +33,9 @@ android {
 }
 
 dependencies {
+
+    api "androidx.navigation:navigation-fragment-ktx:$rootProject.nav_version"
+    api "androidx.navigation:navigation-ui-ktx:$rootProject.nav_version"
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.6.0'

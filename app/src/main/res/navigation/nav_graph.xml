@@ -3,12 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph.xml"
-    app:startDestination="@id/home">
+    app:startDestination="@id/onBoardingViewPagerFragment">
 
     <fragment
         android:id="@+id/home"
         android:name="com.nocapstone.home.HomeFragment"
         android:label="HomeFragment"
         tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/onBoardingViewPagerFragment"
+        android:name="com.nocapstone.onboarding.OnBoardingViewPagerFragment"
+        android:label="OnBoardingViewPagerFragment" />
 
 </navigation>

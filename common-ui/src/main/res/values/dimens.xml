@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <dimen name="basic_horizontal_margin">21dp</dimen>
+    <dimen name="basic_bottom_btn_margin">43dp</dimen>
+    <dimen name="basic_btn_textSize">17sp</dimen>
+</resources>
