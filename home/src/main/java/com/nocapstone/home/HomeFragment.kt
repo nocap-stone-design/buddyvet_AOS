@@ -5,8 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
-import com.nocapstone.common_ui.MainViewModelUtil
+import com.nocapstone.common_ui.MainActivityUtil
 import com.nocapstone.home.databinding.FragmentHomeBinding
 
 
@@ -19,9 +18,9 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
+        _binding = FragmentHomeBinding.inflate(inflater,container,false)
 
-        (activity as MainViewModelUtil).run {
+        (activity as MainActivityUtil).run {
             setToolbarTitle("홈")
         }
 

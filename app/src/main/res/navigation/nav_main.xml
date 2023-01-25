@@ -5,10 +5,11 @@
     android:id="@+id/nav_graph.xml"
     app:startDestination="@id/home">
 
-    <fragment
-        android:id="@+id/home"
+    <fragment android:id="@+id/home"
         android:name="com.nocapstone.home.HomeFragment"
         android:label="HomeFragment"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home"/>
+
+    <include app:graph="@navigation/nav_onboarding" />
 
 </navigation>
