@@ -1,11 +1,16 @@
 package com.nocapstone.onboarding
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.google.android.material.snackbar.Snackbar
+import com.nocapstone.common_ui.DialogForPermission
 import com.nocapstone.common_ui.MainActivityUtil
 import com.nocapstone.onboarding.databinding.FragmentOnBoardingViewPagerBinding
 
@@ -15,6 +20,33 @@ class OnBoardingViewPagerFragment : Fragment() {
 
     private var _binding: FragmentOnBoardingViewPagerBinding? = null
     val binding get() = _binding!!
+
+    private val messageArray = arrayOf("gps 권한", "알림 권한", "카메라 권한")
+    private val imageArray = arrayOf(R.drawable.img_gps, R.drawable.img_gps, R.drawable.img_gps)
+    private val permissionArray = arrayOf(
+        arrayOf(
+            Manifest.permission.ACCESS_COARSE_LOCATION,  // 도시 블록 단위
+            Manifest.permission.ACCESS_FINE_LOCATION,
+        ),
+        arrayOf(Manifest.permission.CAMERA),
+        //todo 13+에 대응
+        arrayOf(Manifest.permission.POST_NOTIFICATIONS)
+    )
+
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        if (permissions.all { it.value }) {
+            if (binding.viewpager2.currentItem == NUM_PAGES-1) {
+                (activity as MainActivityUtil).run {
+                    navigateToHome(this@OnBoardingViewPagerFragment)
+                }
+            }
+            binding.viewpager2.currentItem++
+        } else {
+            Snackbar.make(binding.root, "앱을 사용하기 위해 권한 허용을 해주세요!", Snackbar.LENGTH_SHORT).show()
+        }
+    }
 
 
     override fun onCreateView(
@@ -35,12 +67,16 @@ class OnBoardingViewPagerFragment : Fragment() {
         }
 
         binding.nextButton.setOnClickListener {
-            if (binding.viewpager2.currentItem == NUM_PAGES - 1)
-                (activity as MainActivityUtil).run {
-                    navigateToHome(this@OnBoardingViewPagerFragment)
-                }
-            else
-                binding.viewpager2.currentItem++
+
+            val index = binding.viewpager2.currentItem
+
+            DialogForPermission.Builder(requireContext())
+                .setMessage(messageArray[index])
+                .setImg(imageArray[index])
+                .setOnClickButton {
+                    requestPermission(permissionArray[index])
+                }.build().show()
+
         }
     }
 
@@ -49,7 +85,10 @@ class OnBoardingViewPagerFragment : Fragment() {
         _binding = null
     }
 
-    private fun hideAppBar(){
+    private fun requestPermission(permissionArray: Array<String>) =
+        requestPermissionLauncher.launch(permissionArray)
+
+    private fun hideAppBar() {
         (activity as MainActivityUtil).run {
             setVisibilityBottomAppbar(View.GONE)
         }

@@ -3,7 +3,8 @@ buildscript {
 
     ext {
         nav_version = '2.5.3'
-        fragment_version = "1.5.5"
+        fragment_version = '1.5.5'
+        activity_version = '1.6.1'
     }
 
     dependencies {
