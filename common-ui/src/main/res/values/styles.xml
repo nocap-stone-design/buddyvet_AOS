@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <style name="Contour">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">#EAEAEA</item>
+    </style>
+
+    <style name="basic_btn">
+        <item name="android:background">@drawable/btn_shape</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/bold_text_color</item>
+    </style>
+
+
+
+</resources>
