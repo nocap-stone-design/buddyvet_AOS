@@ -7,5 +7,13 @@
     <fragment
         android:id="@+id/onBoardingViewPagerFragment"
         android:name="com.nocapstone.onboarding.OnBoardingViewPagerFragment"
-        android:label="OnBoardingViewPagerFragment" />
+        android:label="OnBoardingViewPagerFragment" >
+        <action
+            android:id="@+id/next"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.nocapstone.onboarding.LoginFragment"
+        android:label="LoginFragment" />
 </navigation>

@@ -3,4 +3,7 @@
     <dimen name="basic_horizontal_margin">21dp</dimen>
     <dimen name="basic_bottom_btn_margin">43dp</dimen>
     <dimen name="basic_btn_textSize">17sp</dimen>
+    <dimen name="dialog_radius">17dp</dimen>
+    <dimen name="basic_spacingExtra">4sp</dimen>
+    <dimen name="btn_corner">21dp</dimen>
 </resources>
