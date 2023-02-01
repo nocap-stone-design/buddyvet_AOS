@@ -2,6 +2,8 @@ plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
 }
+apply plugin: 'kotlin-kapt'
+apply plugin: 'dagger.hilt.android.plugin'
 
 android {
     namespace 'com.nocapstone.common'
@@ -32,9 +34,17 @@ android {
 
 dependencies {
 
+    api project(path: ':foundation')
+
+
+    // Preferences DataStore
+    implementation("androidx.datastore:datastore-preferences:$rootProject.dataStorePreferences_version")
+
+
     api "com.kakao.sdk:v2-all:$rootProject.kakao_version"
 
-
+    implementation "com.google.dagger:hilt-android:$rootProject.hiltVersion"
+    kapt "com.google.dagger:hilt-android-compiler:$rootProject.hiltVersion"
 
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.appcompat:appcompat:1.6.0'
