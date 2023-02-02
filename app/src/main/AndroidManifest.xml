@@ -16,17 +16,6 @@
         tools:targetApi="33">
 
         <activity
-            android:name=".SplashActivity"
-            android:exported="true">
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
-        </activity>
-
-        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -39,6 +28,7 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
         <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
             android:exported="true">

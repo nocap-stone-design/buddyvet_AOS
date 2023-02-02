@@ -15,7 +15,6 @@ android {
         targetSdk 33
         versionCode 1
         versionName "1.0"
-        manifestPlaceholders["NATIVE_APP_KEY"] = "d48bcd0a6e882bce9b756ab78c9acd6e"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 

@@ -1,17 +1,12 @@
 package com.nocapstone.onboarding
 
-import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
-import androidx.navigation.fragment.findNavController
-import com.kakao.sdk.auth.model.OAuthToken
-import com.kakao.sdk.common.model.ClientError
-import com.kakao.sdk.common.model.ClientErrorCause
-import com.kakao.sdk.user.UserApiClient
+import androidx.fragment.app.viewModels
 import com.nocapstone.onboarding.databinding.FragmentLoginBinding
 
 
@@ -20,6 +15,7 @@ class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
 
+    private val viewModel: SplashViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,9 +40,7 @@ class LoginFragment : Fragment() {
         )
 
         binding.kakaoLoginBtn.setOnClickListener {
-            findNavController().navigate(R.id.next)
+            requireActivity().checkJwt()
         }
-
     }
-
 }
