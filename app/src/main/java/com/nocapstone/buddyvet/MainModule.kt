@@ -6,11 +6,15 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
+
 @InstallIn(SingletonComponent::class)
 @Module
 class MainModule {
 
     @Singleton
     @Provides
-    fun provideMainActivityClass(): Class<*> = MainActivity::class.java
+    fun provideMainActivityClass(): Class<*> {
+        return MainActivity::class.java
+    }
+
 }

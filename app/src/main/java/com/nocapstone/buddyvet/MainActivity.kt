@@ -15,7 +15,9 @@ import androidx.navigation.ui.setupWithNavController
 import com.kakao.sdk.common.util.Utility
 import com.nocapstone.buddyvet.databinding.ActivityMainBinding
 import com.nocapstone.common_ui.MainActivityUtil
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity(), MainActivityUtil {
 
     private lateinit var binding: ActivityMainBinding

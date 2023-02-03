@@ -17,6 +17,4 @@ class NetworkModule {
         return retrofit.create(AuthService::class.java)
     }
 
-
-
 }

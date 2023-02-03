@@ -4,14 +4,14 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nocapstone.common.data.dto.LoginRequest
-import com.nocapstone.common.data.entity.Data
 import com.nocapstone.common.data.source.AuthService
 import com.nocapstone.common.domain.usecase.DataStoreUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
+@HiltViewModel
 class SplashViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     private val authService: AuthService,
@@ -33,7 +33,7 @@ class SplashViewModel @Inject constructor(
     //todo datasoruce에 token 넣기
     fun signup(token: String, callback: () -> Unit) {
         viewModelScope.launch {
-            val data = authService.login(LoginRequest(token, "KaKao")).let {
+            authService.login(LoginRequest(token, "KaKao")).let {
                 if (it.success) {
                     dataStoreUseCase.editJsonWebToken(it.data.jwt)
                     callback.invoke()

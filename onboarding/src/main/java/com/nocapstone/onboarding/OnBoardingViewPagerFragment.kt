@@ -16,9 +16,10 @@ import com.google.android.material.snackbar.Snackbar
 import com.nocapstone.common_ui.DialogForPermission
 import com.nocapstone.common_ui.MainActivityUtil
 import com.nocapstone.onboarding.databinding.FragmentOnBoardingViewPagerBinding
+import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.log
 
-
+@AndroidEntryPoint
 class OnBoardingViewPagerFragment : Fragment() {
 
 
