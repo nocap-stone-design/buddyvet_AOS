@@ -10,6 +10,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/' }
     }
 }
 rootProject.name = "buddyvet"
@@ -18,3 +19,4 @@ include ':home'
 include ':common'
 include ':common-ui'
 include ':onboarding'
+include ':foundation'

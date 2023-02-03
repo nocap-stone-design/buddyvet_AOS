@@ -6,15 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
-import androidx.navigation.fragment.findNavController
 import com.nocapstone.onboarding.databinding.FragmentLoginBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class LoginFragment : Fragment() {
 
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,9 +38,7 @@ class LoginFragment : Fragment() {
         )
 
         binding.kakaoLoginBtn.setOnClickListener {
-            findNavController().navigate(R.id.next)
+            (requireActivity() as SplashActivity).checkJWT()
         }
-
     }
-
 }
