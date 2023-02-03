@@ -4,10 +4,12 @@ import com.nocapstone.common.data.source.AuthService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import javax.inject.Singleton
 
-@InstallIn
+
+@InstallIn(SingletonComponent::class)
 @Module
 class NetworkModule {
 

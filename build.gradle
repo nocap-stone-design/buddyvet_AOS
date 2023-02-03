@@ -10,16 +10,13 @@ buildscript {
 
 
     ext {
-
         nav_version = '2.5.3'
         fragment_version = '1.5.5'
         activity_version = '1.6.1'
         kakao_version = '2.12.1'
         dataStorePreferences_version = '1.0.0'
-
         retrofit2Version = '2.9.0'
         okHttpVersion = '4.10.0'
-
         hiltVersion = '2.44'
 
     }

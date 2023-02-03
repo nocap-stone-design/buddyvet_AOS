@@ -10,6 +10,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.snackbar.Snackbar
@@ -19,13 +21,20 @@ import com.nocapstone.onboarding.databinding.FragmentOnBoardingViewPagerBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.log
 
+
 @AndroidEntryPoint
 class OnBoardingViewPagerFragment : Fragment() {
 
 
+    companion object{
+        var viewpagerNum = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) 3 else 2
+    }
+
+    private val viewModel: SplashViewModel by viewModels()
+
+
     private var _binding: FragmentOnBoardingViewPagerBinding? = null
     private val binding get() = _binding!!
-    var viewpagerNum: Int = 0
 
     private val messageArray = arrayOf("gps 권한", "알림 권한", "카메라 권한")
     private val imageArray = arrayOf(R.drawable.img_gps, R.drawable.img_gps, R.drawable.img_gps)
@@ -48,8 +57,11 @@ class OnBoardingViewPagerFragment : Fragment() {
                     navigateToHome(this@OnBoardingViewPagerFragment)
                 }*/
                 findNavController().navigate(R.id.next)
+                viewModel.completeViewPagerNum(viewpagerNum)
             }
             binding.viewpager2.currentItem++
+            viewpagerNum
+
         } else {
             Snackbar.make(binding.root, "앱을 사용하기 위해 권한 허용을 해주세요!", Snackbar.LENGTH_SHORT).show()
         }
@@ -60,7 +72,7 @@ class OnBoardingViewPagerFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentOnBoardingViewPagerBinding.inflate(inflater, container, false)
-        hideAppBar()
+        //hideAppBar()
         return binding.root
     }
 
@@ -107,8 +119,7 @@ class OnBoardingViewPagerFragment : Fragment() {
     private inner class OnBoardingViewPagerAdapter(fragment: Fragment) :
         FragmentStateAdapter(fragment) {
 
-        override fun getItemCount(): Int = setViewpagerNum()
-
+        override fun getItemCount(): Int = viewpagerNum
         override fun createFragment(position: Int): Fragment {
             return when (position) {
                 0 -> OnBoarding1Fragment.newInstance()
@@ -117,9 +128,6 @@ class OnBoardingViewPagerFragment : Fragment() {
             }
         }
 
-        fun setViewpagerNum(): Int{
-            viewpagerNum = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) 3 else 2
-            return viewpagerNum
-        }
+
     }
 }
