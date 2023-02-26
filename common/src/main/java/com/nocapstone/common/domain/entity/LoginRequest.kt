@@ -1,4 +1,4 @@
-package com.nocapstone.common.data.dto
+package com.nocapstone.common.domain.entity
 
 data class LoginRequest(
     val accessToken: String,

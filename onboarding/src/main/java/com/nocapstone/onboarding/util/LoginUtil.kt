@@ -1,4 +1,4 @@
-package com.nocapstone.onboarding
+package com.nocapstone.onboarding.util
 
 import android.app.Activity
 import android.content.Context
@@ -7,7 +7,6 @@ import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
-import com.nocapstone.common.data.source.AuthService
 
 class LoginUtil {
 
@@ -55,7 +54,7 @@ class LoginUtil {
                         UserApiClient.instance.loginWithKakaoAccount(context, callback = callback)
                     } else if (token != null) {
                         // 카카오톡로그인 로그인 성공
-                        onLoginSuccess(token?.accessToken)
+                        onLoginSuccess(token.accessToken)
                     }
 
                 }

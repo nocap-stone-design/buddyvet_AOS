@@ -1,18 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".HomeFragment">
+        android:padding="@dimen/basic_parent_padding">
 
-        <!-- TODO: Update blank fragment layout -->
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment" />
+            android:id="@+id/myBuddy_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="나의 Buddy 들"
+            android:textSize="@dimen/basic_main_textSize"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </FrameLayout>
+        <TextView
+            android:id="@+id/myBuddy_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="TODO 버디들 이미지"
+            android:textSize="@dimen/basic_main_textSize"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/myBuddy_tv" />
+
+
+        <TextView
+            android:id="@+id/today_weather_score"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginTop="21dp"
+            android:gravity="center"
+            android:text="TODO 날씨"
+            android:textSize="40dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/myBuddy_icon" />
+
+
+        <TextView
+            android:id="@+id/eye_check_btn"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginTop="21dp"
+            android:gravity="center"
+            android:text="눈 검사하러 가기"
+            android:textSize="40dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/today_weather_score" />
+
+
+        <TextView
+            android:id="@+id/find_near_hospital"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginTop="21dp"
+            android:gravity="center"
+            android:text="내 주변 동물병원"
+            android:textSize="40dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/eye_check_btn" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

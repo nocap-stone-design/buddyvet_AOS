@@ -80,10 +80,6 @@ class MainActivity : AppCompatActivity(), MainActivityUtil {
     }
 
 
-    override fun navigateToHome(start: Fragment) {
-        start.findNavController().navigate(R.id.home)
-        showAppBar()
-    }
 
     override fun setVisibilityBottomAppbar(visibilityMode: Int) {
         binding.bottomAppBar.visibility = visibilityMode

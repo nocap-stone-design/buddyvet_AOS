@@ -1,12 +1,11 @@
-package com.nocapstone.onboarding
+package com.nocapstone.onboarding.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.nocapstone.onboarding.databinding.FragmentOnBoarding1Binding
-import com.nocapstone.onboarding.databinding.FragmentOnBoarding2Binding
 
 class OnBoarding1Fragment : Fragment() {
 
@@ -17,7 +16,7 @@ class OnBoarding1Fragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentOnBoarding1Binding.inflate(inflater,container,false)
+        _binding = FragmentOnBoarding1Binding.inflate(inflater, container, false)
         return binding.root
     }
 

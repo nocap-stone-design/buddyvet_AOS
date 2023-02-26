@@ -5,7 +5,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".OnBoarding1Fragment">
+        tools:context=".ui.OnBoarding1Fragment">
 
 
         <!-- TODO: Update blank fragment layout -->

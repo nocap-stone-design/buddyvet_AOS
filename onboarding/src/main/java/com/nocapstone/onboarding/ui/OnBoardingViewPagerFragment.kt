@@ -1,78 +1,53 @@
-package com.nocapstone.onboarding
+package com.nocapstone.onboarding.ui
 
-import android.Manifest
-import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.viewModels
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.snackbar.Snackbar
+import com.najudoryeong.mineme.common.util.PermissionCallback
+import com.nocapstone.common.util.PermissionObject
+import com.nocapstone.common.util.PermissionType
 import com.nocapstone.common_ui.DialogForPermission
-import com.nocapstone.common_ui.MainActivityUtil
+import com.nocapstone.onboarding.R
 import com.nocapstone.onboarding.databinding.FragmentOnBoardingViewPagerBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.math.log
+
+//todo companion?
+private val messageArray = arrayOf(
+    "주위 동물병원 찾기 및 산책 지수 제공을 위한 GPS접근 동의가 필요해요.",
+    "진달을 위해서 갤러리 및 카메라 접근 동의가 필요해요." ,
+    "버디들의 진단 정보 나 상태 정보 제공을 위한 알림 권한 동의가 필요해요"
+)
+
+private val imageArray = arrayOf(R.drawable.img_gps, R.drawable.img_gps, R.drawable.img_gps)
+
 
 
 @AndroidEntryPoint
-class OnBoardingViewPagerFragment : Fragment() {
+class OnBoardingViewPagerFragment : Fragment(), PermissionCallback {
 
 
     companion object{
         var viewpagerNum = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) 3 else 2
     }
 
-    private val viewModel: SplashViewModel by viewModels()
-
 
     private var _binding: FragmentOnBoardingViewPagerBinding? = null
     private val binding get() = _binding!!
+    private val requestPermissionLauncher = PermissionObject.checkPermission(this, { onSuccess() }, { onFail() })
 
-    private val messageArray = arrayOf("gps 권한", "알림 권한", "카메라 권한")
-    private val imageArray = arrayOf(R.drawable.img_gps, R.drawable.img_gps, R.drawable.img_gps)
-    private val permissionArray = arrayOf(
-        arrayOf(
-            Manifest.permission.ACCESS_COARSE_LOCATION,  // 도시 블록 단위
-            Manifest.permission.ACCESS_FINE_LOCATION,
-        ),
-        arrayOf(Manifest.permission.CAMERA),
-        arrayOf(Manifest.permission.POST_NOTIFICATIONS)
-    )
-
-    private val requestPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestMultiplePermissions()
-    ) { permissions ->
-        if (permissions.all { it.value }) {
-            if (binding.viewpager2.currentItem == viewpagerNum - 1) {
-               /*
-                (activity as MainActivityUtil).run {
-                    navigateToHome(this@OnBoardingViewPagerFragment)
-                }*/
-                findNavController().navigate(R.id.next)
-                viewModel.completeViewPagerNum(viewpagerNum)
-            }
-            binding.viewpager2.currentItem++
-            viewpagerNum
-
-        } else {
-            Snackbar.make(binding.root, "앱을 사용하기 위해 권한 허용을 해주세요!", Snackbar.LENGTH_SHORT).show()
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentOnBoardingViewPagerBinding.inflate(inflater, container, false)
-        //hideAppBar()
         return binding.root
     }
 
@@ -93,7 +68,7 @@ class OnBoardingViewPagerFragment : Fragment() {
                 .setMessage(messageArray[index])
                 .setImg(imageArray[index])
                 .setOnClickButton {
-                    requestPermission(permissionArray[index])
+                    requestPermissionLauncher.launch(PermissionType.values()[index].permissionArray)
                 }.build().show()
 
         }
@@ -104,17 +79,7 @@ class OnBoardingViewPagerFragment : Fragment() {
         _binding = null
     }
 
-    private fun requestPermission(permissionArray: Array<String>) =
-        requestPermissionLauncher.launch(permissionArray)
 
-    private fun hideAppBar() {
-        (activity as MainActivityUtil).run {
-            setVisibilityBottomAppbar(View.GONE)
-        }
-        (activity as MainActivityUtil).run {
-            setVisibilityTopAppBar(View.GONE)
-        }
-    }
 
     private inner class OnBoardingViewPagerAdapter(fragment: Fragment) :
         FragmentStateAdapter(fragment) {
@@ -129,5 +94,17 @@ class OnBoardingViewPagerFragment : Fragment() {
         }
 
 
+    }
+
+    override fun onSuccess() {
+        if (binding.viewpager2.currentItem == viewpagerNum - 1) {
+            findNavController().navigate(R.id.next)
+        }else{
+            binding.viewpager2.currentItem++
+        }
+    }
+
+    override fun onFail() {
+        Snackbar.make(binding.root, "앱을 사용하기 위해 권한 허용을 해주세요!", Snackbar.LENGTH_SHORT).show()
     }
 }

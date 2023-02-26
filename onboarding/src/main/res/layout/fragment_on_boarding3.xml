@@ -7,7 +7,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".OnBoarding3Fragment">
+        tools:context=".ui.OnBoarding3Fragment">
 
         <!-- TODO: Update blank fragment layout -->
         <TextView

@@ -1,5 +1,5 @@
 package com.nocapstone.common.data.entity
 
-data class Data(
+class Jwt(
     val jwt: String
 )
