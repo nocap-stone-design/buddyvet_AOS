@@ -14,7 +14,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
-    @ApplicationContext private val context: Context,
     private val authUseCase: AuthUseCase,
     private val dataStoreUseCase: DataStoreUseCase
 ) : ViewModel() {
