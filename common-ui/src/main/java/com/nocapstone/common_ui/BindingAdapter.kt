@@ -1,0 +1,47 @@
+package com.nocapstone.common_ui
+
+import android.net.Uri
+import android.view.View
+import android.widget.ImageView
+import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+
+
+@BindingAdapter("photoUrl")
+fun bindImageView(imageView: ImageView, photoUrl: String?) {
+    Glide.with(imageView.context)
+        .load(photoUrl)
+        .into(imageView)
+}
+
+@BindingAdapter("uri")
+fun bindImageView(imageView: ImageView, uri: Uri?) {
+    Glide.with(imageView.context)
+        .load(uri)
+        .into(imageView)
+}
+
+
+//@BindingAdapter("adapter", "submitList", requireAll = true)
+//fun bindViewPager(view: ViewPager2, adapter: RecyclerView.Adapter<*>, submitList: List<Any>) {
+//    view.adapter = adapter.apply {
+//        stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+//        (this as ListAdapter<Any, *>).submitList(submitList.toMutableList())
+//    }
+//}
+
+@BindingAdapter("visible")
+fun setVisibility(view: View, flag: Boolean) {
+    view.visibility = if (flag) View.VISIBLE else View.GONE
+}
+
+@BindingAdapter("adapter", "submitList", requireAll = true)
+fun bindRecyclerView(view: RecyclerView, adapter: RecyclerView.Adapter<*>, submitList: List<Any>?) {
+    view.adapter = adapter.apply {
+        (this as ListAdapter<Any, *>).submitList(submitList?.toMutableList())
+    }
+}
+
+

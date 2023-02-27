@@ -27,22 +27,25 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
                     android:id="@+id/dialog_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="17dp"
                     android:gravity="center"
                     android:lineSpacingExtra="@dimen/basic_spacingExtra"
-                    android:text="위치 권한 요청합니다"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dialog_iv" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/dialog_button"
+                    style="@style/basic_btn"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginTop="17dp"
+                    app:backgroundTint="@color/butter"
                     android:text="@string/confirm"
                     android:textSize="@dimen/basic_btn_textSize"
                     app:layout_constraintTop_toBottomOf="@id/dialog_tv" />
@@ -52,10 +55,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:lineSpacingExtra="2sp"
                     android:text="확인을 누르시면 동의 및 다음 단계로 넘어갑니다."
+                    android:textSize="10sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dialog_button" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

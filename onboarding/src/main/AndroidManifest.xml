@@ -6,7 +6,7 @@
 
     <application>
         <activity
-            android:name=".SplashActivity"
+            android:name=".ui.SplashActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Buddyvet.NoActionBar">
@@ -23,6 +23,7 @@
                     android:scheme="kakao9584594442ebeda4020b94477a6a5ebf" />
             </intent-filter>
         </activity>
+
         <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
             android:exported="true">

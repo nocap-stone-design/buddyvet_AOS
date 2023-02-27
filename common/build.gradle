@@ -37,6 +37,8 @@ dependencies {
 
     api project(path: ':foundation')
 
+    implementation 'io.github.ParkSangGwon:tedimagepicker:1.2.8'
+
 
     // Preferences DataStore
     implementation("androidx.datastore:datastore-preferences:$rootProject.dataStorePreferences_version")

@@ -1,8 +1,8 @@
 package com.nocapstone.common.data.dto
 
-import com.nocapstone.common.data.entity.Data
+import com.nocapstone.common.data.entity.Jwt
 
 data class LoginResponse(
-    val `data`: Data,
+    val data: String,
     val success: Boolean
 )

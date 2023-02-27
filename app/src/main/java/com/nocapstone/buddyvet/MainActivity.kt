@@ -30,8 +30,6 @@ class MainActivity : AppCompatActivity(), MainActivityUtil {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         initAppBar()
         initBottomNav()
-
-
         //printAppKeyHash()
     }
 
@@ -41,7 +39,11 @@ class MainActivity : AppCompatActivity(), MainActivityUtil {
         navController = navHostFragment.navController
 
         appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.home, R.id.diary, R.id.community, R.id.setting)
+            setOf(
+                com.nocapstone.home.R.id.homeFragment,
+                com.nocapstone.home.R.id.checkResultFragment,
+                R.id.diary, R.id.community, R.id.setting
+            )
         )
 
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration)
@@ -79,11 +81,6 @@ class MainActivity : AppCompatActivity(), MainActivityUtil {
         binding.toolbar.title = newTitle
     }
 
-
-    override fun navigateToHome(start: Fragment) {
-        start.findNavController().navigate(R.id.home)
-        showAppBar()
-    }
 
     override fun setVisibilityBottomAppbar(visibilityMode: Int) {
         binding.bottomAppBar.visibility = visibilityMode
