@@ -1,4 +1,4 @@
-package com.example.eye_check
+package com.nocapstone.diary
 
 import org.junit.Test
 

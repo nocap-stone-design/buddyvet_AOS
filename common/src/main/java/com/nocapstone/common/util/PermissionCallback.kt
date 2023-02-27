@@ -1,4 +1,4 @@
-package com.najudoryeong.mineme.common.util
+package com.nocapstone.common.util
 
 interface PermissionCallback {
     fun onSuccess()

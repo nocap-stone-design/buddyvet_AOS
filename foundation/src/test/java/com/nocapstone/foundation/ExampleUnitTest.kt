@@ -1,4 +1,4 @@
-package com.example.diary
+package com.nocapstone.foundation
 
 import org.junit.Test
 

@@ -18,15 +18,6 @@
         android:padding="@dimen/basic_parent_padding"
         tools:context=".CheckSelectImageFragment">
 
-        <TextView
-            android:id="@+id/main_tv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="선택한 사진"
-            android:textSize="20sp"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <ImageView
             android:id="@+id/image"
             uri="@{viewModel.selectImage}"
@@ -35,19 +26,44 @@
             android:layout_marginTop="16dp"
             android:scaleType="centerCrop"
             android:src="@drawable/img_profile"
-            app:layout_constraintTop_toBottomOf="@id/main_tv" />
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/dialog_button"
-            style="@style/basic_btn"
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginBottom="16dp"
-            android:text="검사 받기"
-            android:textSize="@dimen/basic_btn_textSize"
-            app:backgroundTint="@color/butter"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/image" />
+            app:layout_constraintTop_toBottomOf="@id/image">
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/retry"
+                style="@style/basic_btn"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:layout_weight="1"
+                android:text="사진 다시 선택"
+                android:textColor="@color/white"
+                android:textSize="@dimen/basic_btn_textSize"
+                app:backgroundTint="@color/black" />
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/dialog_button"
+                style="@style/basic_btn"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginBottom="16dp"
+                android:layout_weight="1"
+                android:text="검사 받기"
+                android:textSize="@dimen/basic_btn_textSize"
+                app:backgroundTint="@color/butter" />
+
+
+        </LinearLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

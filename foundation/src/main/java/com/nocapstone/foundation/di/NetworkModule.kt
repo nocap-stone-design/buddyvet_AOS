@@ -1,6 +1,6 @@
-package com.example.foundation.di
+package com.nocapstone.foundation.di
 
-import com.example.foundation.util.BASE_URL
+import com.nocapstone.foundation.util.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

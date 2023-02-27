@@ -1,4 +1,4 @@
-package com.example.foundation
+package com.nocapstone.eye_check
 
 import org.junit.Test
 

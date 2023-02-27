@@ -6,11 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.snackbar.Snackbar
-import com.najudoryeong.mineme.common.util.PermissionCallback
+import com.nocapstone.common.util.PermissionCallback
 import com.nocapstone.common.util.PermissionObject
 import com.nocapstone.common.util.PermissionType
 import com.nocapstone.common_ui.DialogForPermission

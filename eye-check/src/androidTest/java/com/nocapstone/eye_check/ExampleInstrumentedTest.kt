@@ -1,4 +1,4 @@
-package com.example.eye_check
+package com.nocapstone.eye_check
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
