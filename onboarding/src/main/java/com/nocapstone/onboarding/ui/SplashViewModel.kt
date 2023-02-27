@@ -31,6 +31,7 @@ class SplashViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val jwt = authUseCase.login(token)
+                Log.d("test",jwt.toString())
                 dataStoreUseCase.editJsonWebToken(jwt)
                 callback.invoke()
             } catch (e: Exception) {
