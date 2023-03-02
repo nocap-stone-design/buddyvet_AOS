@@ -3,6 +3,8 @@ package com.nocapstone.diary.domain
 import com.nocapstone.common.data.dto.CommonResponse
 import com.nocapstone.diary.data.DiaryService
 import com.nocapstone.diary.dto.Diary
+import com.nocapstone.diary.dto.DiaryDetailData
+import com.nocapstone.diary.dto.DiaryId
 import okhttp3.MultipartBody
 import javax.inject.Inject
 
@@ -16,12 +18,20 @@ class DiaryUseCase @Inject constructor(
 
     // view -> domain
     suspend fun createDiary(token: String, createDiaryRequest: CreateDiaryRequest): Int {
-        return diaryService.createDiary(token,createDiaryRequest).data.diaryId
+        return diaryService.createDiary(token, createDiaryRequest).data.diaryId
     }
 
-    suspend fun createDiaryImage(token: String, image: MutableList<MultipartBody.Part>, diaryId: Int): CommonResponse<String?> {
-        return diaryService.createDiaryImage(token,diaryId.toLong(), image)
+    suspend fun createDiaryImage(
+        token: String,
+        image: MutableList<MultipartBody.Part>,
+        diaryId: Int
+    ): CommonResponse<String?> {
+        return diaryService.createDiaryImage(token, diaryId.toLong(), image)
     }
 
-    
+    suspend fun readDiaryDetail(token: String, diaryId: Int) : DiaryDetailData {
+        return diaryService.readDiaryDetail(token, diaryId.toLong()).data
+    }
+
+
 }

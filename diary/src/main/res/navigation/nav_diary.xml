@@ -7,13 +7,24 @@
     <fragment
         android:id="@+id/diaryFragment"
         android:name="com.nocapstone.diary.ui.DiaryFragment"
-        android:label="DiaryFragment" >
+        android:label="DiaryFragment">
         <action
             android:id="@+id/next"
             app:destination="@id/writeDiaryFragment" />
+        <action
+            android:id="@+id/detailDiary"
+            app:destination="@id/detailDiaryFragment" />
     </fragment>
     <fragment
         android:id="@+id/writeDiaryFragment"
         android:name="com.nocapstone.diary.ui.WriteDiaryFragment"
         android:label="WriteDiaryFragment" />
+    <fragment
+        android:id="@+id/detailDiaryFragment"
+        android:name="com.nocapstone.diary.DetailDiaryFragment"
+        android:label="DetailDiaryFragment">
+        <argument
+            android:name="diaryId"
+            app:argType="integer" />
+    </fragment>
 </navigation>

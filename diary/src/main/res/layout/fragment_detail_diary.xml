@@ -1,18 +1,100 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <FrameLayout
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.nocapstone.diary.ui.DiaryViewModel" />
+
+        <variable
+            name="adapter"
+            type="com.nocapstone.diary.ImageAdapter" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.nocapstone.diary.DetailDiaryFragment">
+        android:layout_margin="16dp"
+        tools:context=".ui.WriteDiaryFragment">
 
-        <!-- TODO: Update blank fragment layout -->
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment" />
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.detailData.date}"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            app:layout_constraintStart_toStartOf="@id/title"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </FrameLayout>
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/edit_shape"
+            android:gravity="center_vertical"
+            android:lineSpacingExtra="1sp"
+            android:padding="16dp"
+            android:text="@{viewModel.detailData.title}"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/picture_layout"
+            app:layout_constraintStart_toStartOf="@id/picture_layout"
+            app:layout_constraintTop_toBottomOf="@id/date" />
 
+
+        <FrameLayout
+            android:id="@+id/picture_layout"
+            android:layout_width="348dp"
+            android:layout_height="348dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title">
+
+            <ImageView
+                android:id="@+id/picture"
+                visible="@{viewModel.detailData.images.size() == 0}"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                android:src="@drawable/img_select_picture" />
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/picture_viewPager"
+                adapter="@{adapter}"
+                submitList="@{viewModel.detailData.images}"
+                visible="@{viewModel.detailData.images.size() != 0}"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </FrameLayout>
+
+
+        <TextView
+            android:id="@+id/content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginVertical="32dp"
+            android:background="@drawable/edit_shape"
+            android:gravity="top"
+            android:lineSpacingExtra="1sp"
+            android:padding="16dp"
+            android:text="@{viewModel.detailData.content}"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/picture_layout"
+            app:layout_constraintStart_toStartOf="@id/picture_layout"
+            app:layout_constraintTop_toBottomOf="@id/picture_layout" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

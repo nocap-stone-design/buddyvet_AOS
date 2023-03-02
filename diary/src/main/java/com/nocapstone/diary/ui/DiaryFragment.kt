@@ -43,7 +43,7 @@ class DiaryFragment : Fragment() {
 
         binding.apply {
             this.lifecycleOwner = viewLifecycleOwner
-            this.adapter = DiaryAdapter()
+            this.adapter = DiaryAdapter(this@DiaryFragment)
             this.viewModel = diaryViewModel
         }
 

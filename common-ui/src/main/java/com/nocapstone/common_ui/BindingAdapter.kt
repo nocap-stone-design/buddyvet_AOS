@@ -26,7 +26,8 @@ fun bindImageView(imageView: ImageView, uri: Uri?) {
 
 
 @BindingAdapter("adapter", "submitList", requireAll = true)
-fun bindViewPager(view: ViewPager2, adapter: RecyclerView.Adapter<*>, submitList: List<Any>) {
+fun bindViewPager(view: ViewPager2, adapter: RecyclerView.Adapter<*>, submitList: List<Any>?) {
+    if (submitList == null) return
     view.adapter = adapter.apply {
         (this as ListAdapter<Any, *>).submitList(submitList.toMutableList())
     }

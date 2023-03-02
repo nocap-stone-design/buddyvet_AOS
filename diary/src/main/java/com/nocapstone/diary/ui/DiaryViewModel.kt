@@ -9,6 +9,7 @@ import com.nocapstone.common.domain.usecase.DataStoreUseCase
 import com.nocapstone.diary.domain.CreateDiaryRequest
 import com.nocapstone.diary.domain.DiaryUseCase
 import com.nocapstone.diary.dto.Diary
+import com.nocapstone.diary.dto.DiaryDetailData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,6 +30,8 @@ class DiaryViewModel @Inject constructor(
     private val dataStoreUseCase: DataStoreUseCase
 ) : ViewModel() {
 
+    private val _detailData = MutableStateFlow<DiaryDetailData?>(null)
+    val detailData: StateFlow<DiaryDetailData?> = _detailData
 
     private val _imageUriList = MutableStateFlow<MutableList<Uri>>(mutableListOf())
     val imageUriList: StateFlow<List<Uri>> = _imageUriList
@@ -76,7 +79,20 @@ class DiaryViewModel @Inject constructor(
                 }
                 callBack.invoke()
             } catch (e: Exception) {
-                Log.d("postTest",e.message.toString())
+                Log.d("postTest", e.message.toString())
+            }
+        }
+    }
+
+    fun readDetailDiary(diaryId: Int) {
+        viewModelScope.launch {
+            try {
+                _detailData.value = diaryUseCase.readDiaryDetail(
+                    dataStoreUseCase.bearerJsonWebToken.first()!!,
+                    diaryId
+                )
+            }catch (e : Exception){
+                Log.d("postTest", e.message.toString())
             }
         }
     }
