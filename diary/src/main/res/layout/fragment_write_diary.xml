@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.nocapstone.diary.ui.DiaryViewModel" />
+
+        <variable
+            name="adapter"
+            type="com.nocapstone.diary.ImageAdapter" />
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="16dp"
+        tools:context=".ui.WriteDiaryFragment">
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="날짜"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            app:layout_constraintStart_toStartOf="@id/title"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/title"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/edit_shape"
+            android:gravity="top"
+            android:hint="제목"
+            android:lineSpacingExtra="1sp"
+            android:padding="16dp"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="@id/picture_layout"
+            app:layout_constraintStart_toStartOf="@id/picture_layout"
+            app:layout_constraintTop_toBottomOf="@id/date" />
+
+
+        <FrameLayout
+            android:id="@+id/picture_layout"
+            android:layout_width="348dp"
+            android:layout_height="348dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title">
+
+            <ImageView
+                android:id="@+id/picture"
+                visible="@{viewModel.imageUriList.size() == 0}"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                android:src="@drawable/img_select_picture" />
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/picture_viewPager"
+                adapter="@{adapter}"
+                submitList="@{viewModel.imageUriList}"
+                visible="@{viewModel.imageUriList.size() != 0}"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </FrameLayout>
+
+
+        <EditText
+            android:id="@+id/content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginVertical="32dp"
+            android:background="@drawable/edit_shape"
+            android:gravity="top"
+            android:hint="내용을 입력하세요"
+            android:lineSpacingExtra="1sp"
+            android:padding="16dp"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/picture_layout"
+            app:layout_constraintStart_toStartOf="@id/picture_layout"
+            app:layout_constraintTop_toBottomOf="@id/picture_layout" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

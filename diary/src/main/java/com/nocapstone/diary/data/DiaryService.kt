@@ -1,12 +1,11 @@
 package com.nocapstone.diary.data
 
 import com.nocapstone.common.data.dto.CommonResponse
+import com.nocapstone.diary.domain.CreateDiaryRequest
 import com.nocapstone.diary.dto.DiaryData
 import com.nocapstone.diary.dto.DiaryId
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.POST
+import okhttp3.MultipartBody
+import retrofit2.http.*
 
 interface DiaryService {
 
@@ -22,5 +21,15 @@ interface DiaryService {
         @Header("Authorization") token: String,
         @Body createDiaryRequest: CreateDiaryRequest
     ) : CommonResponse<DiaryId>
+
+
+    @Multipart
+    @POST("diary/{diaryId}/image")
+    suspend fun createDiaryImage(
+        @Header("Authorization") token: String,
+        @Path("diaryId") diaryId: Long,
+        @Part image: MutableList<MultipartBody.Part>
+    ) : CommonResponse<String?>
+
 
 }

@@ -39,6 +39,9 @@ android {
 
 dependencies {
 
+    implementation 'io.github.ParkSangGwon:tedimagepicker:1.2.8'
+
+
     api project(path: ':common-ui')
     api project(path: ':common')
 

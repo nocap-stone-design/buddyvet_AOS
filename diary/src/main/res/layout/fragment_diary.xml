@@ -10,7 +10,7 @@
 
         <variable
             name="viewModel"
-            type="com.nocapstone.diary.DiaryViewModel" />
+            type="com.nocapstone.diary.ui.DiaryViewModel" />
     </data>
 
 
@@ -18,7 +18,7 @@
         android:background="@color/butter"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.nocapstone.diary.DiaryFragment">
+        tools:context="com.nocapstone.diary.ui.DiaryFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             adapter="@{adapter}"

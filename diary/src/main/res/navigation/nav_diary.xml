@@ -6,6 +6,14 @@
 
     <fragment
         android:id="@+id/diaryFragment"
-        android:name="com.nocapstone.diary.DiaryFragment"
-        android:label="DiaryFragment" />
+        android:name="com.nocapstone.diary.ui.DiaryFragment"
+        android:label="DiaryFragment" >
+        <action
+            android:id="@+id/next"
+            app:destination="@id/writeDiaryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/writeDiaryFragment"
+        android:name="com.nocapstone.diary.ui.WriteDiaryFragment"
+        android:label="WriteDiaryFragment" />
 </navigation>
