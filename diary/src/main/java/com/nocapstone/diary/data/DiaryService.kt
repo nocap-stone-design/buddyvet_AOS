@@ -29,7 +29,7 @@ interface DiaryService {
     suspend fun createDiaryImage(
         @Header("Authorization") token: String,
         @Path("diaryId") diaryId: Long,
-        @Part image: MutableList<MultipartBody.Part>
+        @Part image: List<MultipartBody.Part>
     ): CommonResponse<String?>
 
 

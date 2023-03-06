@@ -9,5 +9,6 @@
     <include app:graph="@navigation/nav_eyecheck" />
     <include app:graph="@navigation/nav_home" />
     <include app:graph="@navigation/nav_diary" />
+    <include app:graph="@navigation/nav_community" />
 
 </navigation>

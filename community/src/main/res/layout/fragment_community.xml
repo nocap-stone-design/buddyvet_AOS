@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.nocapstone.community.ui.CommunityViewModel" />
+
+        <variable
+            name="adapter"
+            type="com.nocapstone.community.PostAdapter" />
+
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.nocapstone.diary.ui.DiaryFragment">
+
+        <androidx.recyclerview.widget.RecyclerView
+            adapter="@{adapter}"
+            submitList="@{viewModel.postList}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="vertical"
+            tools:listitem="@layout/item_post" />
+
+    </FrameLayout>
+
+
+</layout>

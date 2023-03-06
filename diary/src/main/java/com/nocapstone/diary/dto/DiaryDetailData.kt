@@ -1,10 +1,12 @@
 package com.nocapstone.diary.dto
 
-import android.net.Uri
+import com.nocapstone.common_ui.ImageInfo
+
 
 data class DiaryDetailData(
     val date: String,
     val title: String,
-    val images: List<String>?,
+    val images: List<ImageInfo>?,
     val content: String
 )
+

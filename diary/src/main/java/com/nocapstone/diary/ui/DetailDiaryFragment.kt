@@ -1,18 +1,15 @@
-package com.nocapstone.diary
+package com.nocapstone.diary.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
-import com.example.diary.R
 import com.example.diary.databinding.FragmentDetailDiaryBinding
-import com.example.diary.databinding.FragmentWriteDiaryBinding
+import com.nocapstone.common_ui.ImageDetailAdapter
 import com.nocapstone.common_ui.MainActivityUtil
-import com.nocapstone.diary.ui.DiaryViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -45,7 +42,7 @@ class DetailDiaryFragment : Fragment() {
         binding.apply {
             lifecycleOwner =  viewLifecycleOwner
             viewModel = diaryViewModel
-            adapter = ImageAdapter()
+            adapter = ImageDetailAdapter()
         }
     }
 

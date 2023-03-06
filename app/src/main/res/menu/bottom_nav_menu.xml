@@ -17,7 +17,7 @@
 
     <!-- todo fix -->
     <item
-        android:id="@+id/community"
+        android:id="@+id/nav_community"
         android:icon="@drawable/bottom_story_on_off"
         android:title="" />
 

@@ -11,7 +11,7 @@
 
         <variable
             name="adapter"
-            type="com.nocapstone.diary.ImageAdapter" />
+            type="com.nocapstone.common_ui.ImageAdapter" />
     </data>
 
 

@@ -42,6 +42,7 @@ class MainActivity : AppCompatActivity(), MainActivityUtil {
             setOf(
                 com.nocapstone.home.R.id.homeFragment,
                 com.nocapstone.home.R.id.checkResultFragment,
+                com.nocapstone.community.R.id.communityFragment,
                 com.example.diary.R.id.diaryFragment
             )
         )

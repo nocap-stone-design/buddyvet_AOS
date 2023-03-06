@@ -1,4 +1,4 @@
-package com.nocapstone.diary
+package com.nocapstone.common_ui
 
 import android.net.Uri
 import android.view.LayoutInflater
@@ -30,20 +30,21 @@ class ImageAdapter : ListAdapter<Uri, RecyclerView.ViewHolder>(ImageDiffCallback
         RecyclerView.ViewHolder(binding.root) {
         fun bind(uri: Uri) {
             with(binding) {
-                imgUri = uri
+                imageUri = uri
                 executePendingBindings()
             }
         }
     }
 
-}
+    private class ImageDiffCallback : DiffUtil.ItemCallback<Uri>() {
+        override fun areItemsTheSame(oldItem: Uri, newItem: Uri): Boolean {
+            return oldItem === newItem
+        }
 
-private class ImageDiffCallback : DiffUtil.ItemCallback<Uri>() {
-    override fun areItemsTheSame(oldItem: Uri, newItem: Uri): Boolean {
-        return oldItem === newItem
+        override fun areContentsTheSame(oldItem: Uri, newItem: Uri): Boolean {
+            return oldItem == newItem
+        }
     }
 
-    override fun areContentsTheSame(oldItem: Uri, newItem: Uri): Boolean {
-        return oldItem == newItem
-    }
 }
+

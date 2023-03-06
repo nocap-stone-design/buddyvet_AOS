@@ -1,5 +1,6 @@
 package com.nocapstone.diary.domain
 
+import android.util.Log
 import com.nocapstone.common.data.dto.CommonResponse
 import com.nocapstone.diary.data.DiaryService
 import com.nocapstone.diary.dto.Diary
@@ -23,13 +24,13 @@ class DiaryUseCase @Inject constructor(
 
     suspend fun createDiaryImage(
         token: String,
-        image: MutableList<MultipartBody.Part>,
-        diaryId: Int
+        diaryId: Int,
+        image: List<MultipartBody.Part>
     ): CommonResponse<String?> {
         return diaryService.createDiaryImage(token, diaryId.toLong(), image)
     }
 
-    suspend fun readDiaryDetail(token: String, diaryId: Int) : DiaryDetailData {
+    suspend fun readDiaryDetail(token: String, diaryId: Int): DiaryDetailData {
         return diaryService.readDiaryDetail(token, diaryId.toLong()).data
     }
 

@@ -1,67 +1,62 @@
-package com.nocapstone.diary.ui
+package com.nocapstone.community.ui
 
 import android.content.Context
 import android.net.Uri
 import android.provider.OpenableColumns
 import android.util.Log
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.net.toUri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nocapstone.common.domain.usecase.DataStoreUseCase
-import com.nocapstone.diary.domain.CreateDiaryRequest
-import com.nocapstone.diary.domain.DiaryUseCase
-import com.nocapstone.diary.dto.Diary
-import com.nocapstone.diary.dto.DiaryDetailData
+import com.nocapstone.community.domain.CommunityUseCase
+import com.nocapstone.community.domain.CreatePostRequest
+import com.nocapstone.community.dto.Post
+import com.nocapstone.community.dto.PostDetailData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
-import java.io.File
 import javax.inject.Inject
 
 
 @HiltViewModel
-class DiaryViewModel @Inject constructor(
+class CommunityViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
-    private val diaryUseCase: DiaryUseCase,
+    private val communityUseCase: CommunityUseCase,
     private val dataStoreUseCase: DataStoreUseCase
 ) : ViewModel() {
 
-    private val _detailData = MutableStateFlow<DiaryDetailData?>(null)
-    val detailData: StateFlow<DiaryDetailData?> = _detailData
+    private val _detailData = MutableStateFlow<PostDetailData?>(null)
+    val detailData: StateFlow<PostDetailData?> = _detailData
 
     private val _imageUriList = MutableStateFlow<MutableList<Uri>>(mutableListOf())
     val imageUriList: StateFlow<List<Uri>> = _imageUriList
 
-    private val _diaryList = MutableStateFlow<MutableList<Diary>>(mutableListOf())
-    val diaryList: StateFlow<List<Diary>> = _diaryList
+    private val _postList = MutableStateFlow<MutableList<Post>>(mutableListOf())
+    val postList: StateFlow<List<Post>> = _postList
 
-    fun readDiaryList() {
+    fun readPostList() {
         viewModelScope.launch {
             try {
-                diaryUseCase.readDiaryList(dataStoreUseCase.bearerJsonWebToken.first()!!).let {
-                    _diaryList.value = it.toMutableList()
+                communityUseCase.readPostList(dataStoreUseCase.bearerJsonWebToken.first()!!).let {
+                    _postList.value = it.toMutableList()
                 }
+                val tmp = mutableListOf<Post>()
             } catch (e: Exception) {
 
             }
         }
     }
 
-    //todo 뷰에서 request 구성
-    fun createDiary(createDiaryRequest: CreateDiaryRequest, callBack: () -> Unit) {
+    fun createPost(createDiaryRequest: CreatePostRequest, callBack: () -> Unit) {
         viewModelScope.launch {
             try {
                 val token = dataStoreUseCase.bearerJsonWebToken.first()!!
-                diaryUseCase.createDiary(token, createDiaryRequest).let { diaryId ->
+                communityUseCase.createPost(token, createDiaryRequest).let { postId ->
                     if (_imageUriList.value.size > 0) {
                         val images = _imageUriList.value.map { imageUri ->
                             Log.d("postUri", imageUri.toString())
@@ -81,7 +76,7 @@ class DiaryViewModel @Inject constructor(
                                 requestBody
                             )
                         }
-                        diaryUseCase.createDiaryImage(token, diaryId, images)
+                        communityUseCase.createPostImage(token, postId, images)
                         _imageUriList.value.clear()
                     }
                 }
@@ -102,19 +97,19 @@ class DiaryViewModel @Inject constructor(
         }
     }
 
-
-    fun readDetailDiary(diaryId: Int) {
+    fun readDetailPost(postId: Int) {
         viewModelScope.launch {
             try {
-                _detailData.value = diaryUseCase.readDiaryDetail(
+                _detailData.value = communityUseCase.readPostDetail(
                     dataStoreUseCase.bearerJsonWebToken.first()!!,
-                    diaryId
+                    postId
                 )
             } catch (e: Exception) {
                 Log.d("postTest", e.message.toString())
             }
         }
     }
+
 
 
     fun setImage(newUriList: List<Uri>) {

@@ -1,4 +1,4 @@
-package com.nocapstone.diary.ui
+package com.nocapstone.community.ui
 
 import android.os.Bundle
 import android.view.*
@@ -8,34 +8,32 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
-import com.example.diary.R
-import com.example.diary.databinding.FragmentWriteDiaryBinding
-import com.nocapstone.common_ui.CalendarUtil.Companion.getTodayDate
-import com.nocapstone.common_ui.CalendarUtil.Companion.parseDateToFormatString
-import com.nocapstone.common_ui.CalendarUtil.Companion.parseStringToDate
-import com.nocapstone.common_ui.DialogForDatePicker
 import com.nocapstone.common_ui.ImageAdapter
 import com.nocapstone.common_ui.MainActivityUtil
-import com.nocapstone.diary.domain.CreateDiaryRequest
+import com.nocapstone.community.domain.CreatePostRequest
+import com.nocapstone.common_ui.ImageDetailAdapter
+import com.nocapstone.community.R
+import com.nocapstone.community.databinding.FragmentWritePostBinding
 import dagger.hilt.android.AndroidEntryPoint
 import gun0912.tedimagepicker.builder.TedImagePicker
 
 
 @AndroidEntryPoint
-class WriteDiaryFragment : Fragment() {
+class WritePostFragment : Fragment() {
 
-    private val diaryViewModel: DiaryViewModel by viewModels()
-    private var _binding: FragmentWriteDiaryBinding? = null
+    private val communityViewModel: CommunityViewModel by viewModels()
+    private var _binding: FragmentWritePostBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentWriteDiaryBinding.inflate(inflater, container, false)
+
+        _binding = FragmentWritePostBinding.inflate(inflater, container, false)
 
         (activity as MainActivityUtil).run {
-            setToolbarTitle("일기작성")
+            setToolbarTitle("글 작성")
             setVisibilityBottomAppbar(View.GONE)
         }
 
@@ -46,28 +44,16 @@ class WriteDiaryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initMenu()
-
         binding.apply {
-
-            viewModel = diaryViewModel
+            viewModel = communityViewModel
             lifecycleOwner = viewLifecycleOwner
             adapter = ImageAdapter()
-            date.text = getTodayDate()
-            date.setOnClickListener {
-                DialogForDatePicker.Builder(requireContext())
-                    .setInitDate(parseStringToDate(binding.date.text.toString())!!)
-                    .setOnClickPositiveButton { newDate ->
-                        binding.date.text = parseDateToFormatString(newDate)
-                    }
-                    .build().show()
-            }
 
             picture.setOnClickListener {
                 TedImagePicker.with(requireContext())
-                    .startMultiImage { diaryViewModel.setImage(it) }
+                    .startMultiImage { communityViewModel.setImage(it) }
             }
         }
-
     }
 
     override fun onDestroyView() {
@@ -76,9 +62,7 @@ class WriteDiaryFragment : Fragment() {
             setVisibilityBottomAppbar(View.VISIBLE)
         }
         _binding = null
-
     }
-
 
     private fun initMenu() {
         val menuHost: MenuHost = requireActivity()
@@ -86,7 +70,7 @@ class WriteDiaryFragment : Fragment() {
         menuHost.addMenuProvider(object : MenuProvider {
 
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                menuInflater.inflate(R.menu.writing_diary_menu, menu)
+                menuInflater.inflate(R.menu.write_post_menu, menu)
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
@@ -94,15 +78,13 @@ class WriteDiaryFragment : Fragment() {
                     android.R.id.home -> {
                         findNavController().popBackStack()
                     }
-                    R.id.menu_createDiary -> {
-                        // 일기 작성 완료
+                    R.id.menu_createPost -> {
                         with(binding) {
-                            CreateDiaryRequest(
-                                date.text.toString(),
+                            CreatePostRequest(
                                 title.text.toString(),
                                 content.text.toString()
                             ).let {
-                                diaryViewModel.createDiary(it) {
+                                communityViewModel.createPost(it) {
                                     findNavController().popBackStack()
                                 }
                             }
@@ -115,4 +97,6 @@ class WriteDiaryFragment : Fragment() {
     }
 
 
+
 }
+

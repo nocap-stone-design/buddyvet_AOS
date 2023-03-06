@@ -1,4 +1,4 @@
-package com.nocapstone.diary.ui
+package com.nocapstone.community.ui
 
 import android.os.Bundle
 import android.view.*
@@ -8,52 +8,52 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
-import com.example.diary.R
-import com.example.diary.databinding.FragmentDiaryBinding
 import com.nocapstone.common_ui.MainActivityUtil
-import com.nocapstone.diary.DiaryAdapter
-import com.nocapstone.diary.domain.CreateDiaryRequest
+import com.nocapstone.community.PostAdapter
+import com.nocapstone.community.R
+import com.nocapstone.community.databinding.FragmentCommunityBinding
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
-class DiaryFragment : Fragment() {
+class CommunityFragment : Fragment() {
 
-    private val diaryViewModel: DiaryViewModel by viewModels()
-    private var _binding: FragmentDiaryBinding? = null
+    private val communityViewModel: CommunityViewModel by viewModels()
+    private var _binding: FragmentCommunityBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentDiaryBinding.inflate(inflater, container, false)
+        _binding = FragmentCommunityBinding.inflate(inflater, container, false)
 
         (activity as MainActivityUtil).run {
-            setToolbarTitle("일기")
+            setToolbarTitle("커뮤니티")
         }
 
         return binding.root
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         initMenu()
 
+
         binding.apply {
             this.lifecycleOwner = viewLifecycleOwner
-            this.adapter = DiaryAdapter(this@DiaryFragment)
-            this.viewModel = diaryViewModel
+            this.adapter = PostAdapter(this@CommunityFragment)
+            this.viewModel = communityViewModel
         }
-
-        diaryViewModel.readDiaryList()
+        communityViewModel.readPostList()
     }
 
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+
     }
 
     private fun initMenu() {
@@ -62,12 +62,12 @@ class DiaryFragment : Fragment() {
         menuHost.addMenuProvider(object : MenuProvider {
 
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                menuInflater.inflate(R.menu.diary_menu, menu)
+                menuInflater.inflate(R.menu.community_menu, menu)
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 when (menuItem.itemId) {
-                    R.id.menu_writingDiary -> {
+                    R.id.menu_writingCommunity -> {
                         findNavController().navigate(R.id.next)
                     }
                 }
@@ -75,5 +75,6 @@ class DiaryFragment : Fragment() {
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
+
 
 }

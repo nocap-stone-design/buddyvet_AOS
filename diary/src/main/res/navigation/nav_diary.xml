@@ -21,7 +21,7 @@
         android:label="WriteDiaryFragment" />
     <fragment
         android:id="@+id/detailDiaryFragment"
-        android:name="com.nocapstone.diary.DetailDiaryFragment"
+        android:name="com.nocapstone.diary.ui.DetailDiaryFragment"
         android:label="DetailDiaryFragment">
         <argument
             android:name="diaryId"

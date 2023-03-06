@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_community"
+    app:startDestination="@id/communityFragment">
+
+    <fragment
+        android:id="@+id/communityFragment"
+        android:name="com.nocapstone.community.ui.CommunityFragment"
+        android:label="fragment_community"
+        tools:layout="@layout/fragment_community" >
+        <action
+            android:id="@+id/detailPost"
+            app:destination="@id/detailPostFragment" />
+        <action
+            android:id="@+id/next"
+            app:destination="@id/writePostFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailPostFragment"
+        android:name="com.nocapstone.community.ui.DetailPostFragment"
+        android:label="DetailPostFragment" >
+        <argument
+            android:name="postID"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/writePostFragment"
+        android:name="com.nocapstone.community.ui.WritePostFragment"
+        android:label="WritePostFragment" />
+</navigation>
