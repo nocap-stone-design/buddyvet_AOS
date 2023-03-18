@@ -3,66 +3,189 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.nocapstone.home.HomeViewModel" />
+
+        <variable
+            name="adapter"
+            type="com.nocapstone.home.BuddyListAdapter" />
+    </data>
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="@dimen/basic_parent_padding">
 
-        <TextView
-            android:id="@+id/myBuddy_tv"
-            android:layout_width="wrap_content"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/buddy_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="나의 Buddy 들"
-            android:textSize="@dimen/basic_main_textSize"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/myBuddy_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
-            android:text="TODO 버디들 이미지"
-            android:textSize="@dimen/basic_main_textSize"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/myBuddy_tv" />
+            app:cardBackgroundColor="@color/butter"
+            app:cardCornerRadius="16dp"
+            app:layout_constraintTop_toTopOf="parent">
 
 
-        <TextView
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/myBuddy_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/cafe24_ssurround_air"
+                    android:text="My Buddy"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/basic_main_textSize"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/myBuddy_recyclerView"
+                    adapter="@{adapter}"
+                    submitList="@{viewModel.buddyList}"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintTop_toBottomOf="@id/myBuddy_tv"
+                    tools:listitem="@layout/item_buddy_profile" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+
+        <ImageView
             android:id="@+id/today_weather_score"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:layout_marginTop="21dp"
-            android:gravity="center"
-            android:text="TODO 날씨"
-            android:textSize="40dp"
+            android:layout_marginTop="32dp"
+            android:src="@drawable/img_weather"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/myBuddy_icon" />
+            app:layout_constraintTop_toBottomOf="@id/buddy_layout" />
 
 
         <TextView
-            android:id="@+id/eye_check_btn"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_marginTop="21dp"
-            android:gravity="center"
-            android:text="눈 검사하러 가기"
-            android:textSize="40dp"
+            android:id="@+id/health_check_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:fontFamily="@font/cafe24_ssurround_air"
+            android:text="건강 체크"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/today_weather_score" />
 
-
-        <TextView
-            android:id="@+id/find_near_hospital"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/health_check_ll"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_marginTop="21dp"
-            android:gravity="center"
-            android:text="내 주변 동물병원"
-            android:textSize="40dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/eye_check_btn" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@id/health_check_tv">
 
+            <androidx.cardview.widget.CardView
+                android:id="@+id/eye_check_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:layout_weight="1"
+                app:cardBackgroundColor="@color/butter"
+                app:cardCornerRadius="21dp"
+                app:layout_constraintEnd_toStartOf="@id/fine_hospital_btn"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_weight="1"
+                    android:padding="16dp">
+
+                    <ImageView
+                        android:id="@+id/eye_check_image"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/baseline_remove_red_eye_24"
+                        app:layout_constraintBottom_toTopOf="@id/eye_check_tv"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/eye_check_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/cafe24_ssurround_air"
+                        android:gravity="center"
+                        android:text="눈 검사하기"
+                        android:textColor="@color/black"
+                        android:textSize="17sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@id/eye_check_image"
+                        app:layout_constraintStart_toStartOf="@id/eye_check_image"
+                        app:layout_constraintTop_toBottomOf="@id/eye_check_image" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/fine_hospital_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:layout_weight="1"
+                app:cardBackgroundColor="@color/butter"
+                app:cardCornerRadius="21dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/eye_check_btn">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:padding="16dp">
+
+                    <ImageView
+                        android:id="@+id/find_hospital_image"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/baseline_local_hospital_24"
+                        app:layout_constraintBottom_toTopOf="@id/find_hospital_tv"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/find_hospital_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/cafe24_ssurround_air"
+                        android:text="동물병원 찾기"
+                        android:textColor="@color/black"
+                        android:textSize="17sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@id/find_hospital_image"
+                        app:layout_constraintStart_toStartOf="@id/find_hospital_image"
+                        app:layout_constraintTop_toBottomOf="@id/find_hospital_image" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

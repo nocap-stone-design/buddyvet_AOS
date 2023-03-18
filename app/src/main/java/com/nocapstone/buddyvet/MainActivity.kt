@@ -57,6 +57,7 @@ class MainActivity : AppCompatActivity(), MainActivityUtil {
 
     private fun initAppBar() {
         setSupportActionBar(binding.toolbar)
+        binding.toolbar
         supportActionBar?.run {
             setDisplayShowTitleEnabled(false)
             setDisplayHomeAsUpEnabled(true)

@@ -18,7 +18,7 @@ import gun0912.tedimagepicker.builder.TedImagePicker
 @AndroidEntryPoint
 class CheckSelectImageFragment : Fragment() {
 
-    private val storyViewModel: HomeViewModel by viewModels({ requireActivity() })
+    private val homeViewModel: HomeViewModel by viewModels({ requireActivity() })
     private var _binding: FragmentCheckSelectImageBinding? = null
     private val binding get() = _binding!!
 
@@ -39,7 +39,7 @@ class CheckSelectImageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
-            viewModel = storyViewModel
+            viewModel = homeViewModel
             lifecycleOwner = viewLifecycleOwner
             dialogButton.setOnClickListener {
                 findNavController().navigate(R.id.next)
@@ -48,7 +48,7 @@ class CheckSelectImageFragment : Fragment() {
                 TedImagePicker.with(requireContext())
                     .errorListener { }
                     .start { uri ->
-                        storyViewModel.setImage(uri)
+                        homeViewModel.setImage(uri)
                         findNavController().navigate(R.id.checkSelectImageFragment)
                     }
             }

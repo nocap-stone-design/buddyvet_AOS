@@ -3,6 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <import type="java.util.List" />
+
+        <import type="com.nocapstone.home.dto.BuddyData" />
+
+        <variable
+            name="buddyList"
+            type="List&lt;BuddyData&gt;" />
+
+        <variable
+            name="adapter"
+            type="com.nocapstone.home.BuddyListAdapter" />
+    </data>
+
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -11,18 +27,18 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="350dp"
-            android:layout_margin="8dp"
             app:cardCornerRadius="@dimen/dialog_radius">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="26dp">
+                android:padding="16dp">
 
                 <TextView
                     android:id="@+id/dialog_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:text="안구 검사를 진행할 Buddy를 선택"
                     android:textSize="17sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -30,37 +46,44 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/myBuddy_text"
-                    android:layout_width="match_parent"
+                    android:id="@+id/myBuddy_tv"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:gravity="start"
-                    android:text="나의 Buddy들"
+                    android:fontFamily="@font/cafe24_ssurround_air"
+                    android:text="My Buddy"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/basic_main_textSize"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dialog_text" />
 
-                <TextView
-                    android:id="@+id/buddy_list_viewpager"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/myBuddy_recyclerView"
+                    adapter="@{adapter}"
+                    submitList="@{buddyList}"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="100dp"
                     android:layout_marginTop="16dp"
-                    android:gravity="center"
-                    android:text="todo 버디 리스트 뷰페이저"
-                    android:textSize="20dp"
-                    android:textStyle="bold"
-                    app:layout_constraintTop_toBottomOf="@id/myBuddy_text" />
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintTop_toBottomOf="@id/myBuddy_tv"
+                    tools:listitem="@layout/item_buddy_profile" />
 
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/start_eye_check_btn"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginBottom="21dp"
-                    android:backgroundTint="@color/black"
-                    android:textColor="@color/butter"
+                    android:backgroundTint="@color/butter"
+                    android:fontFamily="@font/cafe24_ssurround_air"
                     android:gravity="center"
                     android:text="검사 진행"
+                    android:textColor="@color/black"
                     android:textSize="15sp"
-                    app:cornerRadius="@dimen/btn_corner"
+                    android:textStyle="bold"
+                    app:cornerRadius="21dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
