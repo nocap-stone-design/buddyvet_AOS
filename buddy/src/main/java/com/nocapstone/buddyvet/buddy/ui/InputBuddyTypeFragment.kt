@@ -9,7 +9,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.nocapstone.buddyvet.buddy.R
 import com.nocapstone.buddyvet.buddy.databinding.FragmentInputBuddyTypeBinding
-import com.nocapstone.buddyvet.buddy.util.BuddyType
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -37,11 +36,11 @@ class InputBuddyTypeFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         binding.dogIv.setOnClickListener {
-            buddyViewModel.setSelectBuddyType(BuddyType.DOG)
+            buddyViewModel.setKind("D")
         }
 
         binding.catIv.setOnClickListener {
-            buddyViewModel.setSelectBuddyType(BuddyType.CAT)
+            buddyViewModel.setKind("C")
         }
 
         binding.next.setOnClickListener {
