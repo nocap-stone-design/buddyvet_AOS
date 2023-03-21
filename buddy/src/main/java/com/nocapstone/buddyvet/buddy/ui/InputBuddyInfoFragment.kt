@@ -1,7 +1,6 @@
-package com.nocapstone.onboarding.ui.registrationbuddy
+package com.nocapstone.buddyvet.buddy.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,10 +8,9 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.nocapstone.onboarding.R
-import com.nocapstone.onboarding.databinding.FragmentInputBuddyInfoBinding
-import com.nocapstone.onboarding.ui.BuddyType
-import com.nocapstone.onboarding.ui.SplashViewModel
+import com.nocapstone.buddyvet.buddy.R
+import com.nocapstone.buddyvet.buddy.databinding.FragmentInputBuddyInfoBinding
+import com.nocapstone.buddyvet.buddy.util.BuddyType
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -20,9 +18,9 @@ import dagger.hilt.android.AndroidEntryPoint
 class InputBuddyInfoFragment : Fragment() {
 
     private var _binding: FragmentInputBuddyInfoBinding? = null
-    val binding get() = _binding!!
+    private val binding get() = _binding!!
 
-    private val splashViewModel: SplashViewModel by viewModels({ requireActivity() })
+    private val buddyViewModel: BuddyViewModel by viewModels({ requireActivity() })
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,7 +33,7 @@ class InputBuddyInfoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val breedListItem = if (splashViewModel.selectType.value == BuddyType.DOG) {
+        val breedListItem = if (buddyViewModel.selectType.value == BuddyType.DOG) {
             resources.getStringArray(com.nocapstone.common.R.array.DogBreed)
         } else {
             resources.getStringArray(com.nocapstone.common.R.array.CatBreed)

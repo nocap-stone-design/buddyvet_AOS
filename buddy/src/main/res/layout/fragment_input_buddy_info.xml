@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="21dp"
-        tools:context=".ui.registrationbuddy.InputBuddyInfoFragment">
+        tools:context="com.nocapstone.buddyvet.buddy.ui.InputBuddyInfoFragment">
 
         <TextView
             android:id="@+id/buddyInfo_tv"

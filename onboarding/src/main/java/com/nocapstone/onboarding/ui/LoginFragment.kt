@@ -1,7 +1,6 @@
 package com.nocapstone.onboarding.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.nocapstone.onboarding.R
 import com.nocapstone.onboarding.databinding.FragmentLoginBinding
-import com.nocapstone.onboarding.util.LoginUtil
+import com.nocapstone.common.util.LoginUtil
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

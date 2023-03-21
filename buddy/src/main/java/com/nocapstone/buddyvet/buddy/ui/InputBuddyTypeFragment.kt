@@ -1,4 +1,4 @@
-package com.nocapstone.onboarding.ui.registrationbuddy
+package com.nocapstone.buddyvet.buddy.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,10 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.nocapstone.onboarding.R
-import com.nocapstone.onboarding.databinding.FragmentInputBuddyTypeBinding
-import com.nocapstone.onboarding.ui.BuddyType
-import com.nocapstone.onboarding.ui.SplashViewModel
+import com.nocapstone.buddyvet.buddy.R
+import com.nocapstone.buddyvet.buddy.databinding.FragmentInputBuddyTypeBinding
+import com.nocapstone.buddyvet.buddy.util.BuddyType
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -18,8 +17,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class InputBuddyTypeFragment : Fragment() {
 
     private var _binding: FragmentInputBuddyTypeBinding? = null
-    val binding get() = _binding!!
-    private val splashViewModel: SplashViewModel by viewModels({ requireActivity() })
+    private val binding get() = _binding!!
+    private val buddyViewModel: BuddyViewModel by viewModels({ requireActivity() })
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,15 +33,15 @@ class InputBuddyTypeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        binding.viewModel = splashViewModel
+        binding.viewModel = buddyViewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
         binding.dogIv.setOnClickListener {
-            splashViewModel.setSelectBuddyType(BuddyType.DOG)
+            buddyViewModel.setSelectBuddyType(BuddyType.DOG)
         }
 
         binding.catIv.setOnClickListener {
-            splashViewModel.setSelectBuddyType(BuddyType.CAT)
+            buddyViewModel.setSelectBuddyType(BuddyType.CAT)
         }
 
         binding.next.setOnClickListener {

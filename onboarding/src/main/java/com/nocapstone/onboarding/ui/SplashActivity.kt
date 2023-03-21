@@ -11,7 +11,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.nocapstone.onboarding.R
 import com.nocapstone.onboarding.databinding.ActivitySplashBinding
-import com.nocapstone.onboarding.util.LoginUtil
+import com.nocapstone.common.util.LoginUtil
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

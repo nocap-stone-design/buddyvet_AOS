@@ -20,20 +20,7 @@ class SplashViewModel @Inject constructor(
     private val dataStoreUseCase: DataStoreUseCase
 ) : ViewModel() {
 
-    private val _selectType = MutableStateFlow(BuddyType.NULL)
-    val selectType: StateFlow<BuddyType> = _selectType
 
-    private val _newBuddy = MutableStateFlow<BuddyRequest?>(null)
-    val newBuddy : StateFlow<BuddyRequest?> = _newBuddy
-
-    fun setSelectBuddyType(buddyType : BuddyType){
-        if (_selectType.value == buddyType){
-            _selectType.value = BuddyType.NULL
-        }else{
-            _newBuddy.value = BuddyRequest(buddyType.kind)
-            _selectType.value = buddyType
-        }
-    }
 
 
 
@@ -78,6 +65,3 @@ class SplashViewModel @Inject constructor(
 }
 
 
-enum class BuddyType(val kind : String) {
-    NULL(""),DOG("D"), CAT("C")
-}

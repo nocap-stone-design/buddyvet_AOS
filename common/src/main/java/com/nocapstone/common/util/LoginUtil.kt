@@ -1,4 +1,4 @@
-package com.nocapstone.onboarding.util
+package com.nocapstone.common.util
 
 import android.app.Activity
 import android.content.Context

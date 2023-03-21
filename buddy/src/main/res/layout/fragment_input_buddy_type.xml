@@ -6,11 +6,11 @@
 
     <data>
 
-        <import type="com.nocapstone.onboarding.ui.BuddyType" />
+        <import type="com.nocapstone.buddyvet.buddy.util.BuddyType" />
 
         <variable
             name="viewModel"
-            type="com.nocapstone.onboarding.ui.SplashViewModel" />
+            type="com.nocapstone.buddyvet.buddy.ui.BuddyViewModel" />
 
     </data>
 
@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="21dp"
-        tools:context=".ui.registrationbuddy.InputBuddyTypeFragment">
+        tools:context="com.nocapstone.buddyvet.buddy.ui.InputBuddyTypeFragment">
 
         <TextView
             android:id="@+id/buddyType_tv"
