@@ -17,16 +17,13 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
-
-
     @Inject
     lateinit var mainActivityClass: Class<*>
-
 
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
 
-    private val splashViewModel: SplashViewModel by viewModels()
+    private val splashViewModel: SplashViewModel by viewModels({ requireActivity() })
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,7 +50,9 @@ class LoginFragment : Fragment() {
         binding.kakaoLoginBtn.setOnClickListener {
             LoginUtil.loginWithKaKao(requireContext()) { token ->
                 splashViewModel.signup(token!!, {
-                    LoginUtil.startMainActivity(requireActivity(), mainActivityClass) }, { findNavController().navigate(R.id.next) })
+                    findNavController().navigate(R.id.next)
+                                                //LoginUtil.startMainActivity(requireActivity(), mainActivityClass)
+                }, { findNavController().navigate(R.id.next) })
             }
         }
     }

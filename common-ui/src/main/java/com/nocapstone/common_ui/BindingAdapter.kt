@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide
 fun bindImageView(imageView: ImageView, photoUrl: String?) {
     Glide.with(imageView.context)
         .load(photoUrl)
+        .placeholder(R.drawable.img_person)
         .into(imageView)
 }
 

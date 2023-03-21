@@ -6,19 +6,14 @@
 
     <data>
 
-
         <import type="android.view.View"/>
-
-
-        <variable
-            name="viewModel"
-            type="com.nocapstone.home.HomeViewModel" />
 
         <import type="com.nocapstone.home.dto.BuddyData" />
 
         <variable
             name="buddyData"
             type="BuddyData" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

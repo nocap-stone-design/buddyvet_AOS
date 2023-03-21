@@ -6,14 +6,14 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="21dp"
+        android:paddingHorizontal="21dp"
         tools:context=".ui.InputUserInfoFragment">
 
         <TextView
             android:id="@+id/name_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="48dp"
             android:fontFamily="@font/cafe24_ssurround_air"
             android:gravity="center"
             android:text="앱에서 사용할 닉네임을\n입력하세요"
@@ -27,24 +27,31 @@
             android:id="@+id/name_sub_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="24dp"
             android:gravity="center"
             android:text="앱을 사용하는 사용자님 이름입니다.\n반려동물등록은 뒤에서 해요"
-            app:layout_constraintBottom_toTopOf="@id/name_et"
+            app:layout_constraintBottom_toTopOf="@id/name_lo"
             app:layout_constraintTop_toBottomOf="@id/name_tv" />
 
-        <EditText
-            android:id="@+id/name_et"
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/name_lo"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="32dp"
-            android:background="@drawable/edit_shape"
-            android:gravity="center_vertical"
-            android:hint="이름 입력"
-            android:padding="8dp"
-            android:textSize="21sp"
-            app:layout_constraintStart_toStartOf="@id/name_sub_tv"
-            app:layout_constraintTop_toBottomOf="@id/name_sub_tv" />
+            android:layout_height="70dp"
+            android:layout_marginTop="48dp"
+            android:hint="이름"
+            app:boxStrokeColor="@color/butter"
+            app:endIconMode="clear_text"
+            app:hintTextColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/name_sub_tv">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@id/name_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <!--        <TextView-->
         <!--            android:id="@+id/birthDay_tv"-->
@@ -89,10 +96,10 @@
             style="@style/basic_btn"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginBottom="43dp"
+            android:layout_marginBottom="@dimen/basic_bottom_btn_margin"
             android:text="다음"
-            app:backgroundTint="@color/butter"
             android:textSize="@dimen/basic_btn_textSize"
+            app:backgroundTint="@color/butter"
             app:layout_constraintBottom_toBottomOf="parent" />
 
 

@@ -1,4 +1,4 @@
-package com.nocapstone.onboarding.ui
+package com.nocapstone.onboarding.ui.registrationbuddy
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,26 +7,32 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.nocapstone.common_ui.MainActivityUtil
 import com.nocapstone.onboarding.R
-import com.nocapstone.onboarding.databinding.FragmentInputUserInfoBinding
+import com.nocapstone.onboarding.databinding.FragmentCompleteRegistrationBinding
+import com.nocapstone.onboarding.databinding.FragmentLoginBinding
+import com.nocapstone.onboarding.ui.SplashViewModel
+import com.nocapstone.onboarding.util.LoginUtil
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class InputUserInfoFragment : Fragment() {
+class CompleteRegistrationFragment : Fragment() {
 
-    private var _binding: FragmentInputUserInfoBinding? = null
+    @Inject
+    lateinit var mainActivityClass: Class<*>
+
+    private var _binding: FragmentCompleteRegistrationBinding? = null
     private val binding get() = _binding!!
 
-    private val splashViewModel: SplashViewModel by viewModels()
+    private val splashViewModel: SplashViewModel by viewModels({ requireActivity() })
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-
     ): View? {
         // Inflate the layout for this fragment
-        _binding = FragmentInputUserInfoBinding.inflate(inflater, container, false)
+        _binding = FragmentCompleteRegistrationBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -34,13 +40,8 @@ class InputUserInfoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.next.setOnClickListener {
-            splashViewModel.postUserInfo(binding.nameEt.toString())
-            findNavController().navigate(R.id.next)
+            LoginUtil.startMainActivity(requireActivity(), mainActivityClass)
         }
-    }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }
