@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="DogBreed">
+        <item>개 종류1</item>
+        <item>개 종류2</item>
+        <item>개 종류3</item>
+        <item>개 종류4</item>
+        <item>개 종류5</item>
+        <item>개 종류6</item>
+        <item>개 종류7</item>
+        <item>개 종류8</item>
+        <item>개 종류9</item>
+    </string-array>
+
+    <string-array name="CatBreed">
+        <item>고양이 종류1</item>
+        <item>고양이 종류2</item>
+        <item>고양이 종류3</item>
+        <item>고양이 종류4</item>
+        <item>고양이 종류5</item>
+        <item>고양이 종류6</item>
+        <item>고양이 종류7</item>
+        <item>고양이 종류8</item>
+        <item>고양이 종류9</item>
+    </string-array>
+
+
+</resources>

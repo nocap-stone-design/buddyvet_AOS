@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="21dp"
+        tools:context=".ui.InputUserInfoFragment">
+
+        <TextView
+            android:id="@+id/name_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:fontFamily="@font/cafe24_ssurround_air"
+            android:gravity="center"
+            android:text="앱에서 사용할 닉네임을\n입력하세요"
+            android:textColor="@color/black"
+            android:textSize="21sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/name_sub_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:text="앱을 사용하는 사용자님 이름입니다.\n반려동물등록은 뒤에서 해요"
+            app:layout_constraintBottom_toTopOf="@id/name_lo"
+            app:layout_constraintTop_toBottomOf="@id/name_tv" />
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/name_lo"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginTop="48dp"
+            android:hint="이름"
+            app:boxStrokeColor="@color/butter"
+            app:endIconMode="clear_text"
+            app:hintTextColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/name_sub_tv">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@id/name_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/birthDay_tv"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginTop="24dp"-->
+        <!--            android:text="생년월일"-->
+        <!--            android:textColor="@color/black"-->
+        <!--            android:textSize="16sp"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toBottomOf="@id/name_et" />-->
+
+        <!--        <LinearLayout-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            app:layout_constraintTop_toBottomOf="@id/birthDay_tv">-->
+
+        <!--            <TextView-->
+        <!--                android:id="@+id/year_tv"-->
+        <!--                style="@style/birthDay_text"-->
+        <!--                android:text="년"-->
+        <!--                app:drawableEndCompat="@drawable/img_down_arrow" />-->
+
+        <!--            <TextView-->
+        <!--                android:id="@+id/month_tv"-->
+        <!--                style="@style/birthDay_text"-->
+        <!--                android:layout_marginHorizontal="8dp"-->
+        <!--                android:text="월"-->
+        <!--                app:drawableEndCompat="@drawable/img_down_arrow" />-->
+
+        <!--            <TextView-->
+        <!--                android:id="@+id/day_tv"-->
+        <!--                style="@style/birthDay_text"-->
+        <!--                android:text="일"-->
+        <!--                app:drawableEndCompat="@drawable/img_down_arrow" />-->
+
+        <!--        </LinearLayout>-->
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/next"
+            style="@style/basic_btn"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginBottom="@dimen/basic_bottom_btn_margin"
+            android:text="다음"
+            android:textSize="@dimen/basic_btn_textSize"
+            app:backgroundTint="@color/butter"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

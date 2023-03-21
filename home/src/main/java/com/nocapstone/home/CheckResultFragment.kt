@@ -15,7 +15,7 @@ import gun0912.tedimagepicker.builder.TedImagePicker
 
 class CheckResultFragment : Fragment() {
 
-    private val storyViewModel: HomeViewModel by viewModels( { requireActivity()} )
+    private val homeViewModel: HomeViewModel by viewModels( { requireActivity()} )
     private var _binding:FragmentCheckResultBinding? = null
     private val binding get() = _binding!!
 
@@ -34,16 +34,16 @@ class CheckResultFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        storyViewModel.setDummyCheckResultList()
+        homeViewModel.setDummyCheckResultList()
         binding.apply {
-            viewModel = storyViewModel
+            viewModel = homeViewModel
             lifecycleOwner = viewLifecycleOwner
             adapter = CheckResultAdapter()
             retry.setOnClickListener {
                 TedImagePicker.with(requireContext())
                     .errorListener { }
                     .start { uri ->
-                        storyViewModel.setImage(uri)
+                        homeViewModel.setImage(uri)
                         findNavController().navigate(R.id.action_checkResultFragment_to_checkSelectImageFragment)
                     }
             }

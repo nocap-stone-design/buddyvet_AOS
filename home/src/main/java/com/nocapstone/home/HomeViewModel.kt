@@ -2,6 +2,7 @@ package com.nocapstone.home
 
 import android.net.Uri
 import androidx.lifecycle.ViewModel
+import com.nocapstone.home.dto.BuddyData
 import com.nocapstone.home.dto.CheckResultData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,9 +24,17 @@ class HomeViewModel @Inject constructor(
     private val _checkResultList = MutableStateFlow<MutableList<CheckResultData>>(mutableListOf())
     val checkResultList: StateFlow<List<CheckResultData>> = _checkResultList
 
+    private val _buddyList = MutableStateFlow<MutableList<BuddyData>>(mutableListOf())
+    val buddyList: StateFlow<List<BuddyData>> = _buddyList
 
+    private val _selectBuddy = MutableStateFlow<Int?>(null)
+    val selectBuddy: StateFlow<Int?> = _selectBuddy
     fun setImage(uri: Uri) {
         _selectImage.value = uri
+    }
+
+    fun setSelectCheckBuddy(position: Int) {
+        _selectBuddy.value = position
     }
 
     fun setDummyCheckResultList() {
@@ -39,6 +48,10 @@ class HomeViewModel @Inject constructor(
             )
         }
         _checkResultList.value = dummyList
+    }
+
+    fun setBuddyListDummy() {
+        _buddyList.value = buddyDummy
     }
 
 //    fun settingHomeData() {

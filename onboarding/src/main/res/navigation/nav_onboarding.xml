@@ -15,5 +15,45 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.nocapstone.onboarding.ui.LoginFragment"
-        android:label="LoginFragment" />
+        android:label="LoginFragment" >
+        <action
+            android:id="@+id/next"
+            app:destination="@id/inputUserInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/inputUserInfoFragment"
+        android:name="com.nocapstone.onboarding.ui.InputUserInfoFragment"
+        android:label="InputUserInfoFragment" >
+        <action
+            android:id="@+id/next"
+            app:destination="@id/inputBuddyTypeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/completeRegistrationFragment"
+        android:name="com.nocapstone.onboarding.ui.registrationbuddy.CompleteRegistrationFragment"
+        android:label="CompleteRegistrationFragment" />
+    <fragment
+        android:id="@+id/inputBuddyTypeFragment"
+        android:name="com.nocapstone.onboarding.ui.registrationbuddy.InputBuddyTypeFragment"
+        android:label="InputBuddyTypeFragment" >
+        <action
+            android:id="@+id/next"
+            app:destination="@id/inputBuddyInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/inputBuddyInfoFragment"
+        android:name="com.nocapstone.onboarding.ui.registrationbuddy.InputBuddyInfoFragment"
+        android:label="InputBuddyInfoFragment" >
+        <action
+            android:id="@+id/next"
+            app:destination="@id/inputBuddyInfo2Fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/inputBuddyInfo2Fragment"
+        android:name="com.nocapstone.onboarding.ui.registrationbuddy.InputBuddyInfo2Fragment"
+        android:label="InputBuddyInfo2Fragment" >
+        <action
+            android:id="@+id/next"
+            app:destination="@id/completeRegistrationFragment" />
+    </fragment>
 </navigation>
