@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.nocapstone.buddyvet.buddy.ui.BuddyViewModel" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -10,13 +17,95 @@
         tools:context="com.nocapstone.buddyvet.buddy.ui.CompleteRegistrationFragment">
 
 
+        <TextView
+            android:id="@+id/complete_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:fontFamily="@font/cafe24_ssurround_air"
+            android:gravity="center"
+            android:text="이대로 등록 할까"
+            android:textColor="@color/black"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_iv"
+            uri="@{viewModel.selectImgUri}"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_marginTop="32dp"
+            app:civ_border_overlay="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/complete_tv" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/profile_iv">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:fontFamily="@font/cafe24_ssurround"
+                android:text="@{viewModel.newBuddy.name}"
+                android:textColor="@color/black"
+                android:textSize="17sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:fontFamily="@font/cafe24_ssurround"
+                android:text='@{viewModel.newBuddy.gender == "M" ? "남아" : "여아"}'
+                android:textColor="@color/black"
+                android:textSize="17sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:fontFamily="@font/cafe24_ssurround"
+                android:text='@{"중성화 여부 : " + (viewModel.newBuddy.neutered ? "O" : "X")}'
+                android:textColor="@color/black"
+                android:textSize="17sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:fontFamily="@font/cafe24_ssurround"
+                android:text='@{"태어난 날 : " + viewModel.newBuddy.birthDay}'
+                android:textColor="@color/black"
+                android:textSize="17sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:fontFamily="@font/cafe24_ssurround"
+                android:text='@{"가족이 된 날 : " + viewModel.newBuddy.adoptDay}'
+                android:textColor="@color/black"
+                android:textSize="17sp" />
+
+        </LinearLayout>
+
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/next"
             style="@style/basic_btn"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginBottom="@dimen/basic_bottom_btn_margin_non_padding"
-            android:text="다음"
+            android:text="등록하기"
             android:textSize="@dimen/basic_btn_textSize"
             app:backgroundTint="@color/butter"
             app:layout_constraintBottom_toBottomOf="parent" />

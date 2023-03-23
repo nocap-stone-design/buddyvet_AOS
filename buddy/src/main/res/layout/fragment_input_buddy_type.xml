@@ -52,7 +52,7 @@
                     android:layout_height="100dp"
                     android:layout_gravity="center"
                     android:elevation="16dp"
-                    app:cardBackgroundColor="@{viewModel.newBuddy.kind == 'D' ? @color/butter : @color/white}"
+                    app:cardBackgroundColor='@{viewModel.newBuddy.kind.equals("D")? @color/butter : @color/white}'
                     app:cardCornerRadius="50dp">
 
                     <ImageView
@@ -88,7 +88,7 @@
                     android:layout_height="100dp"
                     android:layout_gravity="center"
                     android:elevation="16dp"
-                    app:cardBackgroundColor="@{viewModel.newBuddy.kind == 'C' ? @color/butter : @color/white}"
+                    app:cardBackgroundColor='@{viewModel.newBuddy.kind.equals("C")? @color/butter : @color/white}'
                     app:cardCornerRadius="50dp">
 
 

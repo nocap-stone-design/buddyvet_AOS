@@ -53,8 +53,8 @@ class BuddyViewModel @Inject constructor(
         _newBuddy.value?.adoptDay = adoptDay
     }
 
-    fun setNeutered(Neutered: String) {
-        _newBuddy.value?.isNeutered = (Neutered == "예")
+    fun setNeutered(Neutered: Boolean) {
+        _newBuddy.value?.isNeutered = Neutered
     }
 
     fun setGender(gender: String) {
@@ -66,7 +66,6 @@ class BuddyViewModel @Inject constructor(
     }
 
     fun setSelectImgUri(uri: Uri?) {
-        _selectImgUri.value = null
         _selectImgUri.value = uri
     }
 
@@ -79,10 +78,14 @@ class BuddyViewModel @Inject constructor(
 
     fun createBuddy() {
         viewModelScope.launch {
-            val jwt = dataStoreUseCase.bearerJsonWebToken.first()!!
-            val buddyId = buddyUseCase.createBuddy(jwt, _newBuddy.value!!)
-            if (_selectImgUri.value != null) {
-                uploadBuddyImg(jwt, buddyId)
+            try {
+                val jwt = dataStoreUseCase.bearerJsonWebToken.first()!!
+                val buddyId = buddyUseCase.createBuddy(jwt, _newBuddy.value!!)
+                if (_selectImgUri.value != null) {
+                    uploadBuddyImg(jwt, buddyId)
+                }
+            } catch (e: Exception) {
+                Log.d("createBuddy", e.message.toString())
             }
         }
     }
