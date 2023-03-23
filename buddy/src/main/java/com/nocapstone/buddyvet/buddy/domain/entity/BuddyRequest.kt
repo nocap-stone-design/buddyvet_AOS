@@ -1,9 +1,8 @@
-package com.nocapstone.onboarding.domain
+package com.nocapstone.buddyvet.buddy.domain.entity
 
 data class BuddyRequest(
     val kind : String,
     var name : String = "name",
-    var bread : String = "bread",
     var birthDay : String = "birthday",
     var adoptDay : String = "adoptDay",
     var isNeutered : Boolean = false,

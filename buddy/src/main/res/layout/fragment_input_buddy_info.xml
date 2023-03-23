@@ -6,8 +6,10 @@
     <data>
 
         <variable
-            name="imageUri"
-            type="String" />
+            name="viewModel"
+            type="com.nocapstone.buddyvet.buddy.ui.BuddyViewModel" />
+
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -40,11 +42,10 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/main_iv"
-                photoUrl="@{imageUri}"
+                uri="@{viewModel.selectImgUri}"
                 android:layout_width="65dp"
                 android:layout_height="65dp"
-                app:civ_border_overlay="true"
-                tools:src="@drawable/img_person" />
+                app:civ_border_overlay="true" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -67,15 +68,18 @@
             app:layout_constraintTop_toBottomOf="@id/img_select">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/name_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
+            android:id="@+id/info1_lo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@+id/name_et">
 
             <com.google.android.material.textfield.TextInputLayout
@@ -83,24 +87,6 @@
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_marginEnd="16dp"
-                android:layout_weight="1"
-                android:hint="종류"
-                app:boxStrokeColor="@color/butter"
-                app:hintTextColor="@color/black">
-
-                <AutoCompleteTextView
-                    android:id="@+id/breed_tv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="none" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
-                android:layout_width="0dp"
-                android:layout_height="100dp"
                 android:layout_weight="1"
                 android:hint="성별"
                 app:boxStrokeColor="@color/butter"
@@ -114,7 +100,99 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:hint="중성화"
+                app:boxStrokeColor="@color/butter"
+                app:hintTextColor="@color/black">
+
+                <AutoCompleteTextView
+                    android:id="@+id/isNeutered_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
         </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/info2_lo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/info1_lo">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="태어난 날"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/adoptDay_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="16dp"
+                    android:fontFamily="@font/cafe24_ssurround"
+                    android:gravity="end|bottom"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
+                    app:drawableEndCompat="@drawable/img_calendar"
+                    app:layout_constraintStart_toStartOf="@id/title"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="처음 만난 날"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/birthDay_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="16dp"
+                    android:fontFamily="@font/cafe24_ssurround"
+                    android:gravity="end|bottom"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
+                    app:drawableEndCompat="@drawable/img_calendar"
+                    app:layout_constraintStart_toStartOf="@id/title"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/next"

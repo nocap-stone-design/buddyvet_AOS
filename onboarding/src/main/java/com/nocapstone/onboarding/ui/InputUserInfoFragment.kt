@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.nocapstone.common_ui.MainActivityUtil
 import com.nocapstone.onboarding.R
 import com.nocapstone.onboarding.databinding.FragmentInputUserInfoBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,13 +31,11 @@ class InputUserInfoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.next.setOnClickListener {
             splashViewModel.postUserInfo(binding.nameEt.toString())
             findNavController().navigate(R.id.next)
         }
     }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

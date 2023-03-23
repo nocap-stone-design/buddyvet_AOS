@@ -1,15 +1,11 @@
 package com.nocapstone.onboarding.ui
 
-import android.content.Context
-import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nocapstone.common.domain.usecase.AuthUseCase
 import com.nocapstone.common.domain.usecase.DataStoreUseCase
-import com.nocapstone.onboarding.domain.BuddyRequest
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -20,17 +16,11 @@ class SplashViewModel @Inject constructor(
     private val dataStoreUseCase: DataStoreUseCase
 ) : ViewModel() {
 
-
-
-
-
     fun withJsonWebToken(callback: (String?) -> Unit) {
         viewModelScope.launch {
             callback.invoke(dataStoreUseCase.bearerJsonWebToken.firstOrNull())
         }
     }
-
-
     fun signup(token: String, createCallback: () -> Unit, loginCallback: () -> Unit) {
 
         createCallback.invoke()
@@ -51,13 +41,12 @@ class SplashViewModel @Inject constructor(
 //        }
     }
 
-
     fun postUserInfo(nickname: String) {
         viewModelScope.launch {
             try {
                 authUseCase.inputUserInfo(dataStoreUseCase.bearerJsonWebToken.first()!!, nickname)
             } catch (e: Exception) {
-                Log.d("postTest", e.message.toString())
+                Log.d("nickNameApi", e.message.toString())
             }
         }
     }

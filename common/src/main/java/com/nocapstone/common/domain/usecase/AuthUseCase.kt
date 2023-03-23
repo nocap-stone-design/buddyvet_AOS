@@ -11,9 +11,8 @@ import javax.inject.Inject
 class AuthUseCase @Inject constructor(
     private val authService: AuthService
 ){
-    suspend fun login(token: String, providerType: String= "KAKAO") : Response<LoginResponse> {
-        val jwt = authService.postToken(LoginRequest(token, providerType))
-        return jwt
+    suspend fun login(token: String, providerType: String = "KAKAO"): Response<LoginResponse> {
+        return authService.postToken(LoginRequest(token, providerType))
     }
 
     suspend fun inputUserInfo(token:String , nickname: String){

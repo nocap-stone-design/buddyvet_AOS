@@ -6,8 +6,6 @@
 
     <data>
 
-        <import type="com.nocapstone.buddyvet.buddy.util.BuddyType" />
-
         <variable
             name="viewModel"
             type="com.nocapstone.buddyvet.buddy.ui.BuddyViewModel" />
@@ -54,7 +52,7 @@
                     android:layout_height="100dp"
                     android:layout_gravity="center"
                     android:elevation="16dp"
-                    app:cardBackgroundColor="@{viewModel.selectType == BuddyType.DOG ? @color/butter : @color/white}"
+                    app:cardBackgroundColor='@{viewModel.newBuddy.kind.equals("D")? @color/butter : @color/white}'
                     app:cardCornerRadius="50dp">
 
                     <ImageView
@@ -90,7 +88,7 @@
                     android:layout_height="100dp"
                     android:layout_gravity="center"
                     android:elevation="16dp"
-                    app:cardBackgroundColor="@{viewModel.selectType == BuddyType.CAT ? @color/butter : @color/white}"
+                    app:cardBackgroundColor='@{viewModel.newBuddy.kind.equals("C")? @color/butter : @color/white}'
                     app:cardCornerRadius="50dp">
 
 

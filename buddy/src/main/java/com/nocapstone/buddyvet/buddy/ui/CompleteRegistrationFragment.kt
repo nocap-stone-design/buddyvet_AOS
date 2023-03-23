@@ -22,12 +22,10 @@ class CompleteRegistrationFragment : Fragment() {
 
     private val buddyViewModel: BuddyViewModel by viewModels({ requireActivity() })
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         _binding = FragmentCompleteRegistrationBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -35,7 +33,13 @@ class CompleteRegistrationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.apply {
+            this.viewModel = buddyViewModel
+            this.lifecycleOwner = viewLifecycleOwner
+        }
+
         binding.next.setOnClickListener {
+            buddyViewModel.createBuddy()
             LoginUtil.startMainActivity(requireActivity(), mainActivityClass)
         }
 

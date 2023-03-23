@@ -44,9 +44,7 @@ dependencies {
     api project(path: ':common-ui')
 
     implementation 'io.github.ParkSangGwon:tedimagepicker:1.2.8'
-
     implementation 'de.hdodenhof:circleimageview:3.1.0'
-
 
     // Navigation
     api "androidx.navigation:navigation-fragment-ktx:$rootProject.nav_version"
@@ -55,7 +53,7 @@ dependencies {
     implementation "com.google.dagger:hilt-android:$rootProject.hiltVersion"
     kapt "com.google.dagger:hilt-android-compiler:$rootProject.hiltVersion"
 
-    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'
     testImplementation 'junit:junit:4.13.2'
