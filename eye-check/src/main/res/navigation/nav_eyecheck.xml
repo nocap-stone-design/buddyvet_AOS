@@ -1,6 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_eyecheck">
+    android:id="@+id/nav_eyecheck"
+    app:startDestination="@id/checkSelectImageFragment">
+
+    <fragment
+        android:id="@+id/checkSelectImageFragment"
+        android:name="com.nocapstone.eye_check.ui.CheckSelectImageFragment"
+        android:label="CheckSelectImageFragment">
+        <action
+            android:id="@+id/next"
+            app:destination="@id/checkResultFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/checkResultFragment"
+        android:name="com.nocapstone.eye_check.ui.CheckResultFragment"
+        android:label="CheckResultFragment">
+        <action
+            android:id="@+id/action_checkResultFragment_to_checkSelectImageFragment"
+            app:destination="@id/checkSelectImageFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
 
 </navigation>

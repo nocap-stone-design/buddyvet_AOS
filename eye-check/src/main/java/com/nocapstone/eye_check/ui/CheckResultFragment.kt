@@ -1,22 +1,28 @@
-package com.nocapstone.home
+package com.nocapstone.eye_check.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.eye_check.R
+import com.example.eye_check.databinding.FragmentCheckResultBinding
+import com.nocapstone.common.util.LoginUtil
 import com.nocapstone.common_ui.MainActivityUtil
-import com.nocapstone.home.databinding.FragmentCheckResultBinding
-import com.nocapstone.home.databinding.FragmentCheckSelectImageBinding
+import com.nocapstone.eye_check.CheckResultAdapter
+import dagger.hilt.android.AndroidEntryPoint
 import gun0912.tedimagepicker.builder.TedImagePicker
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class CheckResultFragment : Fragment() {
+    @Inject
+    lateinit var mainActivityClass: Class<*>
 
-    private val homeViewModel: HomeViewModel by viewModels( { requireActivity()} )
-    private var _binding:FragmentCheckResultBinding? = null
+    private val eyeCheckViewModel: EyeCheckViewModel by viewModels( { requireActivity()} )
+    private var _binding: FragmentCheckResultBinding? = null
     private val binding get() = _binding!!
 
 
@@ -34,21 +40,21 @@ class CheckResultFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        homeViewModel.setDummyCheckResultList()
+        eyeCheckViewModel.setDummyCheckResultList()
         binding.apply {
-            viewModel = homeViewModel
+            viewModel = eyeCheckViewModel
             lifecycleOwner = viewLifecycleOwner
             adapter = CheckResultAdapter()
             retry.setOnClickListener {
                 TedImagePicker.with(requireContext())
                     .errorListener { }
                     .start { uri ->
-                        homeViewModel.setImage(uri)
+                        eyeCheckViewModel.setImage(uri)
                         findNavController().navigate(R.id.action_checkResultFragment_to_checkSelectImageFragment)
                     }
             }
             complete.setOnClickListener {
-                findNavController().popBackStack()
+                LoginUtil.startMainActivity(requireActivity(), mainActivityClass)
             }
         }
 

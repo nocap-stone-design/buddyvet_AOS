@@ -49,8 +49,7 @@ class LoginFragment : Fragment() {
         binding.kakaoLoginBtn.setOnClickListener {
             LoginUtil.loginWithKaKao(requireContext()) { token ->
                 splashViewModel.signup(token!!, {
-                    findNavController().navigate(R.id.next)
-                                                //LoginUtil.startMainActivity(requireActivity(), mainActivityClass)
+                    LoginUtil.startMainActivity(requireActivity(), mainActivityClass)
                 }, { findNavController().navigate(R.id.next) })
             }
         }

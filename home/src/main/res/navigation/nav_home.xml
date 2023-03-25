@@ -6,34 +6,16 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.nocapstone.home.HomeFragment"
+        android:name="com.nocapstone.home.ui.HomeFragment"
         android:label="HomeFragment">
+
         <action
             android:id="@+id/next"
-            app:destination="@id/checkSelectImageFragment"
+            app:destination="@id/nav_eyecheck"
             app:popUpTo="@id/homeFragment"
             app:popUpToInclusive="false" />
     </fragment>
-    <fragment
-        android:id="@+id/checkSelectImageFragment"
-        android:name="com.nocapstone.home.CheckSelectImageFragment"
-        android:label="CheckSelectImageFragment">
-        <action
-            android:id="@+id/next"
-            app:destination="@id/checkResultFragment"
-            app:popUpTo="@id/homeFragment"
-            app:popUpToInclusive="false" />
-    </fragment>
-    <fragment
-        android:id="@+id/checkResultFragment"
-        android:name="com.nocapstone.home.CheckResultFragment"
-        android:label="CheckResultFragment" >
-        <action
-            android:id="@+id/action_checkResultFragment_to_checkSelectImageFragment"
-            app:destination="@id/checkSelectImageFragment"
-            app:popUpTo="@id/homeFragment"
-            app:popUpToInclusive="false" />
-    </fragment>
+    <include app:graph="@navigation/nav_eyecheck" />
 
 
 </navigation>

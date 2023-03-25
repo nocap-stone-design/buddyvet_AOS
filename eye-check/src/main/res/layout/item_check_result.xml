@@ -8,7 +8,7 @@
 
         <variable
             name="checkResultData"
-            type="com.nocapstone.home.dto.CheckResultData" />
+            type="com.nocapstone.eye_check.domain.entity.CheckResultData" />
     </data>
 
     <androidx.cardview.widget.CardView

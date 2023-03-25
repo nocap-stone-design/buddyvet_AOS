@@ -1,20 +1,21 @@
-package com.nocapstone.home
+package com.nocapstone.buddyvet.buddy
 
-import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.nocapstone.home.databinding.ItemBuddyProfileBinding
-import com.nocapstone.home.dto.BuddyData
-import okhttp3.internal.notify
-import okhttp3.internal.notifyAll
+import com.nocapstone.buddyvet.buddy.databinding.ItemBuddyProfileBinding
+import com.nocapstone.buddyvet.buddy.domain.entity.BuddyData
 
-class BuddyListAdapter(private val onClickBuddyListener: (Int) -> Unit) :
+class BuddyListAdapter(
+    private val ColorChange: Boolean,
+    private val onClickBuddyListener: (Int) -> Unit
+) :
     ListAdapter<BuddyData, RecyclerView.ViewHolder>(BuddyListDiffCallback()) {
 
-    var selectPosition = -1
+    var prePosition = -1
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return BuddyListViewHolder(
@@ -42,22 +43,15 @@ class BuddyListAdapter(private val onClickBuddyListener: (Int) -> Unit) :
             }
 
             itemView.setOnClickListener {
-                var color = false
-                if (selectPosition == position) {
-                    color = false
-                    selectPosition = -1
-                } else {
-                    // 두개가 다르고
-                    if (selectPosition != -1) {
-                        // 이전에 선택되어있는게 있다면 white로 바꾸고
-                        getItem(selectPosition).isSelect = false
-                    }
-                    selectPosition = position
-                    color = true
-                }
-                getItem(position).isSelect = color
                 onClickBuddyListener(position)
-                notifyDataSetChanged()
+                if (ColorChange) {
+                    if (prePosition >= 0) {
+                        getItem(prePosition).isSelect = false
+                    }
+                    getItem(position).isSelect = true
+                    prePosition = position
+                    notifyDataSetChanged()
+                }
             }
         }
     }

@@ -1,18 +1,21 @@
-package com.nocapstone.home
+package com.nocapstone.home.ui
 
 import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
+import com.nocapstone.buddyvet.buddy.BuddyListAdapter
+import com.nocapstone.buddyvet.buddy.domain.entity.BuddyData
+import com.nocapstone.buddyvet.buddy.ui.BuddyViewModel
 import com.nocapstone.home.databinding.DialogForSelectBuddyBinding
-import com.nocapstone.home.dto.BuddyData
 
-class DialogForSelectBuddy(
+
+class DialogForSelectBuddy constructor(
     context: Context,
     private val onClickButton: () -> Unit,
-    private val buddyListData: List<BuddyData>,
-    private val viewModel : HomeViewModel
+    private val buddyViewModel: BuddyViewModel
     //todo budylist
 ) : Dialog(context) {
     private lateinit var binding: DialogForSelectBuddyBinding
@@ -27,17 +30,20 @@ class DialogForSelectBuddy(
         }
 
         binding.apply {
-            adapter = BuddyListAdapter(){
-                viewModel.setSelectCheckBuddy(it)
+            viewModel = buddyViewModel
+            adapter = BuddyListAdapter(true) { nowSelectPosition ->
+                buddyViewModel.setSelectCheckBuddy(nowSelectPosition)
             }
-            buddyList = buddyListData
         }
 
         setContentView(binding.root)
         window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
     }
 
-    class Builder(private val context: Context, private val buddyList : List<BuddyData>,private val viewModel: HomeViewModel) {
+    class Builder(
+        private val context: Context,
+        private val buddyViewModel: BuddyViewModel
+    ) {
         private var onClickButton = {}
 
         fun setOnClickButton(onClickButton: () -> Unit) = apply {
@@ -47,8 +53,7 @@ class DialogForSelectBuddy(
         fun build() = DialogForSelectBuddy(
             context,
             onClickButton,
-            buddyList,
-            viewModel
+            buddyViewModel
         )
     }
 

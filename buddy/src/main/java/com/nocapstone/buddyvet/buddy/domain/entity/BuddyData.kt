@@ -10,7 +10,8 @@ data class BuddyData(
     val name: String,
     val gender: String,
     val profile: String,
-    val age: String
+    val age: String,
+    var isSelect : Boolean = false
 )
 
 data class BuddyId(

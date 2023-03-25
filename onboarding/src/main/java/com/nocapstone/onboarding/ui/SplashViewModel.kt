@@ -22,23 +22,20 @@ class SplashViewModel @Inject constructor(
         }
     }
     fun signup(token: String, createCallback: () -> Unit, loginCallback: () -> Unit) {
+        viewModelScope.launch {
+            try {
+                val response = authUseCase.login(token)
+                dataStoreUseCase.editJsonWebToken(response.body()?.data?.jwt!!)
+                if (response.code() == 200) {
+                    loginCallback.invoke()
+                } else {
+                    createCallback.invoke()
+                }
+            } catch (e: Exception) {
+                Log.d("buddyTest", e.message.toString())
+            }
 
-        createCallback.invoke()
-
-//        viewModelScope.launch {
-//            try {
-//                val response = authUseCase.login(token)
-//                dataStoreUseCase.editJsonWebToken(response.body()?.data?.jwt!!)
-//                if (response.code() == 200) {
-//                    loginCallback.invoke()
-//                } else {
-//                    createCallback.invoke()
-//                }
-//            } catch (e: Exception) {
-//                Log.d("buddyTest", e.message.toString())
-//            }
-//
-//        }
+        }
     }
 
     fun postUserInfo(nickname: String) {

@@ -1,45 +1,28 @@
-package com.nocapstone.home
+package com.nocapstone.home.ui
 
-import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.nocapstone.buddyvet.buddy.BuddyListAdapter
+import com.nocapstone.buddyvet.buddy.domain.entity.BuddyData
+import com.nocapstone.buddyvet.buddy.ui.BuddyViewModel
 import com.nocapstone.common_ui.MainActivityUtil
+import com.nocapstone.eye_check.ui.EyeCheckViewModel
+import com.nocapstone.home.R
 import com.nocapstone.home.databinding.FragmentHomeBinding
-import com.nocapstone.home.dto.BuddyData
 import dagger.hilt.android.AndroidEntryPoint
 import gun0912.tedimagepicker.builder.TedImagePicker
-import java.net.URI
 
-
-val buddyDummy = mutableListOf<BuddyData>().apply {
-    add(
-        BuddyData(
-            1,
-            "https://mineme-bucket.s3.ap-northeast-2.amazonaws.com/buddyvet/static/cat.png",
-            "주주",
-            false
-        )
-    )
-}.apply {
-    add(
-        BuddyData(
-            2,
-            "https://mineme-bucket.s3.ap-northeast-2.amazonaws.com/buddyvet/static/dog.png",
-            "도주",
-            false
-        )
-    )
-}
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
-
-    private val homeViewModel: HomeViewModel by viewModels({ requireActivity() })
+    private val buddyViewModel: BuddyViewModel by viewModels({ requireActivity() })
+    private val eyeViewModel: EyeCheckViewModel by viewModels({ requireActivity() })
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
@@ -49,34 +32,36 @@ class HomeFragment : Fragment() {
     ): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        homeViewModel.setBuddyListDummy()
-
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
-            adapter = BuddyListAdapter() {}
-            viewModel = homeViewModel
+            adapter = BuddyListAdapter(false) {
+                buddyViewModel.setSelectCheckBuddy(it)
+            }
+            viewModel = buddyViewModel
         }
-
 
         (activity as MainActivityUtil).run {
             setToolbarTitle("홈")
         }
 
-
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        buddyViewModel.readBuddyList()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.eyeCheckBtn.setOnClickListener {
-
-            DialogForSelectBuddy.Builder(requireContext(), buddyDummy, homeViewModel)
+            DialogForSelectBuddy.Builder(requireContext(), buddyViewModel)
                 .setOnClickButton {
                     TedImagePicker.with(requireContext())
                         .errorListener { }
                         .start { uri ->
-                            homeViewModel.setImage(uri)
+                            //todo eyechackViewModel
+                            eyeViewModel.setImage(uri)
                             findNavController().navigate(R.id.next)
                         }
                 }

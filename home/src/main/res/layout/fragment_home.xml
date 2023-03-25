@@ -5,13 +5,14 @@
 
     <data>
 
+
         <variable
             name="viewModel"
-            type="com.nocapstone.home.HomeViewModel" />
+            type="com.nocapstone.buddyvet.buddy.ui.BuddyViewModel" />
 
         <variable
             name="adapter"
-            type="com.nocapstone.home.BuddyListAdapter" />
+            type="com.nocapstone.buddyvet.buddy.BuddyListAdapter" />
     </data>
 
 
@@ -101,7 +102,8 @@
                 app:cardBackgroundColor="@color/butter"
                 app:cardCornerRadius="21dp"
                 app:layout_constraintEnd_toStartOf="@id/fine_hospital_btn"
-                app:layout_constraintStart_toStartOf="parent">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="150dp"
@@ -149,7 +151,8 @@
                 app:cardBackgroundColor="@color/butter"
                 app:cardCornerRadius="21dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/eye_check_btn">
+                app:layout_constraintStart_toEndOf="@id/eye_check_btn"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="150dp"

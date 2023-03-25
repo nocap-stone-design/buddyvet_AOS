@@ -1,24 +1,23 @@
-package com.nocapstone.home
+package com.nocapstone.eye_check.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
-import androidx.fragment.app.Fragment
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
+import com.example.eye_check.R
+import com.example.eye_check.databinding.FragmentCheckSelectImageBinding
 import com.nocapstone.common_ui.MainActivityUtil
-import com.nocapstone.home.databinding.FragmentCheckSelectImageBinding
-import com.nocapstone.home.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 import gun0912.tedimagepicker.builder.TedImagePicker
 
 @AndroidEntryPoint
 class CheckSelectImageFragment : Fragment() {
 
-    private val homeViewModel: HomeViewModel by viewModels({ requireActivity() })
+    private val eyeCheckViewModel: EyeCheckViewModel by viewModels({ requireActivity() })
     private var _binding: FragmentCheckSelectImageBinding? = null
     private val binding get() = _binding!!
 
@@ -38,21 +37,26 @@ class CheckSelectImageFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         binding.apply {
-            viewModel = homeViewModel
+
+            viewModel = eyeCheckViewModel
             lifecycleOwner = viewLifecycleOwner
-            dialogButton.setOnClickListener {
+
+            startBtn.setOnClickListener {
                 findNavController().navigate(R.id.next)
             }
-            retry.setOnClickListener {
+
+            retryBtn.setOnClickListener {
                 TedImagePicker.with(requireContext())
                     .errorListener { }
                     .start { uri ->
-                        homeViewModel.setImage(uri)
+                        eyeCheckViewModel.setImage(uri)
                         findNavController().navigate(R.id.checkSelectImageFragment)
                     }
             }
         }
+
         val menuHost: MenuHost = requireActivity()
 
         menuHost.addMenuProvider(
@@ -60,6 +64,7 @@ class CheckSelectImageFragment : Fragment() {
                 override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
 
                 }
+
                 override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                     when (menuItem.itemId) {
                         android.R.id.home -> {
@@ -72,7 +77,6 @@ class CheckSelectImageFragment : Fragment() {
         )
 
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()
