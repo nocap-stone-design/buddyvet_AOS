@@ -1,4 +1,4 @@
-package com.nocapstone.home.dto
+package com.nocapstone.eye_check.domain.entity
 
 data class CheckResultData(
     val imgUri: String,

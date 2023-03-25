@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity(), MainActivityUtil {
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 com.nocapstone.home.R.id.homeFragment,
-                com.nocapstone.home.R.id.checkResultFragment,
+                com.example.eye_check.R.id.checkResultFragment,
                 com.nocapstone.community.R.id.communityFragment,
                 com.example.diary.R.id.diaryFragment
             )

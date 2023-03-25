@@ -7,15 +7,13 @@
 
         <import type="java.util.List" />
 
-        <import type="com.nocapstone.home.dto.BuddyData" />
-
         <variable
-            name="buddyList"
-            type="List&lt;BuddyData&gt;" />
+            name="viewModel"
+            type="com.nocapstone.buddyvet.buddy.ui.BuddyViewModel" />
 
         <variable
             name="adapter"
-            type="com.nocapstone.home.BuddyListAdapter" />
+            type="com.nocapstone.buddyvet.buddy.BuddyListAdapter" />
     </data>
 
 
@@ -61,7 +59,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/myBuddy_recyclerView"
                     adapter="@{adapter}"
-                    submitList="@{buddyList}"
+                    submitList="@{viewModel.getBuddyLists()}"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:layout_marginTop="16dp"

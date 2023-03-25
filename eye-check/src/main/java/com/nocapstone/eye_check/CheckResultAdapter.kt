@@ -1,12 +1,12 @@
-package com.nocapstone.home
+package com.nocapstone.eye_check
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.nocapstone.home.databinding.ItemCheckResultBinding
-import com.nocapstone.home.dto.CheckResultData
+import com.example.eye_check.databinding.ItemCheckResultBinding
+import com.nocapstone.eye_check.domain.entity.CheckResultData
 
 class CheckResultAdapter() : ListAdapter<CheckResultData, RecyclerView.ViewHolder>(CheckResultDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -32,6 +32,7 @@ class CheckResultAdapter() : ListAdapter<CheckResultData, RecyclerView.ViewHolde
             binding.checkResultData = checkResultData
         }
     }
+
 }
 
 private class CheckResultDiffCallback : DiffUtil.ItemCallback<CheckResultData>() {

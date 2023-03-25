@@ -21,6 +21,8 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import javax.inject.Inject
 
+
+
 @HiltViewModel
 class BuddyViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
@@ -36,6 +38,13 @@ class BuddyViewModel @Inject constructor(
 
     private val _selectImgUri = MutableStateFlow<Uri?>(null)
     val selectImgUri: StateFlow<Uri?> = _selectImgUri
+
+    private val _selectBuddy = MutableStateFlow<Int?>(null)
+    val selectBuddy: StateFlow<Int?> = _selectBuddy
+
+    fun setSelectCheckBuddy(position: Int) {
+        _selectBuddy.value = position
+    }
 
     fun setKind(kind: String) {
         _newBuddy.value = BuddyRequest(kind)
@@ -69,11 +78,46 @@ class BuddyViewModel @Inject constructor(
         _selectImgUri.value = uri
     }
 
+    fun getBuddyLists() = _buddyList.value
+
     fun readBuddyList() {
-        viewModelScope.launch {
-            val jwt = dataStoreUseCase.bearerJsonWebToken.first()!!
-            _buddyList.value = buddyUseCase.readBuddyList(jwt)
+        Log.d("refresh","refresh")
+        val buddyDummy = mutableListOf<BuddyData>().apply {
+            add(
+                BuddyData(
+                    1,
+                    "D",
+                    "개주",
+                    "W",
+                    "https://mineme-bucket.s3.ap-northeast-2.amazonaws.com/buddyvet/static/dog.png",
+                    "5년 2개월",
+                    false
+                )
+            )
+        }.apply {
+            add(
+                BuddyData(
+                    2,
+                    "C",
+                    "도t",
+                    "M",
+                    "https://mineme-bucket.s3.ap-northeast-2.amazonaws.com/buddyvet/static/cat.png",
+                    "5년 1개월",
+                    false
+                )
+            )
         }
+        _buddyList.value = buddyDummy
+
+        /*
+        viewModelScope.launch {
+            try {
+                val jwt = dataStoreUseCase.bearerJsonWebToken.first()!!
+                _buddyList.value = buddyUseCase.readBuddyList(jwt)
+            }catch (e : Exception){
+            }
+        }
+         */
     }
 
     fun createBuddy() {

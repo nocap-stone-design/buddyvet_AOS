@@ -7,11 +7,11 @@
 
         <variable
             name="viewModel"
-            type="com.nocapstone.home.HomeViewModel" />
+            type="com.nocapstone.eye_check.ui.EyeCheckViewModel" />
 
         <variable
             name="adapter"
-            type="com.nocapstone.home.CheckResultAdapter" />
+            type="com.nocapstone.eye_check.CheckResultAdapter" />
 
 
     </data>
