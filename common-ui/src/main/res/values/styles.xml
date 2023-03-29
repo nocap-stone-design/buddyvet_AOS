@@ -8,6 +8,10 @@
         <item name="android:background">#EAEAEA</item>
     </style>
 
+    <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="colorOnSurface">@color/edit_text_surface</item>
+    </style>
+
     <style name="basic_btn">
         <item name="android:background">@drawable/btn_shape</item>
         <item name="android:gravity">center</item>

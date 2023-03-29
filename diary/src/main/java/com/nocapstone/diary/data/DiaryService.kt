@@ -13,7 +13,9 @@ interface DiaryService {
     //일기목록조회
     @GET("diary")
     suspend fun readDiaryList(
-        @Header("Authorization") token: String
+        @Header("Authorization") token: String,
+        @Path("year") year: Int,
+        @Path("month") month: Int
     ): CommonResponse<DiaryData>
 
     // 일기 작성

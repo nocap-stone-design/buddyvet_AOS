@@ -2,29 +2,22 @@ package com.nocapstone.diary.ui
 
 import android.content.Context
 import android.net.Uri
-import android.provider.OpenableColumns
-import android.util.Log
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.net.toUri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nocapstone.common.domain.usecase.DataStoreUseCase
+import com.nocapstone.common.util.ImageUtil
+import com.nocapstone.common.util.printLog
+import com.nocapstone.diary.DiaryUtil
 import com.nocapstone.diary.domain.CreateDiaryRequest
 import com.nocapstone.diary.domain.DiaryUseCase
-import com.nocapstone.diary.dto.Diary
+import com.nocapstone.diary.dto.CalendarData
 import com.nocapstone.diary.dto.DiaryDetailData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.asRequestBody
-import okhttp3.RequestBody.Companion.toRequestBody
-import java.io.File
 import javax.inject.Inject
 
 
@@ -41,84 +34,72 @@ class DiaryViewModel @Inject constructor(
     private val _imageUriList = MutableStateFlow<MutableList<Uri>>(mutableListOf())
     val imageUriList: StateFlow<List<Uri>> = _imageUriList
 
-    private val _diaryList = MutableStateFlow<MutableList<Diary>>(mutableListOf())
-    val diaryList: StateFlow<List<Diary>> = _diaryList
+    private val _diaryList = MutableStateFlow<MutableList<CalendarData>>(mutableListOf())
+    val diaryList: StateFlow<List<CalendarData>> = _diaryList
 
-    fun readDiaryList() {
-        viewModelScope.launch {
-            try {
-                diaryUseCase.readDiaryList(dataStoreUseCase.bearerJsonWebToken.first()!!).let {
-                    _diaryList.value = it.toMutableList()
+    private val _toastMessage = MutableStateFlow("")
+    val toastMessage: StateFlow<String> = _toastMessage
+
+    fun readDiaryList(year: Int, month: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val token = dataStoreUseCase.bearerJsonWebToken.first()
+            if (token != null) {
+                try {
+                    val diaryData = diaryUseCase.readDiaryList(token, year, month)
+                    _diaryList.value = DiaryUtil.getDatesInMonth(year, month, diaryData)
+                } catch (e: Exception) {
+                    printLog("readDiaryList 오류", e)
                 }
-            } catch (e: Exception) {
-
             }
         }
     }
 
-    //todo 뷰에서 request 구성
-    fun createDiary(createDiaryRequest: CreateDiaryRequest, callBack: () -> Unit) {
-        viewModelScope.launch {
-            try {
-                val token = dataStoreUseCase.bearerJsonWebToken.first()!!
-                diaryUseCase.createDiary(token, createDiaryRequest).let { diaryId ->
-                    if (_imageUriList.value.size > 0) {
+    fun createDiary(createDiaryRequest: CreateDiaryRequest, callback: () -> Unit) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val token = dataStoreUseCase.bearerJsonWebToken.first()
+            if (token != null) {
+                try {
+                    val diaryId = diaryUseCase.createDiary(token, createDiaryRequest)
+                    if (_imageUriList.value.isNotEmpty()) {
+                        //이미지 업로드 비동기
                         val images = _imageUriList.value.map { imageUri ->
-                            Log.d("postUri", imageUri.toString())
-
-                            // ContentResolver로부터 데이터를 읽기 위해 inputStream을 열어줍니다.
-                            val inputStream = context.contentResolver.openInputStream(imageUri)
-
-                            // 읽은 데이터를 byteArray로 변환하고 RequestBody로 변환합니다.
-                            val byteArray = inputStream!!.readBytes()
-                            val requestBody =
-                                byteArray.toRequestBody("multipart/form-data".toMediaTypeOrNull())
-
-                            // MultipartBody.Part를 생성하여 반환합니다.
-                            MultipartBody.Part.createFormData(
-                                "image",
-                                getFileName(context, imageUri),
-                                requestBody
-                            )
-                        }
-                        diaryUseCase.createDiaryImage(token, diaryId, images)
+                            async {
+                                ImageUtil.uriToMultipart(context, imageUri)
+                            }
+                        }.awaitAll()
+                        diaryUseCase.createDiaryImage(token, diaryId, images.filterNotNull())
                         _imageUriList.value.clear()
                     }
+                    callback.invoke()
+                } catch (e: Exception) {
+
+                    printLog("createDiary 오류", e)
+
                 }
-                callBack.invoke()
-            } catch (e: Exception) {
-                Log.d("postTest", e.message.toString())
             }
         }
     }
-
-    private fun getFileName(context: Context, uri: Uri): String? {
-        val cursor = context.contentResolver.query(uri, null, null, null, null)
-        return cursor?.use {
-            it.moveToFirst()
-            val nameIndex = it.getColumnIndex(OpenableColumns.DISPLAY_NAME)
-            Log.d("postUri", it.getString(nameIndex))
-            return it.getString(nameIndex)
-        }
-    }
-
 
     fun readDetailDiary(diaryId: Int) {
-        viewModelScope.launch {
-            try {
-                _detailData.value = diaryUseCase.readDiaryDetail(
-                    dataStoreUseCase.bearerJsonWebToken.first()!!,
-                    diaryId
-                )
-            } catch (e: Exception) {
-                Log.d("postTest", e.message.toString())
+        viewModelScope.launch(Dispatchers.IO) {
+            val token = dataStoreUseCase.bearerJsonWebToken.first()
+            if (token != null) {
+                try {
+                    _detailData.value = diaryUseCase.readDiaryDetail(token, diaryId)
+                } catch (e: Exception) {
+                    printLog("readDetailDiary 오류", e)
+                }
             }
         }
     }
-
 
     fun setImage(newUriList: List<Uri>) {
         _imageUriList.value = newUriList.toMutableList()
     }
 
+    private fun setToastMessage(newMessage: String) {
+        _toastMessage.value = ""
+        _toastMessage.value = newMessage
+    }
 }
+

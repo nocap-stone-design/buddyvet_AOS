@@ -2,18 +2,28 @@ package com.nocapstone.diary.ui
 
 import android.os.Bundle
 import android.view.*
+import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.diary.R
 import com.example.diary.databinding.FragmentDiaryBinding
+import com.nocapstone.common_ui.CalendarUtil
+import com.nocapstone.common_ui.DialogForDateNoDay
 import com.nocapstone.common_ui.MainActivityUtil
 import com.nocapstone.diary.DiaryAdapter
 import com.nocapstone.diary.domain.CreateDiaryRequest
+import com.nocapstone.diary.dto.Diary
+import com.nocapstone.diary.dto.DiaryData
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+import java.util.*
 
 
 @AndroidEntryPoint
@@ -28,11 +38,7 @@ class DiaryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentDiaryBinding.inflate(inflater, container, false)
-
-        (activity as MainActivityUtil).run {
-            setToolbarTitle("일기")
-        }
-
+        (activity as MainActivityUtil).run { setToolbarTitle("일기") }
         return binding.root
     }
 
@@ -41,13 +47,37 @@ class DiaryFragment : Fragment() {
 
         initMenu()
 
+        var testYear = 2023
+        var testMonth = 3
         binding.apply {
             this.lifecycleOwner = viewLifecycleOwner
             this.adapter = DiaryAdapter(this@DiaryFragment)
             this.viewModel = diaryViewModel
+            calendarDate.text = CalendarUtil.getTodayDateNoDay()
+            calendarDate.setOnClickListener {
+                DialogForDateNoDay.Builder(requireContext())
+                    .setInitDate(CalendarUtil.parseStringToDateNoDay(it as TextView)!!)
+                    .setOnClickPositiveButton { newDate ->
+                        binding.calendarDate.text = newDate
+                        diaryViewModel.readDiaryList(
+                            newDate.substring(0, 4).toInt(),
+                            newDate.substring(5).toInt()
+                        )
+                    }.build().show()
+            }
+            diaryViewModel.readDiaryList(testYear, testMonth)
         }
+        observeToast()
+    }
 
-        diaryViewModel.readDiaryList()
+    private fun observeToast() {
+        lifecycleScope.launch {
+            diaryViewModel.toastMessage.collectLatest {
+                if (it.isNotEmpty()) {
+                    Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 
 
@@ -58,7 +88,6 @@ class DiaryFragment : Fragment() {
 
     private fun initMenu() {
         val menuHost: MenuHost = requireActivity()
-
         menuHost.addMenuProvider(object : MenuProvider {
 
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
@@ -75,5 +104,6 @@ class DiaryFragment : Fragment() {
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
+
 
 }

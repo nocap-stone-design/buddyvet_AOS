@@ -2,11 +2,13 @@ package com.nocapstone.diary.ui
 
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.diary.R
 import com.example.diary.databinding.FragmentWriteDiaryBinding
@@ -19,6 +21,8 @@ import com.nocapstone.common_ui.MainActivityUtil
 import com.nocapstone.diary.domain.CreateDiaryRequest
 import dagger.hilt.android.AndroidEntryPoint
 import gun0912.tedimagepicker.builder.TedImagePicker
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -48,7 +52,6 @@ class WriteDiaryFragment : Fragment() {
         initMenu()
 
         binding.apply {
-
             viewModel = diaryViewModel
             lifecycleOwner = viewLifecycleOwner
             adapter = ImageAdapter()
@@ -67,7 +70,7 @@ class WriteDiaryFragment : Fragment() {
                     .startMultiImage { diaryViewModel.setImage(it) }
             }
         }
-
+        observeToast()
     }
 
     override fun onDestroyView() {
@@ -99,10 +102,10 @@ class WriteDiaryFragment : Fragment() {
                         with(binding) {
                             CreateDiaryRequest(
                                 date.text.toString(),
-                                title.text.toString(),
-                                content.text.toString()
+                                titleTv.text.toString(),
+                                contentTv.text.toString()
                             ).let {
-                                diaryViewModel.createDiary(it) {
+                                diaryViewModel.createDiary(it){
                                     findNavController().popBackStack()
                                 }
                             }
@@ -112,6 +115,16 @@ class WriteDiaryFragment : Fragment() {
                 return true
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+    }
+
+    private fun observeToast() {
+        lifecycleScope.launch {
+            diaryViewModel.toastMessage.collectLatest {
+                if (it.isNotEmpty()) {
+                    Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 
 
