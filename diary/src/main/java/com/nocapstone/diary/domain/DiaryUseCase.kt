@@ -4,6 +4,7 @@ import android.util.Log
 import com.nocapstone.common.data.dto.CommonResponse
 import com.nocapstone.diary.data.DiaryService
 import com.nocapstone.diary.dto.Diary
+import com.nocapstone.diary.dto.DiaryData
 import com.nocapstone.diary.dto.DiaryDetailData
 import com.nocapstone.diary.dto.DiaryId
 import okhttp3.MultipartBody
@@ -13,8 +14,8 @@ class DiaryUseCase @Inject constructor(
     private val diaryService: DiaryService
 ) {
     // response를 entity로 변경하는 mapper 역할까지
-    suspend fun readDiaryList(token: String): List<Diary> {
-        return diaryService.readDiaryList(token).data.diaries!!
+    suspend fun readDiaryList(token: String, year: Int, month: Int): DiaryData {
+        return diaryService.readDiaryList(token,year,month).data
     }
 
     // view -> domain

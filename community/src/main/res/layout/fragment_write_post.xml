@@ -18,7 +18,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="16dp"
+        android:padding="@dimen/basic_parent_padding"
         tools:context=".ui.WriteDiaryFragment">
 
         <EditText

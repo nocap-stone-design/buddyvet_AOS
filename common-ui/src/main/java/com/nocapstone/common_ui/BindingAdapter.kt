@@ -19,15 +19,16 @@ import de.hdodenhof.circleimageview.CircleImageView
 fun bindImageView(imageView: ImageView, photoUrl: String?) {
     Glide.with(imageView.context)
         .load(photoUrl)
-        .placeholder(R.drawable.img_person)
+        .placeholder(R.drawable.img_no_diary)
         .into(imageView)
 }
+
 
 @BindingAdapter("uri")
 fun bindImageView(imageView: ImageView, uri: Uri?) {
     Glide.with(imageView.context)
         .load(uri)
-        .placeholder(R.drawable.img_person)
+        .placeholder(R.drawable.img_no_diary)
         .into(imageView)
 }
 

@@ -5,6 +5,7 @@ data class DiaryData(
 )
 
 data class Diary(
+    val day : Int,
     val diaryId: Int,
     val thumbnail: String?
 )
