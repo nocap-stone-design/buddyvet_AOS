@@ -7,6 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.nocapstone.common.domain.usecase.DataStoreUseCase
 import com.nocapstone.common.util.ImageUtil
 import com.nocapstone.common.util.printLog
+import com.nocapstone.common_ui.ToastSet
+import com.nocapstone.common_ui.ToastType
 import com.nocapstone.diary.DiaryUtil
 import com.nocapstone.diary.domain.CreateDiaryRequest
 import com.nocapstone.diary.domain.DiaryUseCase
@@ -37,8 +39,8 @@ class DiaryViewModel @Inject constructor(
     private val _diaryList = MutableStateFlow<MutableList<CalendarData>>(mutableListOf())
     val diaryList: StateFlow<List<CalendarData>> = _diaryList
 
-    private val _toastMessage = MutableStateFlow("")
-    val toastMessage: StateFlow<String> = _toastMessage
+    private val _toastMessage = MutableStateFlow<ToastSet?>(null)
+    val toastMessage: StateFlow<ToastSet?> = _toastMessage
 
     fun readDiaryList(year: Int, month: Int) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -97,9 +99,9 @@ class DiaryViewModel @Inject constructor(
         _imageUriList.value = newUriList.toMutableList()
     }
 
-    private fun setToastMessage(newMessage: String) {
-        _toastMessage.value = ""
-        _toastMessage.value = newMessage
+    fun setToastMessage(newMessage: String, toastType: ToastType) {
+        _toastMessage.value = null
+        _toastMessage.value = ToastSet(newMessage,toastType)
     }
 }
 

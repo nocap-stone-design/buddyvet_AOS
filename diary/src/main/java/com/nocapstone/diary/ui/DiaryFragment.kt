@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.diary.R
 import com.example.diary.databinding.FragmentDiaryBinding
 import com.nocapstone.common_ui.CalendarUtil
+import com.nocapstone.common_ui.CustomToast
 import com.nocapstone.common_ui.DialogForDateNoDay
 import com.nocapstone.common_ui.MainActivityUtil
 import com.nocapstone.diary.DiaryAdapter
@@ -67,14 +68,13 @@ class DiaryFragment : Fragment() {
             }
             diaryViewModel.readDiaryList(testYear, testMonth)
         }
-        observeToast()
     }
 
     private fun observeToast() {
         lifecycleScope.launch {
             diaryViewModel.toastMessage.collectLatest {
-                if (it.isNotEmpty()) {
-                    Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                if (it != null) {
+                    CustomToast.createToast(this@DiaryFragment, it.message, it.type)
                 }
             }
         }

@@ -26,13 +26,13 @@ interface DiaryService {
     ): CommonResponse<DiaryId>
 
 
-    @Multipart
-    @POST("diary/{diaryId}/image")
-    suspend fun createDiaryImage(
-        @Header("Authorization") token: String,
-        @Path("diaryId") diaryId: Long,
-        @Part image: List<MultipartBody.Part>
-    ): CommonResponse<String?>
+        @Multipart
+        @POST("diary/{diaryId}/image")
+        suspend fun createDiaryImage(
+            @Header("Authorization") token: String,
+            @Path("diaryId") diaryId: Long,
+            @Part image: List<MultipartBody.Part>
+        ): CommonResponse<String?>
 
 
     @GET("diary/{diaryId}")

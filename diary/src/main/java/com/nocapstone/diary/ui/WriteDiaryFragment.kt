@@ -12,12 +12,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.diary.R
 import com.example.diary.databinding.FragmentWriteDiaryBinding
+import com.nocapstone.common_ui.*
 import com.nocapstone.common_ui.CalendarUtil.Companion.getTodayDate
 import com.nocapstone.common_ui.CalendarUtil.Companion.parseDateToFormatString
 import com.nocapstone.common_ui.CalendarUtil.Companion.parseStringToDate
-import com.nocapstone.common_ui.DialogForDatePicker
-import com.nocapstone.common_ui.ImageAdapter
-import com.nocapstone.common_ui.MainActivityUtil
 import com.nocapstone.diary.domain.CreateDiaryRequest
 import dagger.hilt.android.AndroidEntryPoint
 import gun0912.tedimagepicker.builder.TedImagePicker
@@ -42,6 +40,8 @@ class WriteDiaryFragment : Fragment() {
             setToolbarTitle("일기작성")
             setVisibilityBottomAppbar(View.GONE)
         }
+
+        diaryViewModel.setToastMessage("안녕",ToastType.SUCCESS)
 
         return binding.root
     }
@@ -105,7 +105,7 @@ class WriteDiaryFragment : Fragment() {
                                 titleTv.text.toString(),
                                 contentTv.text.toString()
                             ).let {
-                                diaryViewModel.createDiary(it){
+                                diaryViewModel.createDiary(it) {
                                     findNavController().popBackStack()
                                 }
                             }
@@ -120,8 +120,8 @@ class WriteDiaryFragment : Fragment() {
     private fun observeToast() {
         lifecycleScope.launch {
             diaryViewModel.toastMessage.collectLatest {
-                if (it.isNotEmpty()) {
-                    Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                if (it != null) {
+                    CustomToast.createToast(this@WriteDiaryFragment, it.message, it.type)
                 }
             }
         }
