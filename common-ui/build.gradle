@@ -42,6 +42,7 @@ dependencies {
 
     api project(path: ':foundation')
 
+    implementation 'com.github.Spikeysanju:MotionToast:1.4'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
     api "androidx.navigation:navigation-fragment-ktx:$rootProject.nav_version"
