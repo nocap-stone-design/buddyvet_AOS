@@ -13,10 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.diary.R
 import com.example.diary.databinding.FragmentDiaryBinding
-import com.nocapstone.common_ui.CalendarUtil
-import com.nocapstone.common_ui.CustomToast
-import com.nocapstone.common_ui.DialogForDateNoDay
-import com.nocapstone.common_ui.MainActivityUtil
+import com.nocapstone.common_ui.*
 import com.nocapstone.diary.DiaryAdapter
 import com.nocapstone.diary.domain.CreateDiaryRequest
 import com.nocapstone.diary.dto.Diary
@@ -30,7 +27,8 @@ import java.util.*
 @AndroidEntryPoint
 class DiaryFragment : Fragment() {
 
-    private val diaryViewModel: DiaryViewModel by viewModels()
+    private val diaryViewModel: DiaryViewModel by viewModels({ requireActivity() })
+
     private var _binding: FragmentDiaryBinding? = null
     private val binding get() = _binding!!
 
@@ -39,7 +37,10 @@ class DiaryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentDiaryBinding.inflate(inflater, container, false)
-        (activity as MainActivityUtil).run { setToolbarTitle("일기") }
+        (activity as MainActivityUtil).run {
+            setToolbarTitle("일기")
+
+        }
         return binding.root
     }
 
@@ -48,8 +49,6 @@ class DiaryFragment : Fragment() {
 
         initMenu()
 
-        var testYear = 2023
-        var testMonth = 3
         binding.apply {
             this.lifecycleOwner = viewLifecycleOwner
             this.adapter = DiaryAdapter(this@DiaryFragment)
@@ -66,8 +65,9 @@ class DiaryFragment : Fragment() {
                         )
                     }.build().show()
             }
-            diaryViewModel.readDiaryList(testYear, testMonth)
+            diaryViewModel.readDiaryList(CalendarUtil.getTodayYear(), CalendarUtil.getTodayMonth())
         }
+        observeToast()
     }
 
     private fun observeToast() {
@@ -75,6 +75,7 @@ class DiaryFragment : Fragment() {
             diaryViewModel.toastMessage.collectLatest {
                 if (it != null) {
                     CustomToast.createToast(this@DiaryFragment, it.message, it.type)
+                    diaryViewModel.setToastMessage(null)
                 }
             }
         }

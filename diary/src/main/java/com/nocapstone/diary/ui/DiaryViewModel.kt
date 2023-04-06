@@ -13,6 +13,8 @@ import com.nocapstone.diary.DiaryUtil
 import com.nocapstone.diary.domain.CreateDiaryRequest
 import com.nocapstone.diary.domain.DiaryUseCase
 import com.nocapstone.diary.dto.CalendarData
+import com.nocapstone.diary.dto.Diary
+import com.nocapstone.diary.dto.DiaryData
 import com.nocapstone.diary.dto.DiaryDetailData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -30,8 +32,8 @@ class DiaryViewModel @Inject constructor(
     private val dataStoreUseCase: DataStoreUseCase
 ) : ViewModel() {
 
-    private val _detailData = MutableStateFlow<DiaryDetailData?>(null)
-    val detailData: StateFlow<DiaryDetailData?> = _detailData
+    private val _detailData = MutableStateFlow(DiaryDetailData("", "", mutableListOf(), ""))
+    val detailData: StateFlow<DiaryDetailData> = _detailData
 
     private val _imageUriList = MutableStateFlow<MutableList<Uri>>(mutableListOf())
     val imageUriList: StateFlow<List<Uri>> = _imageUriList
@@ -44,13 +46,35 @@ class DiaryViewModel @Inject constructor(
 
     fun readDiaryList(year: Int, month: Int) {
         viewModelScope.launch(Dispatchers.IO) {
+            var diaryData: DiaryData? = null
             val token = dataStoreUseCase.bearerJsonWebToken.first()
             if (token != null) {
                 try {
-                    val diaryData = diaryUseCase.readDiaryList(token, year, month)
-                    _diaryList.value = DiaryUtil.getDatesInMonth(year, month, diaryData)
+                    diaryData = diaryUseCase.readDiaryList(token, year, month)
                 } catch (e: Exception) {
+                    setToastMessage(ToastSet("일기 정보를 읽어 오는데 실패했습니다", ToastType.ERROR))
                     printLog("readDiaryList 오류", e)
+                    diaryData = DiaryData(
+                        listOf(
+                            Diary(
+                                1,
+                                1,
+                                "https://upload3.inven.co.kr/upload/2022/03/15/bbs/i16343629296.jpg?MW=800"
+                            ),
+                            Diary(
+                                2,
+                                2,
+                                "https://upload3.inven.co.kr/upload/2022/03/15/bbs/i16343629296.jpg?MW=800"
+                            ),
+                            Diary(
+                                3,
+                                3,
+                                "https://upload3.inven.co.kr/upload/2022/03/15/bbs/i16343629296.jpg?MW=800"
+                            ),
+                        )
+                    )
+                } finally {
+                    _diaryList.value = DiaryUtil.getDatesInMonth(year, month, diaryData)
                 }
             }
         }
@@ -74,15 +98,13 @@ class DiaryViewModel @Inject constructor(
                     }
                     callback.invoke()
                 } catch (e: Exception) {
-
                     printLog("createDiary 오류", e)
-
                 }
             }
         }
     }
 
-    fun readDetailDiary(diaryId: Int) {
+    fun readDetailDiary(diaryId: Long) {
         viewModelScope.launch(Dispatchers.IO) {
             val token = dataStoreUseCase.bearerJsonWebToken.first()
             if (token != null) {
@@ -95,13 +117,59 @@ class DiaryViewModel @Inject constructor(
         }
     }
 
+    fun putDiary(
+        diaryId: Long,
+        createDiaryRequest: CreateDiaryRequest,
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val token = dataStoreUseCase.bearerJsonWebToken.first()
+            if (token != null) {
+                try {
+                    diaryUseCase.putDiary(token, diaryId, createDiaryRequest)
+                    setToastMessage(ToastSet("일기 수정 완료", ToastType.SUCCESS))
+                } catch (e: Exception) {
+
+                }
+            }
+        }
+    }
+
+    fun deleteImage(
+        removeList: List<Long>
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val token = dataStoreUseCase.bearerJsonWebToken.first()
+            if (token != null) {
+                try {
+                   // diaryUseCase.deleteImage(token,imageUriList.)
+                } catch (e: Exception) {
+                    printLog("deleteImage 오류", e)
+                }
+            }
+
+
+        }
+    }
+
+    fun deleteDiary(diaryId: Long) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val token = dataStoreUseCase.bearerJsonWebToken.first()
+            if (token != null) {
+                try {
+                    diaryUseCase.deleteDiary(token,diaryId)
+                } catch (e : Exception) {
+                    printLog("deleteDiary 오류", e)
+                }
+            }
+        }
+    }
+
     fun setImage(newUriList: List<Uri>) {
         _imageUriList.value = newUriList.toMutableList()
     }
 
-    fun setToastMessage(newMessage: String, toastType: ToastType) {
-        _toastMessage.value = null
-        _toastMessage.value = ToastSet(newMessage,toastType)
+    fun setToastMessage(toastSet: ToastSet?) {
+        _toastMessage.value = toastSet
     }
 }
 
