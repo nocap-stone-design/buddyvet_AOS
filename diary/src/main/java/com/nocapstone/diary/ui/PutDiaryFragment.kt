@@ -2,6 +2,7 @@ package com.nocapstone.diary.ui
 
 import android.os.Bundle
 import android.view.*
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -24,42 +25,49 @@ class PutDiaryFragment : Fragment() {
 
     private val args: PutDiaryFragmentArgs by navArgs()
     private val diaryViewModel: DiaryViewModel by viewModels({ requireActivity() })
+    lateinit var existingList: List<ImageInfo>
     private var _binding: FragmentPutDiaryBinding? = null
     private val binding get() = _binding!!
     private var diaryId = 0L
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentPutDiaryBinding.inflate(inflater, container, false)
         diaryId = args.diaryId
 
+
         (activity as MainActivityUtil).run {
             setToolbarTitle("일기 수정")
-            setVisibilityBottomAppbar(View.GONE)
         }
+
+        existingList = diaryViewModel.detailData.value.images
+        diaryViewModel.setImage(existingList.map { it.url.toUri() })
 
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        //기존 거의
 
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             viewModel = diaryViewModel
             adapter = ImageAdapter()
-            imageCancle.setOnClickListener {
+
+            picture.setOnClickListener {
                 TedImagePicker.with(requireContext())
-                    .selectedUri(diaryViewModel.imageUriList.value)
                     .startMultiImage { diaryViewModel.setImage(it) }
             }
+
+            imageCancle.setOnClickListener {
+                TedImagePicker.with(requireContext()).selectedUri(diaryViewModel.imageUriList.value)
+                    .startMultiImage {
+                        diaryViewModel.setImage(it)
+                    }
+            }
         }
-
-
-
         initMenu()
         observeToast()
     }
@@ -105,13 +113,9 @@ class PutDiaryFragment : Fragment() {
                                 titleTv.text.toString(),
                                 contentTv.text.toString()
                             ).let {
+                                diaryViewModel.deleteDiary(diaryId)
                                 diaryViewModel.createDiary(it) {
-                                    diaryViewModel.setToastMessage(
-                                        ToastSet(
-                                            "일기 수정 완료",
-                                            ToastType.SUCCESS
-                                        )
-                                    )
+                                    diaryViewModel.setToastMessage(ToastSet("일기 수정 완료", ToastType.SUCCESS))
                                     findNavController().popBackStack()
                                 }
                             }

@@ -28,7 +28,8 @@
             app:argType="long" />
         <action
             android:id="@+id/putDiaryFragment"
-            app:destination="@id/putDiaryFragment" />
+            app:destination="@id/putDiaryFragment"
+            app:popUpTo="@id/diaryFragment" />
     </fragment>
     <fragment
         android:id="@+id/putDiaryFragment"

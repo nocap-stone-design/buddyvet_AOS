@@ -14,6 +14,8 @@ import com.example.diary.databinding.FragmentDetailDiaryBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.nocapstone.common_ui.ImageDetailAdapter
 import com.nocapstone.common_ui.MainActivityUtil
+import com.nocapstone.common_ui.ToastSet
+import com.nocapstone.common_ui.ToastType
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -38,7 +40,6 @@ class DetailDiaryFragment : Fragment() {
         }
 
         diaryId = args.diaryId
-
         return binding.root
     }
 
@@ -55,9 +56,6 @@ class DetailDiaryFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        (activity as MainActivityUtil).run {
-            setVisibilityBottomAppbar(View.VISIBLE)
-        }
         _binding = null
 
     }
@@ -76,20 +74,24 @@ class DetailDiaryFragment : Fragment() {
                         findNavController().popBackStack()
                     }
                     R.id.put_diary -> {
-                        findNavController().navigate(DetailDiaryFragmentDirections.putDiaryFragment(diaryId))
+                        findNavController().navigate(
+                            DetailDiaryFragmentDirections.putDiaryFragment(
+                                diaryId
+                            )
+                        )
                     }
                     R.id.delete_diary -> {
                         MaterialAlertDialogBuilder(requireContext())
                             .setTitle("일기 삭제")
                             .setMessage("정말 삭제하시겠습니까?")
-                            .setNegativeButton("취소"){ dialog, which->
-                              dialog.dismiss()
-                            }.setPositiveButton("삭제"){ dialog, which ->
+                            .setNegativeButton("취소") { dialog, which ->
+                                dialog.dismiss()
+                            }.setPositiveButton("삭제") { dialog, which ->
                                 diaryViewModel.deleteDiary(diaryId)
+                                diaryViewModel.setToastMessage(ToastSet("일기 삭제 완료",ToastType.SUCCESS))
                                 dialog.dismiss()
                                 findNavController().popBackStack()
                             }.show()
-
                     }
                 }
                 return true

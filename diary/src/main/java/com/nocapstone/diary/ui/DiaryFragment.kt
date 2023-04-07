@@ -39,7 +39,7 @@ class DiaryFragment : Fragment() {
         _binding = FragmentDiaryBinding.inflate(inflater, container, false)
         (activity as MainActivityUtil).run {
             setToolbarTitle("일기")
-
+            setVisibilityBottomAppbar(View.VISIBLE)
         }
         return binding.root
     }

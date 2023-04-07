@@ -89,9 +89,7 @@ class DiaryViewModel @Inject constructor(
                     if (_imageUriList.value.isNotEmpty()) {
                         //이미지 업로드 비동기
                         val images = _imageUriList.value.map { imageUri ->
-                            async {
-                                ImageUtil.uriToMultipart(context, imageUri)
-                            }
+                            async { ImageUtil.uriToMultipart(context, imageUri) }
                         }.awaitAll()
                         diaryUseCase.createDiaryImage(token, diaryId, images.filterNotNull())
                         _imageUriList.value.clear()
@@ -120,6 +118,7 @@ class DiaryViewModel @Inject constructor(
     fun putDiary(
         diaryId: Long,
         createDiaryRequest: CreateDiaryRequest,
+        callback: () -> Unit
     ) {
         viewModelScope.launch(Dispatchers.IO) {
             val token = dataStoreUseCase.bearerJsonWebToken.first()
@@ -141,13 +140,11 @@ class DiaryViewModel @Inject constructor(
             val token = dataStoreUseCase.bearerJsonWebToken.first()
             if (token != null) {
                 try {
-                   // diaryUseCase.deleteImage(token,imageUriList.)
+                    // diaryUseCase.deleteImage(token,imageUriList.)
                 } catch (e: Exception) {
                     printLog("deleteImage 오류", e)
                 }
             }
-
-
         }
     }
 
@@ -156,8 +153,8 @@ class DiaryViewModel @Inject constructor(
             val token = dataStoreUseCase.bearerJsonWebToken.first()
             if (token != null) {
                 try {
-                    diaryUseCase.deleteDiary(token,diaryId)
-                } catch (e : Exception) {
+                    diaryUseCase.deleteDiary(token, diaryId)
+                } catch (e: Exception) {
                     printLog("deleteDiary 오류", e)
                 }
             }

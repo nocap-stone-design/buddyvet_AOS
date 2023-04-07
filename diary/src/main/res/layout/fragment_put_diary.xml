@@ -71,28 +71,29 @@
 
             <ImageView
                 android:id="@+id/picture"
-                visible="@{viewModel.imageUriList.size() == 0}"
+                visible="@{viewModel.detailData.images.size() == 0}"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitCenter"
                 android:src="@drawable/img_select_picture" />
 
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/picture_viewPager"
+                adapter="@{adapter}"
+                submitList="@{viewModel.imageUriList}"
+                visible="@{viewModel.detailData.images.size() != 0}"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
             <ImageView
                 android:id="@+id/image_cancle"
-                visible="@{viewModel.imageUriList.size() != 0}"
+                visible="@{viewModel.detailData.images.size() != 0}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:padding="16dp"
                 android:src="@drawable/img_cancel" />
-
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/picture_viewPager"
-                adapter="@{adapter}"
-                submitList="@{viewModel.detailData.images}"
-                visible="@{viewModel.detailData.images.size() != 0}"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
 
         </FrameLayout>
 
