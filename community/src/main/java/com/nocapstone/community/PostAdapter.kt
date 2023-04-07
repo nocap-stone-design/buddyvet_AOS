@@ -12,10 +12,10 @@ import com.nocapstone.community.dto.Post
 import com.nocapstone.community.ui.CommunityFragmentDirections
 
 class PostAdapter(val fragment: Fragment) : ListAdapter<Post, RecyclerView.ViewHolder>(
-    DiaryDiffCallback()
+    PostDiffCallback()
 ) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return CheckResultViewHolder(
+        return PostViewHolder(
             ItemPostBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
@@ -25,13 +25,13 @@ class PostAdapter(val fragment: Fragment) : ListAdapter<Post, RecyclerView.ViewH
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is CheckResultViewHolder) {
+        if (holder is PostViewHolder) {
             val checkResultData = getItem(position)
             holder.bind(checkResultData)
         }
     }
 
-    inner class CheckResultViewHolder(private val binding: ItemPostBinding) :
+    inner class PostViewHolder(private val binding: ItemPostBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(post: Post) {
             binding.post = post
@@ -43,7 +43,7 @@ class PostAdapter(val fragment: Fragment) : ListAdapter<Post, RecyclerView.ViewH
 }
 
 
-private class DiaryDiffCallback : DiffUtil.ItemCallback<Post>() {
+private class PostDiffCallback : DiffUtil.ItemCallback<Post>() {
     override fun areItemsTheSame(oldItem: Post, newItem: Post): Boolean {
         return oldItem === newItem
     }

@@ -7,7 +7,8 @@ data class CommunityData(
 data class Post(
     val postId: Int,
     val title: String,
-    val thumbnail: String
+    val thumbnail: String,
+    val replyCount : Int
 )
 
 data class PostId(
