@@ -3,6 +3,7 @@ package com.nocapstone.community.data
 import com.nocapstone.common.data.dto.CommonResponse
 import com.nocapstone.community.domain.CreatePostRequest
 import com.nocapstone.community.dto.CommunityData
+import com.nocapstone.community.dto.Content
 import com.nocapstone.community.dto.PostDetailData
 import com.nocapstone.community.dto.PostId
 import okhttp3.MultipartBody
@@ -37,4 +38,17 @@ interface CommunityService {
         @Path("postId") postId: Long,
     ): CommonResponse<PostDetailData>
 
+
+    @POST("community/{postId}")
+    suspend fun createReply(
+        @Header("Authorization") token: String,
+        @Path("postId") postId: Long,
+        @Body content: Content
+    ): CommonResponse<String?>
+
+    @DELETE("community/{postId}")
+    suspend fun deleteReply(
+        @Header("Authorization") token: String,
+        @Path("postId") postId: Long
+    ): CommonResponse<String?>
 }

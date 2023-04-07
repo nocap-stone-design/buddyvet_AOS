@@ -9,10 +9,12 @@ import androidx.lifecycle.viewModelScope
 import com.nocapstone.common.domain.usecase.DataStoreUseCase
 import com.nocapstone.community.domain.CommunityUseCase
 import com.nocapstone.community.domain.CreatePostRequest
+import com.nocapstone.community.dto.Content
 import com.nocapstone.community.dto.Post
 import com.nocapstone.community.dto.PostDetailData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
@@ -40,7 +42,7 @@ class CommunityViewModel @Inject constructor(
     val postList: StateFlow<List<Post>> = _postList
 
     fun readPostList() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 communityUseCase.readPostList(dataStoreUseCase.bearerJsonWebToken.first()!!).let {
                     _postList.value = it.toMutableList()
@@ -53,7 +55,7 @@ class CommunityViewModel @Inject constructor(
     }
 
     fun createPost(createDiaryRequest: CreatePostRequest, callBack: () -> Unit) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 val token = dataStoreUseCase.bearerJsonWebToken.first()!!
                 communityUseCase.createPost(token, createDiaryRequest).let { postId ->
@@ -97,8 +99,8 @@ class CommunityViewModel @Inject constructor(
         }
     }
 
-    fun readDetailPost(postId: Int) {
-        viewModelScope.launch {
+    fun readDetailPost(postId: Long) {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 _detailData.value = communityUseCase.readPostDetail(
                     dataStoreUseCase.bearerJsonWebToken.first()!!,
@@ -110,6 +112,32 @@ class CommunityViewModel @Inject constructor(
         }
     }
 
+    fun createReply(postId: Long, content: Content) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val token = dataStoreUseCase.bearerJsonWebToken.first()
+            if (token != null) {
+                try {
+                    communityUseCase.createReply(token, postId, content)
+                    readDetailPost(postId)
+                } catch (e: Exception) {
+
+                }
+            }
+        }
+    }
+
+    fun deleteReply(postId: Long) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val token = dataStoreUseCase.bearerJsonWebToken.first()
+            if (token != null) {
+                try {
+                    communityUseCase.deleteReply(token, postId)
+                } catch (e: Exception) {
+
+                }
+            }
+        }
+    }
 
 
     fun setImage(newUriList: List<Uri>) {

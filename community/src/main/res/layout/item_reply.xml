@@ -11,9 +11,10 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:padding="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="8dp">
+    >
 
         <ImageView
             android:id="@+id/poster_profile"
@@ -31,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="@{reply.authorNickName}"
+            android:text="@{reply.authorNickname}"
             android:textSize="10sp"
             app:layout_constraintStart_toEndOf="@id/poster_profile"
             app:layout_constraintTop_toTopOf="parent"

@@ -7,7 +7,6 @@ data class PostDetailData(
 )
 
 data class PostData(
-
     val id: Long,
     val date: String,
     val title: String,
@@ -23,9 +22,18 @@ data class PostData(
 data class Reply(
     val id: Long,
     val authorId: Long,
-    val authorNickName: String,
+    val authorNickname: String,
     val authorProfile : String,
     val content: String,
     val date: String
 )
+
+data class Content(
+    val content : String
+
+)
+
+
+
+
 
