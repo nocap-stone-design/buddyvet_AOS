@@ -15,6 +15,13 @@ class CalendarUtil {
         private fun Calendar.getMonth() = get(Calendar.MONTH)+1
         private fun Calendar.getDay() = get(Calendar.DAY_OF_MONTH)
 
+        fun getTodayYear(): Int {
+            return Calendar.getInstance().getYear()
+        }
+
+        fun getTodayMonth(): Int {
+            return Calendar.getInstance().getMonth()
+        }
 
         fun getTodayDate(): String = Calendar.getInstance().let {
             return parseDateToFormatString(it.time)!!

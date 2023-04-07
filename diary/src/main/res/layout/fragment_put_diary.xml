@@ -15,11 +15,10 @@
     </data>
 
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:fitsSystemWindows="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
         android:padding="@dimen/basic_parent_padding"
         tools:context=".ui.WriteDiaryFragment">
 
@@ -28,13 +27,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/cafe24_ssurround_air"
-            android:text="날짜"
+            android:gravity="center_vertical"
+            android:text="@{viewModel.detailData.date}"
             android:textSize="14sp"
             android:textStyle="bold"
+            app:drawableEndCompat="@drawable/img_dropdown_black"
             app:layout_constraintStart_toStartOf="@id/title_et"
-            app:layout_constraintTop_toTopOf="parent"
-            android:gravity="center_vertical"
-            app:drawableEndCompat="@drawable/img_dropdown_black" />
+            app:layout_constraintTop_toTopOf="parent" />
 
 
         <com.google.android.material.textfield.TextInputLayout
@@ -54,6 +53,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/cafe24_ssurround"
+                android:text="@{viewModel.detailData.title}"
                 android:textSize="14sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -68,9 +68,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/title_et">
 
+
             <ImageView
                 android:id="@+id/picture"
-                visible="@{viewModel.imageUriList.size() == 0}"
+                visible="@{viewModel.detailData.images.size() == 0}"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitCenter"
@@ -81,13 +82,13 @@
                 android:id="@+id/picture_viewPager"
                 adapter="@{adapter}"
                 submitList="@{viewModel.imageUriList}"
-                visible="@{viewModel.imageUriList.size() != 0}"
+                visible="@{viewModel.detailData.images.size() != 0}"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
             <ImageView
                 android:id="@+id/image_cancle"
-                visible="@{viewModel.imageUriList.size() != 0}"
+                visible="@{viewModel.detailData.images.size() != 0}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
@@ -110,11 +111,12 @@
             app:layout_constraintTop_toBottomOf="@id/picture_layout">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:gravity="top"
                 android:id="@+id/content_tv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fontFamily="@font/cafe24_ssurround_air"
+                android:gravity="top"
+                android:text="@{viewModel.detailData.content}"
                 android:textSize="14sp" />
 
         </com.google.android.material.textfield.TextInputLayout>

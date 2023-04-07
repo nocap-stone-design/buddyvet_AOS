@@ -25,6 +25,18 @@
         android:label="DetailDiaryFragment">
         <argument
             android:name="diaryId"
-            app:argType="integer" />
+            app:argType="long" />
+        <action
+            android:id="@+id/putDiaryFragment"
+            app:destination="@id/putDiaryFragment"
+            app:popUpTo="@id/diaryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/putDiaryFragment"
+        android:name="com.nocapstone.diary.ui.PutDiaryFragment"
+        android:label="PutDiaryFragment" >
+        <argument
+            android:name="diaryId"
+            app:argType="long" />
     </fragment>
 </navigation>

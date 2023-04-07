@@ -2,7 +2,7 @@ package com.nocapstone.diary.ui
 
 import android.os.Bundle
 import android.view.*
-import android.widget.Toast
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -10,58 +10,51 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.diary.R
-import com.example.diary.databinding.FragmentWriteDiaryBinding
+import com.example.diary.databinding.FragmentPutDiaryBinding
 import com.nocapstone.common_ui.*
-import com.nocapstone.common_ui.CalendarUtil.Companion.getTodayDate
-import com.nocapstone.common_ui.CalendarUtil.Companion.parseDateToFormatString
-import com.nocapstone.common_ui.CalendarUtil.Companion.parseStringToDate
 import com.nocapstone.diary.domain.CreateDiaryRequest
 import dagger.hilt.android.AndroidEntryPoint
 import gun0912.tedimagepicker.builder.TedImagePicker
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-
 @AndroidEntryPoint
-class WriteDiaryFragment : Fragment() {
+class PutDiaryFragment : Fragment() {
 
+    private val args: PutDiaryFragmentArgs by navArgs()
     private val diaryViewModel: DiaryViewModel by viewModels({ requireActivity() })
-    private var _binding: FragmentWriteDiaryBinding? = null
+    lateinit var existingList: List<ImageInfo>
+    private var _binding: FragmentPutDiaryBinding? = null
     private val binding get() = _binding!!
+    private var diaryId = 0L
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentWriteDiaryBinding.inflate(inflater, container, false)
+        _binding = FragmentPutDiaryBinding.inflate(inflater, container, false)
+        diaryId = args.diaryId
+
 
         (activity as MainActivityUtil).run {
-            setToolbarTitle("일기작성")
-            setVisibilityBottomAppbar(View.GONE)
+            setToolbarTitle("일기 수정")
         }
+
+        existingList = diaryViewModel.detailData.value.images
+        diaryViewModel.setImage(existingList.map { it.url.toUri() })
 
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        initMenu()
+        //기존 거의
 
         binding.apply {
-            viewModel = diaryViewModel
             lifecycleOwner = viewLifecycleOwner
+            viewModel = diaryViewModel
             adapter = ImageAdapter()
-            date.text = getTodayDate()
-            date.setOnClickListener {
-                DialogForDatePicker.Builder(requireContext())
-                    .setInitDate(parseStringToDate(binding.date.text.toString())!!)
-                    .setOnClickPositiveButton { newDate ->
-                        binding.date.text = parseDateToFormatString(newDate)
-                    }
-                    .build().show()
-            }
 
             picture.setOnClickListener {
                 TedImagePicker.with(requireContext())
@@ -69,24 +62,36 @@ class WriteDiaryFragment : Fragment() {
             }
 
             imageCancle.setOnClickListener {
-                TedImagePicker.with(requireContext())
-                    .selectedUri(diaryViewModel.imageUriList.value)
-                    .startMultiImage { diaryViewModel.setImage(it) }
+                TedImagePicker.with(requireContext()).selectedUri(diaryViewModel.imageUriList.value)
+                    .startMultiImage {
+                        diaryViewModel.setImage(it)
+                    }
             }
         }
+        initMenu()
         observeToast()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-
         _binding = null
+
     }
 
 
+    private fun observeToast() {
+        diaryViewModel.setToastMessage(null)
+        lifecycleScope.launch {
+            diaryViewModel.toastMessage.collectLatest {
+                if (it != null) {
+                    CustomToast.createToast(this@PutDiaryFragment, it.message, it.type)
+                }
+            }
+        }
+    }
+
     private fun initMenu() {
         val menuHost: MenuHost = requireActivity()
-
         menuHost.addMenuProvider(object : MenuProvider {
 
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
@@ -95,9 +100,11 @@ class WriteDiaryFragment : Fragment() {
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 when (menuItem.itemId) {
+
                     android.R.id.home -> {
                         findNavController().popBackStack()
                     }
+
                     R.id.menu_createDiary -> {
                         // 일기 작성 완료
                         with(binding) {
@@ -106,13 +113,9 @@ class WriteDiaryFragment : Fragment() {
                                 titleTv.text.toString(),
                                 contentTv.text.toString()
                             ).let {
+                                diaryViewModel.deleteDiary(diaryId)
                                 diaryViewModel.createDiary(it) {
-                                    diaryViewModel.setToastMessage(
-                                        ToastSet(
-                                            "일기 작성 완료",
-                                            ToastType.SUCCESS
-                                        )
-                                    )
+                                    diaryViewModel.setToastMessage(ToastSet("일기 수정 완료", ToastType.SUCCESS))
                                     findNavController().popBackStack()
                                 }
                             }
@@ -123,17 +126,5 @@ class WriteDiaryFragment : Fragment() {
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
-
-    private fun observeToast() {
-        diaryViewModel.setToastMessage(null)
-        lifecycleScope.launch {
-            diaryViewModel.toastMessage.collectLatest {
-                if (it != null) {
-                    CustomToast.createToast(this@WriteDiaryFragment, it.message, it.type)
-                }
-            }
-        }
-    }
-
 
 }

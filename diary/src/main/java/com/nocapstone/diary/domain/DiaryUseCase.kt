@@ -15,25 +15,33 @@ class DiaryUseCase @Inject constructor(
 ) {
     // response를 entity로 변경하는 mapper 역할까지
     suspend fun readDiaryList(token: String, year: Int, month: Int): DiaryData {
-        return diaryService.readDiaryList(token,year,month).data
+        val requestMonth = if (month >= 10) month.toString() else "0$month"
+        return diaryService.readDiaryList(token, year.toString(), requestMonth).data
     }
 
     // view -> domain
-    suspend fun createDiary(token: String, createDiaryRequest: CreateDiaryRequest): Int {
+    suspend fun createDiary(token: String, createDiaryRequest: CreateDiaryRequest): Long {
         return diaryService.createDiary(token, createDiaryRequest).data.diaryId
     }
 
     suspend fun createDiaryImage(
         token: String,
-        diaryId: Int,
+        diaryId: Long,
         image: List<MultipartBody.Part>
     ): CommonResponse<String?> {
-        return diaryService.createDiaryImage(token, diaryId.toLong(), image)
+        return diaryService.createDiaryImage(token, diaryId, image)
     }
 
-    suspend fun readDiaryDetail(token: String, diaryId: Int): DiaryDetailData {
-        return diaryService.readDiaryDetail(token, diaryId.toLong()).data
+    suspend fun readDiaryDetail(token: String, diaryId: Long): DiaryDetailData {
+        return diaryService.readDiaryDetail(token, diaryId).data
     }
 
+    suspend fun putDiary(token: String, diaryId: Long, createDiaryRequest: CreateDiaryRequest) {
+        diaryService.putDiary(token, diaryId, createDiaryRequest)
+    }
+
+    suspend fun deleteDiary(token:String, diaryId: Long) {
+        diaryService.deleteDiary(token,diaryId)
+    }
 
 }

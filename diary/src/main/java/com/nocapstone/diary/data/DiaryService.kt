@@ -14,8 +14,8 @@ interface DiaryService {
     @GET("diary")
     suspend fun readDiaryList(
         @Header("Authorization") token: String,
-        @Path("year") year: Int,
-        @Path("month") month: Int
+        @Query("year") year: String,
+        @Query("month") month: String
     ): CommonResponse<DiaryData>
 
     // 일기 작성
@@ -26,13 +26,13 @@ interface DiaryService {
     ): CommonResponse<DiaryId>
 
 
-        @Multipart
-        @POST("diary/{diaryId}/image")
-        suspend fun createDiaryImage(
-            @Header("Authorization") token: String,
-            @Path("diaryId") diaryId: Long,
-            @Part image: List<MultipartBody.Part>
-        ): CommonResponse<String?>
+    @Multipart
+    @POST("diary/{diaryId}/image")
+    suspend fun createDiaryImage(
+        @Header("Authorization") token: String,
+        @Path("diaryId") diaryId: Long,
+        @Part image: List<MultipartBody.Part>
+    ): CommonResponse<String?>
 
 
     @GET("diary/{diaryId}")
@@ -40,6 +40,20 @@ interface DiaryService {
         @Header("Authorization") token: String,
         @Path("diaryId") diaryId: Long,
     ): CommonResponse<DiaryDetailData>
+
+    @PUT("diary/{diaryId}")
+    suspend fun putDiary(
+        @Header("Authorization") token: String,
+        @Path("diaryId") diaryId: Long,
+        @Body createDiaryRequest: CreateDiaryRequest
+    ): CommonResponse<String?>
+
+    @DELETE("diary/{diaryId}")
+    suspend fun deleteDiary(
+        @Header("Authorization") token: String,
+        @Path("diaryId") diaryId: Long,
+    ): CommonResponse<String?>
+
 
 
 }

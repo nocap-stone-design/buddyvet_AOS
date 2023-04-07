@@ -16,7 +16,6 @@ class DialogForPermission(
 
     private lateinit var binding: DialogForPermissionBinding
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DialogForPermissionBinding.inflate(layoutInflater).apply {

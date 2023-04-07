@@ -9,11 +9,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.diary.R
 import com.example.diary.databinding.ItemCalendarBinding
-import com.example.diary.databinding.ItemDiaryBinding
 import com.nocapstone.diary.dto.CalendarData
-import com.nocapstone.diary.dto.Diary
 import com.nocapstone.diary.ui.DiaryFragmentDirections
 
 

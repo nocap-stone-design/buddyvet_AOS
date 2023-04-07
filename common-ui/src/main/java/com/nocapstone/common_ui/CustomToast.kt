@@ -9,7 +9,7 @@ import www.sanju.motiontoast.MotionToastStyle
 
 object CustomToast {
     fun createToast(fragment: Fragment, message: String, toastType: ToastType) {
-        MotionToast.createColorToast(
+        MotionToast.darkToast(
             fragment.requireActivity(),
             toastType.title,
             message,
@@ -18,16 +18,17 @@ object CustomToast {
             MotionToast.SHORT_DURATION,
             ResourcesCompat.getFont(
                 fragment.requireContext(),
-                www.sanju.motiontoast.R.font.helvetica_regular
+                www.sanju.motiontoast.R.font.montserrat_bold
             )
         )
     }
 }
 
 
+
 enum class ToastType(val style: MotionToastStyle, val title: String) {
     SUCCESS(MotionToastStyle.SUCCESS, "성공 \uD83D\uDE0D"),
-    ERROR(MotionToastStyle.ERROR, "에러 ☹ "),
+    ERROR(MotionToastStyle.ERROR, "에러 ☹️ "),
     INFO(MotionToastStyle.INFO, "알림")
 }
 

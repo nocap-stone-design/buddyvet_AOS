@@ -51,7 +51,6 @@
 
         <FrameLayout
             android:id="@+id/picture_layout"
-            visible="@{viewModel.detailData.images.size() != 0}"
             android:layout_width="348dp"
             android:layout_height="348dp"
             android:layout_marginTop="32dp"
@@ -60,6 +59,7 @@
             app:layout_constraintTop_toBottomOf="@id/title">
 
             <androidx.viewpager2.widget.ViewPager2
+                visible="@{viewModel.detailData.images.size() != 0}"
                 android:id="@+id/picture_viewPager"
                 adapter="@{adapter}"
                 submitList="@{viewModel.detailData.images}"
@@ -71,7 +71,7 @@
 
         <TextView
             android:id="@+id/content"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginVertical="32dp"
             android:fontFamily="@font/cafe24_ssurround_air"
@@ -83,8 +83,6 @@
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/picture_layout"
-            app:layout_constraintStart_toStartOf="@id/picture_layout"
             app:layout_constraintTop_toBottomOf="@id/picture_layout"
             tools:text="날씨가 좋았다\n그래서기분이 좋았다" />
 

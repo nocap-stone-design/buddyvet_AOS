@@ -9,7 +9,7 @@ class DiaryUtil {
         fun getDatesInMonth(
             year: Int,
             month: Int,
-            dataInDate: DiaryData
+            dataInDate: DiaryData?
         ): MutableList<CalendarData> {
             val calendar = Calendar.getInstance()
             calendar.set(Calendar.YEAR, year)
@@ -30,7 +30,7 @@ class DiaryUtil {
                 calendarArr[firstDayOfWeek + i + 5] = CalendarData(i.toString(), null)
             }
 
-            dataInDate.diaries?.forEach {
+            dataInDate?.diaries?.forEach {
                 calendarArr[firstDayOfWeek + it.day + 5] = CalendarData(it.day.toString(), it)
             }
 
