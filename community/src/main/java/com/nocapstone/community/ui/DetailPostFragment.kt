@@ -2,6 +2,7 @@ package com.nocapstone.community.ui
 
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -12,6 +13,7 @@ import androidx.navigation.fragment.navArgs
 import com.nocapstone.common_ui.MainActivityUtil
 import com.nocapstone.common_ui.ImageDetailAdapter
 import com.nocapstone.community.R
+import com.nocapstone.community.ReplyAdapter
 import com.nocapstone.community.databinding.FragmentDetailPostBinding
 import com.nocapstone.community.domain.CreatePostRequest
 import dagger.hilt.android.AndroidEntryPoint
@@ -47,11 +49,14 @@ class DetailPostFragment : Fragment() {
         initMenu()
 
         communityViewModel.readDetailPost(args.postID)
-
         binding.apply {
             lifecycleOwner =  viewLifecycleOwner
             viewModel = communityViewModel
             adapter = ImageDetailAdapter()
+            repleyAdapter = ReplyAdapter()
+            replyIl.setEndIconOnClickListener {
+                Toast.makeText(context,"댓글",Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
