@@ -13,33 +13,51 @@
     </data>
 
 
-    <FrameLayout
-        android:layout_margin="16dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:layout_height="132dp"
+        android:layout_margin="16dp"
+        android:padding="8dp">
 
 
         <TextView
-            android:id="@+id/diary_id"
-            android:layout_width="match_parent"
+            android:id="@+id/diary_title"
+            android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_gravity="top|start"
-            android:layout_marginEnd="50dp"
+            android:fontFamily="@font/cafe24_ssurround"
             android:gravity="start|center_vertical"
             android:text="@{post.title}"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="일기 아이디" />
+            tools:text="제목" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="8dp"
+            android:text="@{Integer.toString(post.replyCount)}"
+            android:textColor="#312C2C"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:drawableStartCompat="@drawable/img_reply"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:id="@+id/postImage"
+            visible="@{(post.thumbnail != null)}"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_gravity="center"
-            android:layout_marginTop="50dp"
-            app:cardCornerRadius="64dp">
+            app:cardCornerRadius="32dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 photoUrl="@{post.thumbnail}"
@@ -52,7 +70,7 @@
 
         </androidx.cardview.widget.CardView>
 
-    </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </layout>

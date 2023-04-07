@@ -1,5 +1,6 @@
 package com.nocapstone.community.ui
 
+import android.icu.lang.UCharacter.VerticalOrientation
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -8,6 +9,7 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.nocapstone.common_ui.MainActivityUtil
 import com.nocapstone.community.PostAdapter
 import com.nocapstone.community.R
@@ -43,6 +45,7 @@ class CommunityFragment : Fragment() {
 
         binding.apply {
             this.lifecycleOwner = viewLifecycleOwner
+            this.recyclerView.addItemDecoration(DividerItemDecoration(requireContext(),1))
             this.adapter = PostAdapter(this@CommunityFragment)
             this.viewModel = communityViewModel
         }
