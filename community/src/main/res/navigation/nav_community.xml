@@ -23,7 +23,7 @@
         android:label="DetailPostFragment" >
         <argument
             android:name="postID"
-            app:argType="integer" />
+            app:argType="long" />
     </fragment>
     <fragment
         android:id="@+id/writePostFragment"

@@ -16,12 +16,14 @@ import com.nocapstone.community.R
 import com.nocapstone.community.ReplyAdapter
 import com.nocapstone.community.databinding.FragmentDetailPostBinding
 import com.nocapstone.community.domain.CreatePostRequest
+import com.nocapstone.community.dto.Content
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
 class DetailPostFragment : Fragment() {
 
+    private var postId : Long = 0L
     private val args: DetailPostFragmentArgs by navArgs()
     private val communityViewModel: CommunityViewModel by viewModels()
     private var _binding: FragmentDetailPostBinding? = null
@@ -39,6 +41,7 @@ class DetailPostFragment : Fragment() {
             setVisibilityBottomAppbar(View.GONE)
         }
 
+        postId = args.postID
         return binding.root
     }
 
@@ -48,14 +51,15 @@ class DetailPostFragment : Fragment() {
 
         initMenu()
 
-        communityViewModel.readDetailPost(args.postID)
+        communityViewModel.readDetailPost(postId)
         binding.apply {
             lifecycleOwner =  viewLifecycleOwner
             viewModel = communityViewModel
             adapter = ImageDetailAdapter()
             repleyAdapter = ReplyAdapter()
             replyIl.setEndIconOnClickListener {
-                Toast.makeText(context,"댓글",Toast.LENGTH_SHORT).show()
+                communityViewModel.createReply(postId, Content(replyEt.text.toString()))
+                replyEt.text?.clear()
             }
         }
     }
