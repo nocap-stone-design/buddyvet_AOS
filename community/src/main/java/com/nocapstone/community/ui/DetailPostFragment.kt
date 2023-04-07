@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.nocapstone.common_ui.MainActivityUtil
 import com.nocapstone.common_ui.ImageDetailAdapter
 import com.nocapstone.community.R
@@ -23,7 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class DetailPostFragment : Fragment() {
 
-    private var postId : Long = 0L
+    private var postId: Long = 0L
     private val args: DetailPostFragmentArgs by navArgs()
     private val communityViewModel: CommunityViewModel by viewModels()
     private var _binding: FragmentDetailPostBinding? = null
@@ -53,10 +54,11 @@ class DetailPostFragment : Fragment() {
 
         communityViewModel.readDetailPost(postId)
         binding.apply {
-            lifecycleOwner =  viewLifecycleOwner
+            lifecycleOwner = viewLifecycleOwner
             viewModel = communityViewModel
             adapter = ImageDetailAdapter()
             repleyAdapter = ReplyAdapter()
+            replyRecyclerview.addItemDecoration(DividerItemDecoration(requireContext(), 1))
             replyIl.setEndIconOnClickListener {
                 communityViewModel.createReply(postId, Content(replyEt.text.toString()))
                 replyEt.text?.clear()
@@ -91,7 +93,6 @@ class DetailPostFragment : Fragment() {
         }
         _binding = null
     }
-
 
 
 }

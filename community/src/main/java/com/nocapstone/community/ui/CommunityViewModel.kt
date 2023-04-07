@@ -118,6 +118,7 @@ class CommunityViewModel @Inject constructor(
             if (token != null) {
                 try {
                     communityUseCase.createReply(token, postId, content)
+                    readDetailPost(postId)
                 } catch (e: Exception) {
 
                 }

@@ -126,14 +126,20 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/picture_layout" />
 
+                <View
+                    style="@style/Contour"
+                    android:layout_width="match_parent"
+                    app:layout_constraintBottom_toTopOf="@id/reply_recyclerview"
+                    app:layout_constraintTop_toBottomOf="@id/content" />
+
                 <androidx.recyclerview.widget.RecyclerView
+                    android:layout_marginTop="16dp"
                     android:id="@+id/reply_recyclerview"
                     adapter="@{repleyAdapter}"
                     submitList="@{viewModel.detailData.post.reply}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_marginTop="16dp"
+                    android:background="#FAFAFA"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintTop_toBottomOf="@id/content" />
 
