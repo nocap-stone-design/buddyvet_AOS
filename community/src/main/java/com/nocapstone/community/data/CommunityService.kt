@@ -51,4 +51,11 @@ interface CommunityService {
         @Header("Authorization") token: String,
         @Path("postId") postId: Long
     ): CommonResponse<String?>
+
+    @DELETE("community/{postId}")
+    suspend fun deletePost(
+        @Header("Authorization") token: String,
+        @Path("postId") postId: Long,
+    ): CommonResponse<String?>
+
 }

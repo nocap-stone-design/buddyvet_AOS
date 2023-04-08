@@ -7,6 +7,8 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nocapstone.common.domain.usecase.DataStoreUseCase
+import com.nocapstone.common.util.printLog
+import com.nocapstone.common_ui.ToastSet
 import com.nocapstone.community.domain.CommunityUseCase
 import com.nocapstone.community.domain.CreatePostRequest
 import com.nocapstone.community.dto.Content
@@ -40,6 +42,9 @@ class CommunityViewModel @Inject constructor(
 
     private val _postList = MutableStateFlow<MutableList<Post>>(mutableListOf())
     val postList: StateFlow<List<Post>> = _postList
+
+    private val _toastMessage = MutableStateFlow<ToastSet?>(null)
+    val toastMessage: StateFlow<ToastSet?> = _toastMessage
 
     fun readPostList() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -139,9 +144,27 @@ class CommunityViewModel @Inject constructor(
         }
     }
 
+    fun deletePost(postId: Long) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val token = dataStoreUseCase.bearerJsonWebToken.first()
+            if (token != null) {
+                try {
+                    communityUseCase.deletePost(token, postId)
+                } catch (e: Exception) {
+                    printLog("deletePost 오류", e)
+                }
+            }
+        }
+    }
+
+
 
     fun setImage(newUriList: List<Uri>) {
         _imageUriList.value = newUriList.toMutableList()
+    }
+
+    fun setToastMessage(toastSet: ToastSet?) {
+        _toastMessage.value = toastSet
     }
 
 }

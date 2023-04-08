@@ -47,4 +47,8 @@ class CommunityUseCase @Inject constructor(
         return communityService.deleteReply(token, postId)
     }
 
+    suspend fun deletePost(token:String, postId: Long) {
+        communityService.deletePost(token,postId)
+    }
+
 }
