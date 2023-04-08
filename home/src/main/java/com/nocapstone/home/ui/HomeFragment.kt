@@ -60,7 +60,6 @@ class HomeFragment : Fragment() {
                     TedImagePicker.with(requireContext())
                         .errorListener { }
                         .start { uri ->
-                            //todo eyechackViewModel
                             eyeViewModel.setImage(uri)
                             findNavController().navigate(R.id.next)
                         }
