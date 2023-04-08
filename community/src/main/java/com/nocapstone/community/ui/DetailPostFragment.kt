@@ -10,8 +10,12 @@ import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.nocapstone.common_ui.MainActivityUtil
 import com.nocapstone.common_ui.ImageDetailAdapter
+import com.nocapstone.common_ui.ToastSet
+import com.nocapstone.common_ui.ToastType
+import com.nocapstone.community.R
 import com.nocapstone.community.ReplyAdapter
 import com.nocapstone.community.databinding.FragmentDetailPostBinding
 import com.nocapstone.community.dto.Content
@@ -33,12 +37,10 @@ class DetailPostFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentDetailPostBinding.inflate(inflater, container, false)
-
         (activity as MainActivityUtil).run {
             setToolbarTitle("글 상세 조회")
             setVisibilityBottomAppbar(View.GONE)
         }
-
         postId = args.postID
         return binding.root
     }
@@ -71,12 +73,29 @@ class DetailPostFragment : Fragment() {
         menuHost.addMenuProvider(object : MenuProvider {
 
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.detail_community_menu, menu)
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 when (menuItem.itemId) {
                     android.R.id.home -> {
                         findNavController().popBackStack()
+                    }
+                    R.id.put_post -> {
+
+                    }
+                    R.id.delete_post -> {
+                        MaterialAlertDialogBuilder(requireContext())
+                            .setTitle("글 삭제")
+                            .setMessage("정말 삭제하시겠습니까")
+                            .setNegativeButton("취소") {
+                                dialog, which -> dialog.dismiss()
+                            }.setPositiveButton("삭제") { dialog, which ->
+                                communityViewModel.deletePost(postId)
+                                communityViewModel.setToastMessage(ToastSet("일기 삭제 완료", ToastType.SUCCESS))
+                                dialog.dismiss()
+                                findNavController().popBackStack()
+                            }.show()
                     }
                 }
                 return true
