@@ -5,7 +5,6 @@ import com.nocapstone.community.data.CommunityService
 import com.nocapstone.community.dto.Content
 import com.nocapstone.community.dto.Post
 import com.nocapstone.community.dto.PostDetailData
-import com.nocapstone.community.dto.PostId
 import okhttp3.MultipartBody
 import javax.inject.Inject
 

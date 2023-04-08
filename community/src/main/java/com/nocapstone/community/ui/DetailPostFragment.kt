@@ -2,7 +2,6 @@ package com.nocapstone.community.ui
 
 import android.os.Bundle
 import android.view.*
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -13,10 +12,8 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.nocapstone.common_ui.MainActivityUtil
 import com.nocapstone.common_ui.ImageDetailAdapter
-import com.nocapstone.community.R
 import com.nocapstone.community.ReplyAdapter
 import com.nocapstone.community.databinding.FragmentDetailPostBinding
-import com.nocapstone.community.domain.CreatePostRequest
 import com.nocapstone.community.dto.Content
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -60,7 +57,9 @@ class DetailPostFragment : Fragment() {
             repleyAdapter = ReplyAdapter()
             replyRecyclerview.addItemDecoration(DividerItemDecoration(requireContext(), 1))
             replyIl.setEndIconOnClickListener {
-                communityViewModel.createReply(postId, Content(replyEt.text.toString()))
+                communityViewModel.createReply(postId, Content(replyEt.text.toString())){
+                    communityViewModel.readDetailPost(postId)
+                }
                 replyEt.text?.clear()
             }
         }

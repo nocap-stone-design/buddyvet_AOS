@@ -112,13 +112,13 @@ class CommunityViewModel @Inject constructor(
         }
     }
 
-    fun createReply(postId: Long, content: Content) {
+    fun createReply(postId: Long, content: Content, callBack: () -> Unit) {
         viewModelScope.launch(Dispatchers.IO) {
             val token = dataStoreUseCase.bearerJsonWebToken.first()
             if (token != null) {
                 try {
                     communityUseCase.createReply(token, postId, content)
-                    readDetailPost(postId)
+                    callBack.invoke()
                 } catch (e: Exception) {
 
                 }
