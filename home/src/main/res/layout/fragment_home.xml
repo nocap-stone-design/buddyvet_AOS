@@ -12,7 +12,7 @@
 
         <variable
             name="adapter"
-            type="com.nocapstone.buddyvet.buddy.BuddyListAdapter" />
+            type="com.nocapstone.buddyvet.buddy.BuddyProfileListAdapter" />
     </data>
 
 
@@ -34,6 +34,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="16dp">
+
+                <ImageView
+                    android:id="@+id/buddy_setting"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/img_setting"
+                    />
 
                 <TextView
                     android:id="@+id/myBuddy_tv"

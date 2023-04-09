@@ -3,6 +3,8 @@ package com.nocapstone.buddyvet.buddy.domain.usecase
 import com.nocapstone.buddyvet.buddy.data.BuddyService
 import com.nocapstone.buddyvet.buddy.domain.entity.BuddyData
 import com.nocapstone.buddyvet.buddy.domain.entity.BuddyRequest
+import com.nocapstone.buddyvet.buddy.domain.entity.MasterInfoResponse
+import com.nocapstone.common.data.dto.CommonResponse
 import okhttp3.MultipartBody
 import javax.inject.Inject
 
@@ -28,6 +30,10 @@ class BuddyUseCase @Inject constructor(
 
     suspend fun uploadBuddyImg(token: String, buddyId: Long, image: MultipartBody.Part) {
         buddyService.uploadBuddyImg(token, buddyId, image)
+    }
+
+    suspend fun readMasterInfo(token: String): MasterInfoResponse {
+       return buddyService.readMasterInfo(token).data
     }
 
 }

@@ -13,7 +13,7 @@
 
         <variable
             name="adapter"
-            type="com.nocapstone.buddyvet.buddy.BuddyListAdapter" />
+            type="com.nocapstone.buddyvet.buddy.BuddyProfileListAdapter" />
     </data>
 
 

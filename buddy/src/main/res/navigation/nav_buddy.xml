@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_buddy"
-    app:startDestination="@id/inputBuddyTypeFragment">
+    app:startDestination="@id/myBuddyFragment">
 
     <fragment
         android:id="@+id/completeRegistrationFragment"
@@ -23,5 +23,13 @@
         <action
             android:id="@+id/next"
             app:destination="@id/completeRegistrationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/myBuddyFragment"
+        android:name="com.nocapstone.buddyvet.buddy.ui.MyBuddyFragment"
+        android:label="MyBuddyFragment" >
+        <action
+            android:id="@+id/next"
+            app:destination="@id/inputBuddyTypeFragment" />
     </fragment>
 </navigation>

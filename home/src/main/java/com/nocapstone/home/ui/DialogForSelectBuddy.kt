@@ -5,9 +5,7 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
-import com.nocapstone.buddyvet.buddy.BuddyListAdapter
-import com.nocapstone.buddyvet.buddy.domain.entity.BuddyData
+import com.nocapstone.buddyvet.buddy.BuddyProfileListAdapter
 import com.nocapstone.buddyvet.buddy.ui.BuddyViewModel
 import com.nocapstone.home.databinding.DialogForSelectBuddyBinding
 
@@ -31,7 +29,7 @@ class DialogForSelectBuddy constructor(
 
         binding.apply {
             viewModel = buddyViewModel
-            adapter = BuddyListAdapter(true) { nowSelectPosition ->
+            adapter = BuddyProfileListAdapter(true) { nowSelectPosition ->
                 buddyViewModel.setSelectCheckBuddy(nowSelectPosition)
             }
         }

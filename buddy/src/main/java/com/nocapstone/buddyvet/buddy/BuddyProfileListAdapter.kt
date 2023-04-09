@@ -5,14 +5,20 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.nocapstone.buddyvet.buddy.databinding.ItemBuddyDetailBinding
+import com.nocapstone.buddyvet.buddy.databinding.ItemBuddyProfileBinding
 import com.nocapstone.buddyvet.buddy.domain.entity.BuddyData
 
-class BuddyListAdapter(
-) : ListAdapter<BuddyData, RecyclerView.ViewHolder>(BuddyListDiffCallback()) {
+class BuddyProfileListAdapter(
+    private val ColorChange: Boolean,
+    private val onClickBuddyListener: (Int) -> Unit
+) :
+    ListAdapter<BuddyData, RecyclerView.ViewHolder>(BuddyProfileListDiffCallback()) {
+
+    var prePosition = -1
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return BuddyListViewHolder(
-            ItemBuddyDetailBinding.inflate(
+            ItemBuddyProfileBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -27,17 +33,30 @@ class BuddyListAdapter(
         }
     }
 
-    inner class BuddyListViewHolder(private val binding: ItemBuddyDetailBinding) :
+    inner class BuddyListViewHolder(private val binding: ItemBuddyProfileBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data: BuddyData, position: Int) {
+
             binding.apply {
                 buddyData = data
+            }
+
+            itemView.setOnClickListener {
+                onClickBuddyListener(position)
+                if (ColorChange) {
+                    if (prePosition >= 0) {
+                        getItem(prePosition).isSelect = false
+                    }
+                    getItem(position).isSelect = true
+                    prePosition = position
+                    notifyDataSetChanged()
+                }
             }
         }
     }
 }
 
-private class BuddyListDiffCallback : DiffUtil.ItemCallback<BuddyData>() {
+private class BuddyProfileListDiffCallback : DiffUtil.ItemCallback<BuddyData>() {
     override fun areItemsTheSame(oldItem: BuddyData, newItem: BuddyData): Boolean {
         return oldItem === newItem
     }

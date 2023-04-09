@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.nocapstone.buddyvet.buddy.R
 import com.nocapstone.buddyvet.buddy.databinding.FragmentInputBuddyTypeBinding
+import com.nocapstone.common_ui.MainActivityUtil
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -25,7 +26,14 @@ class InputBuddyTypeFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentInputBuddyTypeBinding.inflate(inflater, container, false)
+
+        (activity as MainActivityUtil).run {
+            setToolbarTitle("버디 추가")
+            setVisibilityBottomAppbar(View.GONE)
+        }
+
         return binding.root
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

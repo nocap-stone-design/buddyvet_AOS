@@ -40,4 +40,9 @@ interface BuddyService {
         @Part image: MultipartBody.Part
     ): CommonResponse<String?>
 
+    @GET("users")
+    suspend fun readMasterInfo(
+        @Header("Authorization") token: String,
+    ): CommonResponse<MasterInfoResponse>
+
 }

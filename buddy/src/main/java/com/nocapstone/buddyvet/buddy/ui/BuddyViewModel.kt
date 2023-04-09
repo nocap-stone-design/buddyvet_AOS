@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nocapstone.buddyvet.buddy.domain.entity.BuddyData
 import com.nocapstone.buddyvet.buddy.domain.entity.BuddyRequest
+import com.nocapstone.buddyvet.buddy.domain.entity.MasterInfoResponse
 import com.nocapstone.buddyvet.buddy.domain.usecase.BuddyUseCase
 import com.nocapstone.common.domain.usecase.DataStoreUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -41,6 +42,9 @@ class BuddyViewModel @Inject constructor(
 
     private val _selectBuddy = MutableStateFlow<Int?>(null)
     val selectBuddy: StateFlow<Int?> = _selectBuddy
+
+    private val _masterInfo = MutableStateFlow<MasterInfoResponse?>(null)
+    val masterInfo: StateFlow<MasterInfoResponse?> = _masterInfo
 
     fun setSelectCheckBuddy(position: Int) {
         _selectBuddy.value = position
@@ -84,7 +88,7 @@ class BuddyViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val token = dataStoreUseCase.bearerJsonWebToken.first()
-                if (token != null){
+                if (token != null) {
                     _buddyList.value = buddyUseCase.readBuddyList(token)
                 }
             } catch (e: Exception) {
@@ -142,6 +146,19 @@ class BuddyViewModel @Inject constructor(
             it.moveToFirst()
             val nameIndex = it.getColumnIndex(OpenableColumns.DISPLAY_NAME)
             return it.getString(nameIndex)
+        }
+    }
+
+    fun readMasterProfile() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val token = dataStoreUseCase.bearerJsonWebToken.first()
+            if (token != null) {
+                try {
+                    _masterInfo.value = buddyUseCase.readMasterInfo(token)
+                } catch (e: Exception) {
+
+                }
+            }
         }
     }
 

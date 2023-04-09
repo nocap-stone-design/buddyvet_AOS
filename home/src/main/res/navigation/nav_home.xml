@@ -10,12 +10,16 @@
         android:label="HomeFragment">
 
         <action
-            android:id="@+id/next"
+            android:id="@+id/toEyeCheck"
             app:destination="@id/nav_eyecheck"
             app:popUpTo="@id/homeFragment"
             app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/toBuddy"
+            app:destination="@id/nav_buddy" />
     </fragment>
     <include app:graph="@navigation/nav_eyecheck" />
+    <include app:graph="@navigation/nav_buddy" />
 
 
 </navigation>
