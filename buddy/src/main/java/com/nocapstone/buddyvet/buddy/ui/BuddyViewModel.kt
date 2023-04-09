@@ -59,7 +59,7 @@ class BuddyViewModel @Inject constructor(
     }
 
     fun setBirthDay(birthDay: String) {
-        _newBuddy.value?.birthDay = birthDay
+        _newBuddy.value?.birthday = birthDay
     }
 
     fun setAdoptDay(adoptDay: String) {
@@ -71,11 +71,7 @@ class BuddyViewModel @Inject constructor(
     }
 
     fun setGender(gender: String) {
-        if (gender == "남자") {
-            _newBuddy.value?.gender = "M"
-        } else {
-            _newBuddy.value?.gender = "W"
-        }
+            _newBuddy.value?.gender = gender
     }
 
     fun setSelectImgUri(uri: Uri?) {

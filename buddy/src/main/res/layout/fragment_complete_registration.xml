@@ -83,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 android:fontFamily="@font/cafe24_ssurround"
-                android:text='@{"태어난 날 : " + viewModel.newBuddy.birthDay}'
+                android:text='@{"태어난 날 : " + viewModel.newBuddy.birthday}'
                 android:textColor="@color/black"
                 android:textSize="17sp" />
 

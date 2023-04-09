@@ -100,7 +100,7 @@ class InputBuddyInfoFragment : Fragment() {
             buddyViewModel.setGender(
                 when (genderTv.text.toString()) {
                     genderListItem[0] -> "M"
-                    else -> "W"
+                    else -> "F"
                 }
             )
             buddyViewModel.setAdoptDay(adoptDayTv.text.toString())

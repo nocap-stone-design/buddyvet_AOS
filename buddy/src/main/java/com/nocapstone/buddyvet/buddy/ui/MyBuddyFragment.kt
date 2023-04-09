@@ -31,6 +31,7 @@ class MyBuddyFragment : Fragment() {
 
         (activity as MainActivityUtil).run {
             setToolbarTitle("My Buddy")
+            setVisibilityBottomAppbar(View.VISIBLE)
         }
 
         return binding.root

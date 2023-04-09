@@ -2,9 +2,9 @@ package com.nocapstone.buddyvet.buddy.domain.entity
 
 data class BuddyRequest(
     val kind : String,
-    var name : String = "name",
-    var birthDay : String = "birthday",
-    var adoptDay : String = "adoptDay",
+    var name : String = "DOWOO",
+    var birthday : String = "2023-04-08",
+    var adoptDay : String = "2023-04-08",
     var isNeutered : Boolean = false,
-    var gender : String = "gender"
+    var gender : String = "M"
 )

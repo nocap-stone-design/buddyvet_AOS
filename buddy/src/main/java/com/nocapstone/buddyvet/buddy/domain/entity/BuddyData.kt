@@ -26,7 +26,7 @@ data class BuddyDetailData(
     val kind: String,
     val name: String,
     val profile: String,
-    val birthDay: String,
+    val birthday: String,
     val adoptDay: String,
     val isNeutered: Boolean,
     val gender: String

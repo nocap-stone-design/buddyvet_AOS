@@ -31,12 +31,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_gravity="center"
+                android:id="@+id/buddy_image"
                 photoUrl="@{buddyData.profile}"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
-                android:layout_gravity="center"
-                tools:src="@drawable/img_dog" />
+                app:civ_border_overlay="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.cardview.widget.CardView>
 

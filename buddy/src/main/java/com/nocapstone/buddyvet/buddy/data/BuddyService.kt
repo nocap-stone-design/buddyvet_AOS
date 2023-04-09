@@ -33,6 +33,7 @@ interface BuddyService {
         @Path("buddyId") buddyId: Long,
     ): CommonResponse<String?>
 
+    @Multipart
     @POST("buddies/{buddyId}/image")
     suspend fun uploadBuddyImg(
         @Header("Authorization") token: String,
