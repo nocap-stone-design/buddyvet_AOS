@@ -7,7 +7,7 @@ object BuddyDtoToLocal {
 }
 
 object BuddyLocalToDto {
-    fun transformKind(kind: String): String = if (kind == "강아지") "D" else "C"
-    fun transformGender(gender: String): String = if (gender == "남자") "M" else "F"
+    fun transformKind(kind: String?): String = if (kind == "강아지") "D" else "C"
+    fun transformGender(gender: String?): String = if (gender == "남자") "M" else "F"
     fun transformNeutered(neutered : String?) : Boolean = neutered == "예"
 }

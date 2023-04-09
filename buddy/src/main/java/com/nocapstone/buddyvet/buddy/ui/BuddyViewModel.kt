@@ -3,7 +3,7 @@ package com.nocapstone.buddyvet.buddy.ui
 import android.content.Context
 import android.net.Uri
 import android.provider.OpenableColumns
-import android.util.Log
+import androidx.core.net.toUri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nocapstone.buddyvet.buddy.domain.entity.*
@@ -103,10 +103,12 @@ class BuddyViewModel @Inject constructor(
                 val jwt = dataStoreUseCase.bearerJsonWebToken.first()!!
                 val buddyId = buddyUseCase.createBuddy(jwt, _newBuddy.value!!.replaceForDto())
                 if (_selectImgUri.value != null) {
-                    uploadBuddyImg(jwt, buddyId).await()
+                    val imgUri = _selectImgUri.value!!
+                    uploadBuddyImg(jwt, buddyId, imgUri).await()
                 }
-                callback.invoke()
             } catch (e: Exception) {
+            } finally {
+                callback.invoke()
             }
         }
     }
@@ -133,9 +135,8 @@ class BuddyViewModel @Inject constructor(
         }
     }
 
-    private fun uploadBuddyImg(token: String, buddyId: Long): Deferred<Unit> {
+    private fun uploadBuddyImg(token: String, buddyId: Long, imgUri: Uri): Deferred<Unit> {
         return viewModelScope.async(Dispatchers.IO) {
-            val imgUri = _selectImgUri.value!!
             val inputStream = context.contentResolver.openInputStream(imgUri)
             val byteArray = inputStream!!.readBytes()
             val requestBody = byteArray.toRequestBody("multipart/form-data".toMediaTypeOrNull())
@@ -149,6 +150,28 @@ class BuddyViewModel @Inject constructor(
     }
 
 
+    fun putBuddy(buddyId: Long, buddyRequest: BuddyRequest, callback: () -> Boolean) {
+        viewModelScope.launch {
+            val token = dataStoreUseCase.bearerJsonWebToken.first()
+            if (token != null) {
+                try {
+                    buddyUseCase.putBuddy(token, buddyId, buddyRequest)
+                    if (detailBuddy.value?.profile != null) {
+                        uploadBuddyImg(
+                            token,
+                            buddyId,
+                            detailBuddy.value!!.profile!!.toUri()
+                        ).await()
+                    }
+                } catch (e: Exception) {
+
+                } finally {
+                    callback.invoke()
+                }
+            }
+        }
+    }
+
     private fun getFileName(context: Context, uri: Uri): String? {
         val cursor = context.contentResolver.query(uri, null, null, null, null)
         return cursor?.use {
@@ -157,6 +180,7 @@ class BuddyViewModel @Inject constructor(
             return it.getString(nameIndex)
         }
     }
+
 
     fun readMasterProfile() {
         viewModelScope.launch(Dispatchers.IO) {

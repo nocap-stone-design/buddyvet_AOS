@@ -6,12 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.TextView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.nocapstone.buddyvet.buddy.databinding.FragmentPutBuddyBinding
-import com.nocapstone.buddyvet.buddy.domain.entity.BuddyDetailData
+import com.nocapstone.buddyvet.buddy.domain.entity.BuddyDataLocal
+import com.nocapstone.buddyvet.buddy.domain.entity.BuddyDetailDataLocal
 import com.nocapstone.buddyvet.buddy.domain.entity.BuddyRequest
 import com.nocapstone.common_ui.CalendarUtil
 import com.nocapstone.common_ui.DialogForDatePicker
@@ -49,6 +49,7 @@ class PutBuddyFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         val neuteredAdapter = ArrayAdapter(
             requireContext(),
             R.layout.list_item,
@@ -60,11 +61,16 @@ class PutBuddyFragment : Fragment() {
             genderListItem
         )
 
+        buddyViewModel.readBuddyDetail(buddyId)
+
+
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             viewModel = buddyViewModel
+
             genderTv.setAdapter(genderAdapter)
             isNeuteredTv.setAdapter(neuteredAdapter)
+
             birthDayTv.setOnClickListener {
                 DialogForDatePicker.Builder(requireContext())
                     .setInitDate(CalendarUtil.parseStringToDate(binding.birthDayTv.text.toString())!!)
@@ -84,27 +90,30 @@ class PutBuddyFragment : Fragment() {
             imgSelect.setOnClickListener {
                 TedImagePicker.with(requireContext())
                     .start {
-                        buddyViewModel.setSelectImgUri(it)
+                        buddyViewModel.detailBuddy.value?.profile = it.toString()
                     }
             }
             binding.next.setOnClickListener {
                 putData()
-                findNavController().navigate(com.nocapstone.buddyvet.buddy.R.id.next)
             }
         }
-        buddyViewModel.readBuddyDetail(buddyId)
+
+
     }
 
     private fun putData() {
-        with(binding) {
-            BuddyRequest(
-                buddyViewModel.getKind(),
-                nameTv.text.toString(),
-                birthDayTv.text.toString(),
-                adoptDayTv.text.toString(),
-                isNeuteredTv.text.toString().toBoolean(),
-                genderTv.text.toString()
-            )
+        val request = BuddyDetailDataLocal(
+            buddyViewModel.getKind(),
+            binding.nameTv.text.toString(),
+            binding.genderTv.text.toString(),
+            null,
+            binding.isNeuteredTv.text.toString(),
+            binding.birthDayTv.text.toString(),
+            binding.adoptDayTv.text.toString(),
+        ).replaceForDto()
+
+        buddyViewModel.putBuddy(buddyId, request) {
+            findNavController().popBackStack()
         }
     }
 }

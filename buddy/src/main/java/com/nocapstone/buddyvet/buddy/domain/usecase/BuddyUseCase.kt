@@ -29,6 +29,9 @@ class BuddyUseCase @Inject constructor(
         buddyService.deleteBuddy(token, buddyId)
     }
 
+    suspend fun putBuddy(token: String,buddyId: Long,buddyRequest: BuddyRequest){
+        buddyService.putBuddy(token, buddyRequest, buddyId)
+    }
     suspend fun uploadBuddyImg(token: String, buddyId: Long, image: MultipartBody.Part) {
         buddyService.uploadBuddyImg(token, buddyId, image)
     }

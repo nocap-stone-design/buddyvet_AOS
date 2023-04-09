@@ -20,7 +20,7 @@ data class BuddyDetailDataLocal(
         birthday,
         adoptDay,
         BuddyLocalToDto.transformNeutered(neutered),
-        gender
+        BuddyLocalToDto.transformGender(gender)
     )
 }
 
