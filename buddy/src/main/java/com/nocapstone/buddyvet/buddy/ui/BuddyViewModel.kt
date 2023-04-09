@@ -13,7 +13,9 @@ import com.nocapstone.buddyvet.buddy.domain.usecase.BuddyUseCase
 import com.nocapstone.common.domain.usecase.DataStoreUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
@@ -92,14 +94,15 @@ class BuddyViewModel @Inject constructor(
         }
     }
 
-    fun createBuddy() {
-        viewModelScope.launch {
+    fun createBuddy(callback: () -> Unit) {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 val jwt = dataStoreUseCase.bearerJsonWebToken.first()!!
                 val buddyId = buddyUseCase.createBuddy(jwt, _newBuddy.value!!)
                 if (_selectImgUri.value != null) {
-                    uploadBuddyImg(jwt, buddyId)
+                    uploadBuddyImg(jwt, buddyId).await()
                 }
+                callback.invoke()
             } catch (e: Exception) {
                 Log.d("createBuddy", e.message.toString())
             }
@@ -117,11 +120,12 @@ class BuddyViewModel @Inject constructor(
         viewModelScope.launch {
             val jwt = dataStoreUseCase.bearerJsonWebToken.first()!!
             buddyUseCase.deleteBuddy(jwt, buddyId)
+            readBuddyList()
         }
     }
 
-    private fun uploadBuddyImg(token: String, buddyId: Long) {
-        viewModelScope.launch {
+    private fun uploadBuddyImg(token: String, buddyId: Long) : Deferred<Unit> {
+        return viewModelScope.async(Dispatchers.IO) {
             val imgUri = _selectImgUri.value!!
             val inputStream = context.contentResolver.openInputStream(imgUri)
             val byteArray = inputStream!!.readBytes()

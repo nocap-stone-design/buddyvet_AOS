@@ -73,7 +73,7 @@ class DetailPostFragment : Fragment() {
         menuHost.addMenuProvider(object : MenuProvider {
 
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                menuInflater.inflate(R.menu.detail_community_menu, menu)
+                menuInflater.inflate(com.nocapstone.common_ui.R.menu.common_menu, menu)
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
@@ -81,10 +81,10 @@ class DetailPostFragment : Fragment() {
                     android.R.id.home -> {
                         findNavController().popBackStack()
                     }
-                    R.id.put_post -> {
+                    com.nocapstone.common_ui.R.id.put -> {
 
                     }
-                    R.id.delete_post -> {
+                    com.nocapstone.common_ui.R.id.delete -> {
                         MaterialAlertDialogBuilder(requireContext())
                             .setTitle("글 삭제")
                             .setMessage("정말 삭제하시겠습니까")

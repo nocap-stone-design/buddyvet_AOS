@@ -20,7 +20,7 @@ class MyBuddyFragment : Fragment() {
 
     private var _binding: FragmentMyBuddyBinding? = null
     private val binding get() = _binding!!
-    private val buddyViewModel: BuddyViewModel by viewModels({ requireActivity() })
+    val buddyViewModel: BuddyViewModel by viewModels({ requireActivity() })
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,7 +46,7 @@ class MyBuddyFragment : Fragment() {
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             viewModel = buddyViewModel
-            adapter = BuddyListAdapter()
+            adapter = BuddyListAdapter(this@MyBuddyFragment)
         }
 
     }

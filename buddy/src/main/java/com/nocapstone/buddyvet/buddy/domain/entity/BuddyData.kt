@@ -5,7 +5,7 @@ data class BuddyListResponse(
 )
 
 data class BuddyData(
-    val id: Int,
+    val id: Long,
     val kind: String,
     val name: String,
     val gender: String,

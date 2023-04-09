@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.nocapstone.buddyvet.buddy.BuddyProfileListAdapter
+import com.nocapstone.buddyvet.buddy.HomeBuddyProfileListAdapter
 import com.nocapstone.buddyvet.buddy.ui.BuddyViewModel
 import com.nocapstone.common_ui.MainActivityUtil
 import com.nocapstone.eye_check.ui.EyeCheckViewModel
@@ -32,9 +33,7 @@ class HomeFragment : Fragment() {
 
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
-            adapter = BuddyProfileListAdapter(false) {
-                buddyViewModel.setSelectCheckBuddy(it)
-            }
+            adapter = HomeBuddyProfileListAdapter()
             viewModel = buddyViewModel
             buddySetting.setOnClickListener {
                 findNavController().navigate(R.id.toBuddy)

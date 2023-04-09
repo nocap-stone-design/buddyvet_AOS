@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="buddyData"
+            type="com.nocapstone.buddyvet.buddy.domain.entity.BuddyData" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_marginHorizontal="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/buddy_profile"
+            photoUrl="@{buddyData.profile}"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            app:civ_border_overlay="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="8dp"
+            android:fontFamily="@font/cafe24_ssurround_air"
+            android:text="@{buddyData.name}"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="@id/buddy_profile"
+            app:layout_constraintStart_toStartOf="@id/buddy_profile"
+            app:layout_constraintTop_toBottomOf="@id/buddy_profile"
+            tools:text="주주" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

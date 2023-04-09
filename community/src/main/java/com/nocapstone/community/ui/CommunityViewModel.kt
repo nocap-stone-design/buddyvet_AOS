@@ -52,7 +52,6 @@ class CommunityViewModel @Inject constructor(
                 communityUseCase.readPostList(dataStoreUseCase.bearerJsonWebToken.first()!!).let {
                     _postList.value = it.toMutableList()
                 }
-                val tmp = mutableListOf<Post>()
             } catch (e: Exception) {
 
             }
