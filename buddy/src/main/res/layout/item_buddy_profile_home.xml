@@ -10,7 +10,7 @@
 
         <variable
             name="buddyData"
-            type="com.nocapstone.buddyvet.buddy.domain.entity.BuddyData" />
+            type="com.nocapstone.buddyvet.buddy.domain.entity.BuddyDataLocal" />
 
     </data>
 
@@ -26,6 +26,8 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
+            app:civ_border_width="1dp"
+            app:civ_border_color="@color/black"
             app:civ_border_overlay="true"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

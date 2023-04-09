@@ -6,9 +6,7 @@ import android.provider.OpenableColumns
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.nocapstone.buddyvet.buddy.domain.entity.BuddyData
-import com.nocapstone.buddyvet.buddy.domain.entity.BuddyRequest
-import com.nocapstone.buddyvet.buddy.domain.entity.MasterInfoResponse
+import com.nocapstone.buddyvet.buddy.domain.entity.*
 import com.nocapstone.buddyvet.buddy.domain.usecase.BuddyUseCase
 import com.nocapstone.common.domain.usecase.DataStoreUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -33,11 +31,11 @@ class BuddyViewModel @Inject constructor(
     private val dataStoreUseCase: DataStoreUseCase
 ) : ViewModel() {
 
-    private val _buddyList = MutableStateFlow<List<BuddyData>?>(null)
-    val buddyList: StateFlow<List<BuddyData>?> = _buddyList
+    private val _buddyList = MutableStateFlow<List<BuddyDataLocal>?>(null)
+    val buddyList: StateFlow<List<BuddyDataLocal>?> = _buddyList
 
-    private val _newBuddy = MutableStateFlow<BuddyRequest?>(null)
-    val newBuddy: StateFlow<BuddyRequest?> = _newBuddy
+    private val _newBuddy = MutableStateFlow<BuddyDetailDataLocal?>(null)
+    val newBuddy: StateFlow<BuddyDetailDataLocal?> = _newBuddy
 
     private val _selectImgUri = MutableStateFlow<Uri?>(null)
     val selectImgUri: StateFlow<Uri?> = _selectImgUri
@@ -48,12 +46,15 @@ class BuddyViewModel @Inject constructor(
     private val _masterInfo = MutableStateFlow<MasterInfoResponse?>(null)
     val masterInfo: StateFlow<MasterInfoResponse?> = _masterInfo
 
+    private val _detailBuddy = MutableStateFlow<BuddyDetailDataLocal?>(null)
+    val detailBuddy: StateFlow<BuddyDetailDataLocal?> = _detailBuddy
+
     fun setSelectCheckBuddy(position: Int) {
         _selectBuddy.value = position
     }
 
     fun setKind(kind: String) {
-        _newBuddy.value = BuddyRequest(kind)
+        _newBuddy.value = BuddyDetailDataLocal(kind)
     }
 
     fun setName(name: String) {
@@ -68,26 +69,28 @@ class BuddyViewModel @Inject constructor(
         _newBuddy.value?.adoptDay = adoptDay
     }
 
-    fun setNeutered(Neutered: Boolean) {
-        _newBuddy.value?.isNeutered = Neutered
+    fun setNeutered(Neutered: String) {
+        _newBuddy.value?.neutered = Neutered
     }
 
     fun setGender(gender: String) {
-            _newBuddy.value?.gender = gender
+        _newBuddy.value?.gender = gender
     }
 
     fun setSelectImgUri(uri: Uri?) {
         _selectImgUri.value = uri
     }
 
+    fun getKind(): String = _detailBuddy.value!!.kind
     fun getBuddyLists() = _buddyList.value
-
     fun readBuddyList() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val token = dataStoreUseCase.bearerJsonWebToken.first()
                 if (token != null) {
-                    _buddyList.value = buddyUseCase.readBuddyList(token)
+                    _buddyList.value = buddyUseCase.readBuddyList(token)?.map {
+                        it.replaceForLocal()
+                    }
                 }
             } catch (e: Exception) {
             }
@@ -98,21 +101,27 @@ class BuddyViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val jwt = dataStoreUseCase.bearerJsonWebToken.first()!!
-                val buddyId = buddyUseCase.createBuddy(jwt, _newBuddy.value!!)
+                val buddyId = buddyUseCase.createBuddy(jwt, _newBuddy.value!!.replaceForDto())
                 if (_selectImgUri.value != null) {
                     uploadBuddyImg(jwt, buddyId).await()
                 }
                 callback.invoke()
             } catch (e: Exception) {
-                Log.d("createBuddy", e.message.toString())
             }
         }
     }
 
     fun readBuddyDetail(buddyId: Long) {
-        viewModelScope.launch {
-            val jwt = dataStoreUseCase.bearerJsonWebToken.first()!!
-            buddyUseCase.readBuddyDetail(jwt, buddyId)
+        viewModelScope.launch(Dispatchers.IO) {
+            val token = dataStoreUseCase.bearerJsonWebToken.first()
+            if (token != null) {
+                try {
+                    _detailBuddy.value =
+                        buddyUseCase.readBuddyDetail(token, buddyId).buddy.replaceForLocal()
+                } catch (e: Exception) {
+
+                }
+            }
         }
     }
 
@@ -124,7 +133,7 @@ class BuddyViewModel @Inject constructor(
         }
     }
 
-    private fun uploadBuddyImg(token: String, buddyId: Long) : Deferred<Unit> {
+    private fun uploadBuddyImg(token: String, buddyId: Long): Deferred<Unit> {
         return viewModelScope.async(Dispatchers.IO) {
             val imgUri = _selectImgUri.value!!
             val inputStream = context.contentResolver.openInputStream(imgUri)

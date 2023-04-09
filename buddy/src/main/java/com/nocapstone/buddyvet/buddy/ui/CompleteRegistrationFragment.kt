@@ -41,7 +41,7 @@ class CompleteRegistrationFragment : Fragment() {
         }
 
         binding.next.setOnClickListener {
-            buddyViewModel.createBuddy(){
+            buddyViewModel.createBuddy() {
                 LoginUtil.startMainActivity(requireActivity(), mainActivityClass)
             }
         }

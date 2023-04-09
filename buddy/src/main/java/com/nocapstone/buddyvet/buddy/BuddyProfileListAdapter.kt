@@ -6,13 +6,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.nocapstone.buddyvet.buddy.databinding.ItemBuddyProfileBinding
-import com.nocapstone.buddyvet.buddy.domain.entity.BuddyData
+import com.nocapstone.buddyvet.buddy.domain.entity.BuddyDataLocal
 
 class BuddyProfileListAdapter(
     private val ColorChange: Boolean,
     private val onClickBuddyListener: (Int) -> Unit
 ) :
-    ListAdapter<BuddyData, RecyclerView.ViewHolder>(BuddyProfileListDiffCallback()) {
+    ListAdapter<BuddyDataLocal, RecyclerView.ViewHolder>(BuddyProfileListDiffCallback()) {
 
     var prePosition = -1
 
@@ -35,10 +35,10 @@ class BuddyProfileListAdapter(
 
     inner class BuddyListViewHolder(private val binding: ItemBuddyProfileBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: BuddyData, position: Int) {
+        fun bind(data: BuddyDataLocal, position: Int) {
 
             binding.apply {
-                buddyData = data
+                buddyDataLocal = data
             }
 
             itemView.setOnClickListener {
@@ -56,12 +56,12 @@ class BuddyProfileListAdapter(
     }
 }
 
-private class BuddyProfileListDiffCallback : DiffUtil.ItemCallback<BuddyData>() {
-    override fun areItemsTheSame(oldItem: BuddyData, newItem: BuddyData): Boolean {
+private class BuddyProfileListDiffCallback : DiffUtil.ItemCallback<BuddyDataLocal>() {
+    override fun areItemsTheSame(oldItem: BuddyDataLocal, newItem: BuddyDataLocal): Boolean {
         return oldItem === newItem
     }
 
-    override fun areContentsTheSame(oldItem: BuddyData, newItem: BuddyData): Boolean {
+    override fun areContentsTheSame(oldItem: BuddyDataLocal, newItem: BuddyDataLocal): Boolean {
         return oldItem == newItem
     }
 }

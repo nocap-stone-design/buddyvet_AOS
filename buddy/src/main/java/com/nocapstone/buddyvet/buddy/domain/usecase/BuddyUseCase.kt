@@ -2,6 +2,7 @@ package com.nocapstone.buddyvet.buddy.domain.usecase
 
 import com.nocapstone.buddyvet.buddy.data.BuddyService
 import com.nocapstone.buddyvet.buddy.domain.entity.BuddyData
+import com.nocapstone.buddyvet.buddy.domain.entity.BuddyDetailResponse
 import com.nocapstone.buddyvet.buddy.domain.entity.BuddyRequest
 import com.nocapstone.buddyvet.buddy.domain.entity.MasterInfoResponse
 import com.nocapstone.common.data.dto.CommonResponse
@@ -20,8 +21,8 @@ class BuddyUseCase @Inject constructor(
         return buddyService.createBuddy(token, buddyRequest).data.buddyId
     }
 
-    suspend fun readBuddyDetail(token: String, buddyId: Long) {
-        buddyService.readBuddyDetail(token, buddyId)
+    suspend fun readBuddyDetail(token: String, buddyId: Long): BuddyDetailResponse {
+        return buddyService.readBuddyDetail(token, buddyId).data
     }
 
     suspend fun deleteBuddy(token: String, buddyId: Long) {

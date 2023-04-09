@@ -8,9 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.nocapstone.buddyvet.buddy.databinding.ItemBuddyProfileBinding
 import com.nocapstone.buddyvet.buddy.databinding.ItemBuddyProfileHomeBinding
 import com.nocapstone.buddyvet.buddy.domain.entity.BuddyData
+import com.nocapstone.buddyvet.buddy.domain.entity.BuddyDataLocal
 
 class HomeBuddyProfileListAdapter() :
-    ListAdapter<BuddyData, RecyclerView.ViewHolder>(HomeBuddyProfileListDiffCallback()) {
+    ListAdapter<BuddyDataLocal, RecyclerView.ViewHolder>(HomeBuddyProfileListDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return BuddyListViewHolder(
             ItemBuddyProfileHomeBinding.inflate(
@@ -23,15 +24,14 @@ class HomeBuddyProfileListAdapter() :
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is BuddyListViewHolder) {
-            val buddyData = getItem(position)
-            holder.bind(buddyData, position)
+            val buddyDataLocal = getItem(position)
+            holder.bind(buddyDataLocal, position)
         }
     }
 
     inner class BuddyListViewHolder(private val binding: ItemBuddyProfileHomeBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: BuddyData, position: Int) {
-
+        fun bind(data: BuddyDataLocal, position: Int) {
             binding.apply {
                 buddyData = data
             }
@@ -39,12 +39,12 @@ class HomeBuddyProfileListAdapter() :
     }
 }
 
-private class HomeBuddyProfileListDiffCallback : DiffUtil.ItemCallback<BuddyData>() {
-    override fun areItemsTheSame(oldItem: BuddyData, newItem: BuddyData): Boolean {
+private class HomeBuddyProfileListDiffCallback : DiffUtil.ItemCallback<BuddyDataLocal>() {
+    override fun areItemsTheSame(oldItem: BuddyDataLocal, newItem: BuddyDataLocal): Boolean {
         return oldItem === newItem
     }
 
-    override fun areContentsTheSame(oldItem: BuddyData, newItem: BuddyData): Boolean {
+    override fun areContentsTheSame(oldItem: BuddyDataLocal, newItem: BuddyDataLocal): Boolean {
         return oldItem == newItem
     }
 }

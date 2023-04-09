@@ -31,5 +31,16 @@
         <action
             android:id="@+id/next"
             app:destination="@id/inputBuddyTypeFragment" />
+        <action
+            android:id="@+id/putFragment"
+            app:destination="@id/putBuddyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/putBuddyFragment"
+        android:name="com.nocapstone.buddyvet.buddy.ui.PutBuddyFragment"
+        android:label="PutBuddyFragment">
+        <argument
+            android:name="buddyId"
+            app:argType="long" />
     </fragment>
 </navigation>

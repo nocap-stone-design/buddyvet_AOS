@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 android:fontFamily="@font/cafe24_ssurround"
-                android:text='@{viewModel.newBuddy.gender == "M" ? "남아" : "여아"}'
+                android:text='@{viewModel.newBuddy.gender}'
                 android:textColor="@color/black"
                 android:textSize="17sp" />
 
@@ -74,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 android:fontFamily="@font/cafe24_ssurround"
-                android:text='@{"중성화 여부 : " + (viewModel.newBuddy.neutered ? "O" : "X")}'
+                android:text='@{"중성화 여부 : " + viewModel.newBuddy.neutered}'
                 android:textColor="@color/black"
                 android:textSize="17sp" />
 
