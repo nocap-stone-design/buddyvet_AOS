@@ -3,52 +3,57 @@ package com.nocapstone.buddyvet.buddy.ui
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
+import android.widget.ListAdapter
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.nocapstone.buddyvet.buddy.databinding.FragmentCompleteRegistrationBinding
-import com.nocapstone.common.util.LoginUtil
+import com.nocapstone.buddyvet.buddy.BuddyListAdapter
+import com.nocapstone.buddyvet.buddy.R
+import com.nocapstone.buddyvet.buddy.databinding.FragmentMyBuddyBinding
+import com.nocapstone.common_ui.MainActivityUtil
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @AndroidEntryPoint
-class CompleteRegistrationFragment : Fragment() {
+class MyBuddyFragment : Fragment() {
 
-    @Inject
-    lateinit var mainActivityClass: Class<*>
-
-    private var _binding: FragmentCompleteRegistrationBinding? = null
+    private var _binding: FragmentMyBuddyBinding? = null
     private val binding get() = _binding!!
-
-    private val buddyViewModel: BuddyViewModel by viewModels({ requireActivity() })
+    val buddyViewModel: BuddyViewModel by viewModels({ requireActivity() })
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentCompleteRegistrationBinding.inflate(inflater, container, false)
+        // Inflate the layout for this fragment
+        _binding = FragmentMyBuddyBinding.inflate(inflater, container, false)
+
+        (activity as MainActivityUtil).run {
+            setToolbarTitle("My Buddy")
+            setVisibilityBottomAppbar(View.VISIBLE)
+        }
+
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        buddyViewModel.readMasterProfile()
+        buddyViewModel.readBuddyList()
         initMenu()
-
         binding.apply {
-            this.viewModel = buddyViewModel
-            this.lifecycleOwner = viewLifecycleOwner
+            lifecycleOwner = viewLifecycleOwner
+            viewModel = buddyViewModel
+            adapter = BuddyListAdapter(this@MyBuddyFragment)
         }
 
-        binding.next.setOnClickListener {
-            buddyViewModel.createBuddy() {
-                LoginUtil.startMainActivity(requireActivity(), mainActivityClass)
-            }
-        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun initMenu() {
@@ -57,6 +62,7 @@ class CompleteRegistrationFragment : Fragment() {
         menuHost.addMenuProvider(object : MenuProvider {
 
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.my_buddy_menu, menu)
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
@@ -64,15 +70,13 @@ class CompleteRegistrationFragment : Fragment() {
                     android.R.id.home -> {
                         findNavController().popBackStack()
                     }
+                    R.id.add_buddy -> {
+                        findNavController().navigate(R.id.next)
+                    }
                 }
                 return true
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 }

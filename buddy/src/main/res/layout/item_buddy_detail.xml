@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="BuddyData"
+            type="com.nocapstone.buddyvet.buddy.domain.entity.BuddyDataLocal" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="16dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="1dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/buddy_profile"
+                photoUrl="@{BuddyData.profile}"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                app:civ_border_overlay="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/cafe24_ssurround"
+                android:text="@{BuddyData.name}"
+                android:textColor="@color/black"
+                android:textSize="22sp"
+                app:layout_constraintStart_toEndOf="@id/buddy_profile"
+                app:layout_constraintTop_toTopOf="@id/buddy_profile"
+                tools:text="순심" />
+
+            <TextView
+                android:id="@+id/kind"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{BuddyData.kind}"
+                app:layout_constraintStart_toStartOf="@id/name"
+                app:layout_constraintTop_toBottomOf="@id/name"
+                tools:text="고양이" />
+
+            <TextView
+                android:id="@+id/genderWithAge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{BuddyData.gender+` / `+BuddyData.age}"
+                app:layout_constraintStart_toStartOf="@id/kind"
+                app:layout_constraintTop_toBottomOf="@id/kind"
+                tools:text="여자 / 1살" />
+
+            <ImageView
+                android:id="@+id/more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:src="@drawable/img_more_vert"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+</layout>

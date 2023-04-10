@@ -1,66 +1,76 @@
 package com.nocapstone.buddyvet.buddy.ui
 
 import android.os.Bundle
-import android.util.Log
-import android.view.*
 import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import androidx.core.view.MenuHost
-import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
-import com.nocapstone.buddyvet.buddy.R
-import com.nocapstone.buddyvet.buddy.databinding.FragmentInputBuddyInfoBinding
+import androidx.navigation.fragment.navArgs
+import com.nocapstone.buddyvet.buddy.databinding.FragmentPutBuddyBinding
+import com.nocapstone.buddyvet.buddy.domain.entity.BuddyDataLocal
+import com.nocapstone.buddyvet.buddy.domain.entity.BuddyDetailDataLocal
+import com.nocapstone.buddyvet.buddy.domain.entity.BuddyRequest
 import com.nocapstone.common_ui.CalendarUtil
 import com.nocapstone.common_ui.DialogForDatePicker
-import com.nocapstone.common_ui.R.layout.list_item
+import com.nocapstone.common_ui.MainActivityUtil
+import com.nocapstone.common_ui.R
 import dagger.hilt.android.AndroidEntryPoint
 import gun0912.tedimagepicker.builder.TedImagePicker
-import java.lang.reflect.GenericArrayType
-
 
 @AndroidEntryPoint
-class InputBuddyInfoFragment : Fragment() {
+class PutBuddyFragment : Fragment() {
 
-    private var _binding: FragmentInputBuddyInfoBinding? = null
-    private val binding get() = _binding!!
+    private val args: PutBuddyFragmentArgs by navArgs()
+    private var buddyId = 0L
     private val buddyViewModel: BuddyViewModel by viewModels({ requireActivity() })
+    private var _binding: FragmentPutBuddyBinding? = null
+    private val binding get() = _binding!!
     private val neuteredItem = listOf("예", "아니오")
     private val genderListItem = listOf("남자", "여자")
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentInputBuddyInfoBinding.inflate(inflater, container, false)
+        _binding = FragmentPutBuddyBinding.inflate(inflater, container, false)
+        buddyId = args.buddyId
+
+        (activity as MainActivityUtil).run {
+            setToolbarTitle("버디 수정")
+            setVisibilityBottomAppbar(View.GONE)
+        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initMenu()
 
         val neuteredAdapter = ArrayAdapter(
             requireContext(),
-            list_item,
+            R.layout.list_item,
             neuteredItem
         )
-
-
         val genderAdapter = ArrayAdapter(
             requireContext(),
-            list_item,
+            R.layout.list_item,
             genderListItem
         )
 
-        with(binding) {
-            viewModel = buddyViewModel
+        buddyViewModel.readBuddyDetail(buddyId)
+
+
+        binding.apply {
             lifecycleOwner = viewLifecycleOwner
+            viewModel = buddyViewModel
+
             genderTv.setAdapter(genderAdapter)
             isNeuteredTv.setAdapter(neuteredAdapter)
-            birthDayTv.text = CalendarUtil.getTodayDate()
-            adoptDayTv.text = CalendarUtil.getTodayDate()
+
             birthDayTv.setOnClickListener {
                 DialogForDatePicker.Builder(requireContext())
                     .setInitDate(CalendarUtil.parseStringToDate(binding.birthDayTv.text.toString())!!)
@@ -80,51 +90,30 @@ class InputBuddyInfoFragment : Fragment() {
             imgSelect.setOnClickListener {
                 TedImagePicker.with(requireContext())
                     .start {
-                        buddyViewModel.setSelectImgUri(it)
+                        buddyViewModel.detailBuddy.value?.profile = it.toString()
                     }
             }
-        }
-
-        binding.next.setOnClickListener {
-            setData()
-            findNavController().navigate(R.id.next)
-        }
-    }
-
-    private fun setData() {
-        with(binding) {
-            buddyViewModel.setName(nameTv.text.toString())
-            buddyViewModel.setNeutered(isNeuteredTv.text.toString())
-            buddyViewModel.setGender(genderTv.text.toString())
-            buddyViewModel.setAdoptDay(adoptDayTv.text.toString())
-            buddyViewModel.setBirthDay(birthDayTv.text.toString())
-        }
-    }
-
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    private fun initMenu() {
-        val menuHost: MenuHost = requireActivity()
-
-        menuHost.addMenuProvider(object : MenuProvider {
-
-            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+            binding.next.setOnClickListener {
+                putData()
             }
+        }
 
-            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                when (menuItem.itemId) {
-                    android.R.id.home -> {
-                        findNavController().popBackStack()
-                    }
-                }
-                return true
-            }
-        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+
     }
 
+    private fun putData() {
+        val request = BuddyDetailDataLocal(
+            buddyViewModel.getKind(),
+            binding.nameTv.text.toString(),
+            binding.genderTv.text.toString(),
+            null,
+            binding.isNeuteredTv.text.toString(),
+            binding.birthDayTv.text.toString(),
+            binding.adoptDayTv.text.toString(),
+        ).replaceForDto()
 
+        buddyViewModel.putBuddy(buddyId, request) {
+            findNavController().popBackStack()
+        }
+    }
 }

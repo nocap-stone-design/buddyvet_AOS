@@ -8,8 +8,6 @@
         <variable
             name="viewModel"
             type="com.nocapstone.buddyvet.buddy.ui.BuddyViewModel" />
-
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,19 +16,6 @@
         android:padding="21dp"
         tools:context="com.nocapstone.buddyvet.buddy.ui.InputBuddyInfoFragment">
 
-        <TextView
-            android:id="@+id/buddyInfo_tv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:fontFamily="@font/cafe24_ssurround_air"
-            android:gravity="center"
-            android:text="Buddy를 등록해주세요"
-            android:textColor="@color/black"
-            android:textSize="32sp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <FrameLayout
             android:id="@+id/img_select"
             android:layout_width="70dp"
@@ -38,11 +23,11 @@
             android:layout_marginTop="32dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/buddyInfo_tv">
+            app:layout_constraintTop_toTopOf="parent">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/main_iv"
-                uri="@{viewModel.selectImgUri}"
+                photoUrl="@{viewModel.detailBuddy.profile}"
                 android:layout_width="65dp"
                 android:layout_height="65dp"
                 app:civ_border_overlay="true" />
@@ -70,7 +55,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/name_tv"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.detailBuddy.name}" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -146,12 +132,13 @@
                     android:textSize="17sp" />
 
                 <TextView
-                    android:id="@+id/birthDay_tv"
+                    android:id="@+id/adoptDay_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawablePadding="16dp"
                     android:fontFamily="@font/cafe24_ssurround"
                     android:gravity="end|bottom"
+                    android:text="@{viewModel.detailBuddy.birthday}"
                     android:textColor="@color/black"
                     android:textSize="17sp"
                     app:drawableEndCompat="@drawable/img_calendar"
@@ -176,12 +163,13 @@
                     android:textSize="17sp" />
 
                 <TextView
-                    android:id="@+id/adoptDay_tv"
+                    android:id="@+id/birthDay_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawablePadding="16dp"
                     android:fontFamily="@font/cafe24_ssurround"
                     android:gravity="end|bottom"
+                    android:text="@{viewModel.detailBuddy.adoptDay}"
                     android:textColor="@color/black"
                     android:textSize="17sp"
                     app:drawableEndCompat="@drawable/img_calendar"

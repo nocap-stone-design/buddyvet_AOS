@@ -1,15 +1,14 @@
 package com.nocapstone.home.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.nocapstone.buddyvet.buddy.BuddyListAdapter
-import com.nocapstone.buddyvet.buddy.domain.entity.BuddyData
+import com.nocapstone.buddyvet.buddy.BuddyProfileListAdapter
+import com.nocapstone.buddyvet.buddy.HomeBuddyProfileListAdapter
 import com.nocapstone.buddyvet.buddy.ui.BuddyViewModel
 import com.nocapstone.common_ui.MainActivityUtil
 import com.nocapstone.eye_check.ui.EyeCheckViewModel
@@ -34,10 +33,11 @@ class HomeFragment : Fragment() {
 
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
-            adapter = BuddyListAdapter(false) {
-                buddyViewModel.setSelectCheckBuddy(it)
-            }
+            adapter = HomeBuddyProfileListAdapter()
             viewModel = buddyViewModel
+            buddySetting.setOnClickListener {
+                findNavController().navigate(R.id.toBuddy)
+            }
         }
 
         (activity as MainActivityUtil).run {
@@ -52,6 +52,29 @@ class HomeFragment : Fragment() {
         buddyViewModel.readBuddyList()
     }
 
+//    private fun showMenu(v: View, @MenuRes menuRes: Int) {
+//        val popup = PopupMenu(requireContext(), v)
+//        popup.menuInflater.inflate(menuRes, popup.menu)
+//
+//        popup.setOnMenuItemClickListener { menuItem: MenuItem ->
+//            when(menuItem.itemId){
+//                R.id.add_buddy -> {
+//                    findNavController().navigate()
+//                }
+//                R.id.manage_buddy -> {
+//                    findNavController().navigate()
+//                }
+//            }
+//            true
+//        }
+//        popup.setOnDismissListener {
+//            // Respond to popup being dismissed.
+//        }
+//        // Show the popup menu.
+//        popup.show()
+//    }
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.eyeCheckBtn.setOnClickListener {
@@ -60,9 +83,8 @@ class HomeFragment : Fragment() {
                     TedImagePicker.with(requireContext())
                         .errorListener { }
                         .start { uri ->
-                            //todo eyechackViewModel
                             eyeViewModel.setImage(uri)
-                            findNavController().navigate(R.id.next)
+                            findNavController().navigate(R.id.toEyeCheck)
                         }
                 }
                 .build().show()

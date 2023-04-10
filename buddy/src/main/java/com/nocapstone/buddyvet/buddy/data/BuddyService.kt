@@ -18,6 +18,13 @@ interface BuddyService {
         @Body buddyRequest: BuddyRequest
     ): CommonResponse<BuddyId>
 
+    @PATCH("buddies/{buddyId}")
+    suspend fun putBuddy(
+        @Header("Authorization") token: String,
+        @Body buddyRequest: BuddyRequest,
+        @Path("buddyId") buddyId: Long
+    )
+
     @GET("buddies/{buddyId}")
     suspend fun readBuddyDetail(
         @Header("Authorization") token: String,
@@ -33,11 +40,17 @@ interface BuddyService {
         @Path("buddyId") buddyId: Long,
     ): CommonResponse<String?>
 
+    @Multipart
     @POST("buddies/{buddyId}/image")
     suspend fun uploadBuddyImg(
         @Header("Authorization") token: String,
         @Path("buddyId") buddyId: Long,
         @Part image: MultipartBody.Part
     ): CommonResponse<String?>
+
+    @GET("users")
+    suspend fun readMasterInfo(
+        @Header("Authorization") token: String,
+    ): CommonResponse<MasterInfoResponse>
 
 }
