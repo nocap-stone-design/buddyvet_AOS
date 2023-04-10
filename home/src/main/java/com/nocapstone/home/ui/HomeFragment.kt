@@ -72,6 +72,10 @@ class HomeFragment : Fragment() {
                 }
                 .build().show()
         }
+
+        binding.fineHospitalBtn.setOnClickListener {
+            findNavController().navigate(R.id.toHospital)
+        }
     }
 
     override fun onDestroyView() {
