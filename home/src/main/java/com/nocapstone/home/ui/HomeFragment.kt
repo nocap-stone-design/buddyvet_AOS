@@ -22,6 +22,7 @@ import gun0912.tedimagepicker.builder.TedImagePicker
 class HomeFragment : Fragment() {
     private val buddyViewModel: BuddyViewModel by viewModels({ requireActivity() })
     private val eyeViewModel: EyeCheckViewModel by viewModels({ requireActivity() })
+    private val homeViewModel: HomeViewModel by viewModels({ requireActivity() })
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
@@ -35,6 +36,7 @@ class HomeFragment : Fragment() {
             lifecycleOwner = viewLifecycleOwner
             adapter = HomeBuddyProfileListAdapter()
             viewModel = buddyViewModel
+            homeViewModel = this@HomeFragment.homeViewModel
             buddySetting.setOnClickListener {
                 findNavController().navigate(R.id.toBuddy)
             }
@@ -52,31 +54,12 @@ class HomeFragment : Fragment() {
         buddyViewModel.readBuddyList()
     }
 
-//    private fun showMenu(v: View, @MenuRes menuRes: Int) {
-//        val popup = PopupMenu(requireContext(), v)
-//        popup.menuInflater.inflate(menuRes, popup.menu)
-//
-//        popup.setOnMenuItemClickListener { menuItem: MenuItem ->
-//            when(menuItem.itemId){
-//                R.id.add_buddy -> {
-//                    findNavController().navigate()
-//                }
-//                R.id.manage_buddy -> {
-//                    findNavController().navigate()
-//                }
-//            }
-//            true
-//        }
-//        popup.setOnDismissListener {
-//            // Respond to popup being dismissed.
-//        }
-//        // Show the popup menu.
-//        popup.show()
-//    }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        homeViewModel.getWeatherInfo()
+
         binding.eyeCheckBtn.setOnClickListener {
             DialogForSelectBuddy.Builder(requireContext(), buddyViewModel)
                 .setOnClickButton {
