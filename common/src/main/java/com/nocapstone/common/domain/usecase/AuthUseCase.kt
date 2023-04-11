@@ -5,6 +5,7 @@ import com.nocapstone.common.data.dto.LoginResponse
 import com.nocapstone.common.data.entity.Jwt
 import com.nocapstone.common.domain.entity.LoginRequest
 import com.nocapstone.common.data.source.AuthService
+import com.nocapstone.common.domain.entity.UserNameRequest
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -15,7 +16,7 @@ class AuthUseCase @Inject constructor(
         return authService.postToken(LoginRequest(token, providerType))
     }
 
-    suspend fun inputUserInfo(token:String , nickname: String){
+    suspend fun inputUserInfo(token:String , nickname: UserNameRequest){
         authService.postUserInfo(token,nickname)
     }
 }

@@ -3,9 +3,11 @@ package com.nocapstone.onboarding.ui
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.nocapstone.common.domain.entity.UserNameRequest
 import com.nocapstone.common.domain.usecase.AuthUseCase
 import com.nocapstone.common.domain.usecase.DataStoreUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -21,6 +23,7 @@ class SplashViewModel @Inject constructor(
             callback.invoke(dataStoreUseCase.bearerJsonWebToken.firstOrNull())
         }
     }
+
     fun signup(token: String, createCallback: () -> Unit, loginCallback: () -> Unit) {
         viewModelScope.launch {
             try {
@@ -38,12 +41,19 @@ class SplashViewModel @Inject constructor(
         }
     }
 
-    fun postUserInfo(nickname: String) {
-        viewModelScope.launch {
-            try {
-                authUseCase.inputUserInfo(dataStoreUseCase.bearerJsonWebToken.first()!!, nickname)
-            } catch (e: Exception) {
-                Log.d("nickNameApi", e.message.toString())
+    fun postUserInfo(nickname: String, callback: () -> Unit) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val token = dataStoreUseCase.bearerJsonWebToken.first()
+            if (token != null) {
+                try {
+                    authUseCase.inputUserInfo(
+                        dataStoreUseCase.bearerJsonWebToken.first()!!,
+                        UserNameRequest(nickname)
+                    )
+                    callback.invoke()
+                } catch (e: Exception) {
+                    Log.d("nickNameApi", e.message.toString())
+                }
             }
         }
     }

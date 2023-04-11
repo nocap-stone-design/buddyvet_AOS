@@ -32,8 +32,9 @@ class InputUserInfoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.next.setOnClickListener {
-            splashViewModel.postUserInfo(binding.nameEt.toString())
-            findNavController().navigate(R.id.next)
+            splashViewModel.postUserInfo(binding.nameEt.toString()){
+                findNavController().navigate(R.id.next)
+            }
         }
     }
     override fun onDestroyView() {
