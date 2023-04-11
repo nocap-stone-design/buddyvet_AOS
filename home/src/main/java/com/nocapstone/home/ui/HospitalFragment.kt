@@ -5,10 +5,10 @@ import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
-import android.os.Parcel
-import android.os.Parcelable
 import android.util.Log
 import android.view.*
+import android.webkit.WebChromeClient
+import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -22,14 +22,11 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.nocapstone.common_ui.MainActivityUtil
-import com.nocapstone.home.R
 import com.nocapstone.home.databinding.FragmentHospitalBinding
 import com.nocapstone.home.domain.Place
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import net.daum.mf.map.api.CalloutBalloonAdapter
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
 import net.daum.mf.map.api.MapView
@@ -64,6 +61,28 @@ class HospitalFragment : Fragment(), MapView.POIItemEventListener {
         binding.webView.apply {
             webViewClient = WebViewClient()
             settings.javaScriptEnabled = true
+        }
+
+        binding.webView.webChromeClient = object : WebChromeClient() {
+            override fun onProgressChanged(view: WebView, newProgress: Int) {
+                if (newProgress < 100) {
+                    binding.progressbar.visibility = View.VISIBLE
+                    binding.progressbar.progress = newProgress
+                } else {
+                    binding.progressbar.visibility = View.GONE
+                }
+            }
+        }
+
+        binding.webView.webViewClient = object : WebViewClient() {
+            override fun onReceivedError(
+                view: WebView,
+                errorCode: Int,
+                description: String,
+                fallingUrl: String
+            ) {
+                Toast.makeText(activity, "로딩오류$description", Toast.LENGTH_SHORT).show()
+            }
         }
 
         initMenu()
