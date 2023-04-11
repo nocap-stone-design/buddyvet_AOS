@@ -26,7 +26,7 @@
         android:label="InputUserInfoFragment" >
         <action
             android:id="@+id/next"
-            app:destination="@id/nav_buddy" />
+            app:destination="@id/nav_addbuddy" />
     </fragment>
-    <include app:graph="@navigation/nav_buddy" />
+    <include app:graph="@navigation/nav_addbuddy" />
 </navigation>

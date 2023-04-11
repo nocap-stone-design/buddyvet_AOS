@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_addbuddy">
+    android:id="@+id/nav_addbuddy"
+    app:startDestination="@id/inputBuddyTypeFragment">
 
+    <fragment
+        android:id="@+id/inputBuddyInfoFragment"
+        android:name="com.nocapstone.buddyvet.buddy.ui.InputBuddyInfoFragment"
+        android:label="InputBuddyInfoFragment">
+        <action
+            android:id="@+id/next"
+            app:destination="@id/completeRegistrationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/inputBuddyTypeFragment"
+        android:name="com.nocapstone.buddyvet.buddy.ui.InputBuddyTypeFragment"
+        android:label="InputBuddyTypeFragment">
+        <action
+            android:id="@+id/next"
+            app:destination="@id/inputBuddyInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/completeRegistrationFragment"
+        android:name="com.nocapstone.buddyvet.buddy.ui.CompleteRegistrationFragment"
+        android:label="CompleteRegistrationFragment" />
 </navigation>
