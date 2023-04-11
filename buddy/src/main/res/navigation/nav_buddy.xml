@@ -5,35 +5,15 @@
     app:startDestination="@id/myBuddyFragment">
 
     <fragment
-        android:id="@+id/completeRegistrationFragment"
-        android:name="com.nocapstone.buddyvet.buddy.ui.CompleteRegistrationFragment"
-        android:label="CompleteRegistrationFragment" />
-    <fragment
-        android:id="@+id/inputBuddyTypeFragment"
-        android:name="com.nocapstone.buddyvet.buddy.ui.InputBuddyTypeFragment"
-        android:label="InputBuddyTypeFragment" >
-        <action
-            android:id="@+id/next"
-            app:destination="@id/inputBuddyInfoFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/inputBuddyInfoFragment"
-        android:name="com.nocapstone.buddyvet.buddy.ui.InputBuddyInfoFragment"
-        android:label="InputBuddyInfoFragment" >
-        <action
-            android:id="@+id/next"
-            app:destination="@id/completeRegistrationFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/myBuddyFragment"
         android:name="com.nocapstone.buddyvet.buddy.ui.MyBuddyFragment"
         android:label="MyBuddyFragment" >
         <action
-            android:id="@+id/next"
-            app:destination="@id/inputBuddyTypeFragment" />
-        <action
             android:id="@+id/putFragment"
             app:destination="@id/putBuddyFragment" />
+        <action
+            android:id="@+id/next"
+            app:destination="@id/nav_addbuddy" />
     </fragment>
     <fragment
         android:id="@+id/putBuddyFragment"
@@ -43,4 +23,5 @@
             android:name="buddyId"
             app:argType="long" />
     </fragment>
+    <include app:graph="@navigation/nav_addbuddy" />
 </navigation>

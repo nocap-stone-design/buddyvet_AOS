@@ -28,11 +28,13 @@ class InputBuddyTypeFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentInputBuddyTypeBinding.inflate(inflater, container, false)
 
-
-        (activity as MainActivityUtil).run {
-            setToolbarTitle("버디 추가")
-            setVisibilityBottomAppbar(View.GONE)
+        if (activity is MainActivityUtil){
+            (activity as MainActivityUtil).run {
+                setToolbarTitle("버디 추가")
+                setVisibilityBottomAppbar(View.GONE)
+            }
         }
+
 
         return binding.root
 
