@@ -7,7 +7,7 @@ import javax.inject.Inject
 class HomeUseCase @Inject constructor(
     private val kaKaoService: KaKaoService
 ) {
-    suspend fun readSearchResult(key: String, keyWord: String) : Call<ResultSearchKeyword> {
-        return kaKaoService.getSearchKeyword(key, keyWord)
+    suspend fun readSearchResult(key: String, keyWord: String, longitude: String, latitude: String) : Call<ResultSearchKeyword> {
+        return kaKaoService.getSearchKeyword(key, keyWord,longitude,latitude,"10000")
     }
 }

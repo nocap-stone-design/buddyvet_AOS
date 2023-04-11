@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.nocapstone.common.domain.usecase.DataStoreUseCase
 import com.nocapstone.home.R
 import com.nocapstone.home.domain.HomeUseCase
+import com.nocapstone.home.domain.Place
 import com.nocapstone.home.domain.ResultSearchKeyword
 import com.nocapstone.home.domain.WeatherInfo
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,6 +29,9 @@ class HomeViewModel @Inject constructor(
     private val _nowWeatherInfo = MutableStateFlow<WeatherInfo?>(null)
     val nowWeatherInfo: StateFlow<WeatherInfo?> = _nowWeatherInfo
 
+    private val _placeInfoList = MutableStateFlow<List<Place>?>(listOf())
+    val placeInfoList: StateFlow<List<Place>?> = _placeInfoList
+
     private val _toastMessage = MutableStateFlow("")
     val toastMessage: StateFlow<String> = _toastMessage
 
@@ -39,18 +43,19 @@ class HomeViewModel @Inject constructor(
         )
     }
 
-    fun searchKeyword(keyword: String) {
+    fun searchKeyword(keyword: String, longitude: String, latitude: String) {
         viewModelScope.launch(Dispatchers.IO) {
             val key = "KakaoAK f7c8633cfa431790846824ecf40ac7f8"
-            homeUseCase.readSearchResult(key, keyword)
+            homeUseCase.readSearchResult(key, keyword, longitude, latitude)
                 .enqueue(object : Callback<ResultSearchKeyword> {
                     override fun onResponse(
                         call: Call<ResultSearchKeyword>,
                         response: Response<ResultSearchKeyword>
                     ) {
-                        Log.d("Test", "Raw: ${response.raw()}")
-                        Log.d("Test", "Body: ${response.body()}")
+                        _placeInfoList.value = response.body()?.documents
+                        Log.d("test1234", "${response.body()?.documents}")
                     }
+
                     override fun onFailure(call: Call<ResultSearchKeyword>, t: Throwable) {
                         Log.w("MainActivity", "통신 실패: ${t.message}")
                     }
