@@ -1,18 +1,27 @@
 package com.nocapstone.home.ui
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.nocapstone.common.domain.usecase.DataStoreUseCase
 import com.nocapstone.home.R
+import com.nocapstone.home.domain.HomeUseCase
+import com.nocapstone.home.domain.ResultSearchKeyword
 import com.nocapstone.home.domain.WeatherInfo
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import javax.inject.Inject
 
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    //private val homeUseCase: HomeUseCase,
+    private val homeUseCase: HomeUseCase,
     private val dataStoreUseCase: DataStoreUseCase
 ) : ViewModel() {
 
@@ -30,6 +39,42 @@ class HomeViewModel @Inject constructor(
         )
     }
 
+    fun searchKeyword(keyword: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val key = "KakaoAK f7c8633cfa431790846824ecf40ac7f8"
+            homeUseCase.readSearchResult(key, keyword)
+                .enqueue(object : Callback<ResultSearchKeyword> {
+                    override fun onResponse(
+                        call: Call<ResultSearchKeyword>,
+                        response: Response<ResultSearchKeyword>
+                    ) {
+                        Log.d("Test", "Raw: ${response.raw()}")
+                        Log.d("Test", "Body: ${response.body()}")
+                    }
+                    override fun onFailure(call: Call<ResultSearchKeyword>, t: Throwable) {
+                        Log.w("MainActivity", "통신 실패: ${t.message}")
+                    }
+                })
+        }
+
+
+//        .enqueue(object: Callback<ResultSearchKeyword> {
+//            override fun onResponse(
+//                call: Call<ResultSearchKeyword>,
+//                response: Response<ResultSearchKeyword>
+//            ) {
+//                // 통신 성공 (검색 결과는 response.body()에 담겨있음)
+//                Log.d("Test", "Raw: ${response.raw()}")
+//                Log.d("Test", "Body: ${response.body()}")
+//            }
+//
+//            override fun onFailure(call: Call<ResultSearchKeyword>, t: Throwable) {
+//                // 통신 실패
+//                Log.w("MainActivity", "통신 실패: ${t.message}")
+//            }
+//        })
+
+    }
 
     private fun setToastMessage(newMessage: String) {
         _toastMessage.value = ""

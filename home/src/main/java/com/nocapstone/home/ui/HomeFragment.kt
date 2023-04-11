@@ -20,9 +20,9 @@ import gun0912.tedimagepicker.builder.TedImagePicker
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
+    private val homeViewModel: HomeViewModel by viewModels()
     private val buddyViewModel: BuddyViewModel by viewModels({ requireActivity() })
     private val eyeViewModel: EyeCheckViewModel by viewModels({ requireActivity() })
-    private val homeViewModel: HomeViewModel by viewModels({ requireActivity() })
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
