@@ -42,8 +42,7 @@ dependencies {
     // Preferences DataStore
     implementation("androidx.datastore:datastore-preferences:$rootProject.dataStorePreferences_version")
 
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation files('libs/libDaumMapAndroid.jar')
+
     api "com.kakao.sdk:v2-all:$rootProject.kakao_version"
     implementation "com.google.dagger:hilt-android:$rootProject.hiltVersion"
     kapt "com.google.dagger:hilt-android-compiler:$rootProject.hiltVersion"

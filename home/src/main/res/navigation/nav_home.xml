@@ -18,14 +18,14 @@
             android:id="@+id/toBuddy"
             app:destination="@id/nav_buddy" />
         <action
-            android:id="@+id/toHospital"
+            android:id="@+id/to_findHospital"
             app:destination="@id/hospitalFragment" />
     </fragment>
     <include app:graph="@navigation/nav_eyecheck" />
     <include app:graph="@navigation/nav_buddy" />
     <fragment
         android:id="@+id/hospitalFragment"
-        android:name="com.nocapstone.common.HospitalFragment"
+        android:name="com.nocapstone.home.ui.HospitalFragment"
         android:label="HospitalFragment" />
 
 

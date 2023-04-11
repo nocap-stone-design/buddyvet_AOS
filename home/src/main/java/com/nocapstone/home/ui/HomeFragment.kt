@@ -74,7 +74,7 @@ class HomeFragment : Fragment() {
         }
 
         binding.fineHospitalBtn.setOnClickListener {
-            findNavController().navigate(R.id.toHospital)
+            findNavController().navigate(R.id.to_findHospital)
         }
     }
 

@@ -1,12 +1,11 @@
-package com.nocapstone.common
+package com.nocapstone.home.ui
 
-import android.R
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.nocapstone.common.databinding.FragmentHospitalBinding
+import com.nocapstone.home.databinding.FragmentHospitalBinding
 import dagger.hilt.android.AndroidEntryPoint
 import net.daum.mf.map.api.MapView
 
