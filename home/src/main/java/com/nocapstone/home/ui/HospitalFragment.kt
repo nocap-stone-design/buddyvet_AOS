@@ -80,7 +80,7 @@ class HospitalFragment : Fragment(), MapView.POIItemEventListener {
     override fun onDestroyView() {
         super.onDestroyView()
         (activity as MainActivityUtil).run {
-            setVisibilityBottomAppbar(View.GONE)
+            setVisibilityBottomAppbar(View.VISIBLE)
         }
         _binding = null
     }
@@ -116,7 +116,6 @@ class HospitalFragment : Fragment(), MapView.POIItemEventListener {
         val marker = MapPOIItem()
         marker.itemName = place.place_name
         marker.tag = tag++
-        Log.d("Test1234", " tag is ${tag}")
         marker.mapPoint = MapPoint.mapPointWithGeoCoord(place.y.toDouble(), place.x.toDouble())
         marker.markerType = MapPOIItem.MarkerType.BluePin
         marker.selectedMarkerType = MapPOIItem.MarkerType.YellowPin
@@ -176,10 +175,12 @@ class HospitalFragment : Fragment(), MapView.POIItemEventListener {
     }
 
     override fun onPOIItemSelected(p0: MapView?, p1: MapPOIItem?) {
-        val tag = p1?.tag // 클릭한 마커의 태그 값
-        val url = homeViewModel.placeInfoList.value?.get(tag!!)?.place_url
-        binding.webView.visibility = View.VISIBLE
-        binding.webView.loadUrl(url!!)
+        val tag = p1?.tag!! // 클릭한 마커의 태그 값
+        if (tag > 0){
+            val url = homeViewModel.placeInfoList.value?.get(tag-1)?.place_url
+            binding.webView.visibility = View.VISIBLE
+            binding.webView.loadUrl(url!!)
+        }
     }
 
     override fun onCalloutBalloonOfPOIItemTouched(p0: MapView?, p1: MapPOIItem?) {
