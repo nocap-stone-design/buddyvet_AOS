@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity(), MainActivityUtil {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         initAppBar()
         initBottomNav()
-        //printAppKeyHash()
+        printAppKeyHash()
     }
 
 

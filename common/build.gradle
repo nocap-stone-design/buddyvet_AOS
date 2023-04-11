@@ -13,11 +13,9 @@ android {
     defaultConfig {
         minSdk 23
         targetSdk 33
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
-
     buildTypes {
         release {
             minifyEnabled false
@@ -31,14 +29,15 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    buildFeatures {
+        dataBinding true
+    }
 }
 
 dependencies {
 
     api project(path: ':foundation')
-
     implementation 'io.github.ParkSangGwon:tedimagepicker:1.2.8'
-
 
     // Preferences DataStore
     implementation("androidx.datastore:datastore-preferences:$rootProject.dataStorePreferences_version")
@@ -46,7 +45,6 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation files('libs/libDaumMapAndroid.jar')
     api "com.kakao.sdk:v2-all:$rootProject.kakao_version"
-
     implementation "com.google.dagger:hilt-android:$rootProject.hiltVersion"
     kapt "com.google.dagger:hilt-android-compiler:$rootProject.hiltVersion"
 
