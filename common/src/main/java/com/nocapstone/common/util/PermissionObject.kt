@@ -33,5 +33,4 @@ enum class PermissionType(val permissionArray: Array<String>) {
         )
     ),
     CAMERA(arrayOf(Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE)),
-    NOTIFICATION(arrayOf(Manifest.permission.POST_NOTIFICATIONS))
 }

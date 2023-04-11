@@ -8,13 +8,17 @@
         tools:context=".ui.OnBoarding1Fragment">
 
 
-        <!-- TODO: Update blank fragment layout -->
         <TextView
+            android:layout_marginTop="16dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/cafe24_ssurround"
             android:gravity="center"
-            android:text="1"
-            android:textSize="50sp" />
+            android:text="현재 시간의 산책 지수를\n 실시간으로 받아봐요"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="22sp" />
+
 
     </FrameLayout>
 

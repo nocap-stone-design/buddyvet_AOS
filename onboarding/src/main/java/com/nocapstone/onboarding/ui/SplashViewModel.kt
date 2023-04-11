@@ -11,6 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.math.log
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
@@ -29,15 +30,18 @@ class SplashViewModel @Inject constructor(
             try {
                 val response = authUseCase.login(token)
                 dataStoreUseCase.editJsonWebToken(response.body()?.data?.jwt!!)
-                if (response.code() == 200) {
-                    loginCallback.invoke()
-                } else {
-                    createCallback.invoke()
-                }
+                Log.d("responsecode",response.code().toString())
+//                if (response.code() == 200) {
+//                    loginCallback.invoke()
+//                } else if (response.code() == 201) {
+//              }
+//            else{
+//                    Log.d("responsecode",response.code().toString())
+//                }
+                createCallback.invoke()
             } catch (e: Exception) {
                 Log.d("buddyTest", e.message.toString())
             }
-
         }
     }
 

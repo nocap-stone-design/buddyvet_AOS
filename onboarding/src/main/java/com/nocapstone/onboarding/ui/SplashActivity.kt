@@ -41,7 +41,9 @@ class SplashActivity : AppCompatActivity() {
         splashViewModel.withJsonWebToken { JWT ->
             if (JWT != null) {
                 Log.d("buddyTest","$JWT")
-                LoginUtil.startMainActivity(this, mainActivityClass)
+                initNav()
+
+                //LoginUtil.startMainActivity(this, mainActivityClass)
             } else {
                 Log.d("buddyTest","JWT널")
                 initNav()

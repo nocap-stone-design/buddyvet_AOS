@@ -20,27 +20,22 @@ import dagger.hilt.android.AndroidEntryPoint
 //todo companion?
 private val messageArray = arrayOf(
     "주위 동물병원 찾기 및 산책 지수 제공을 위한 GPS접근 동의가 필요해요.",
-    "진달을 위해서 갤러리 및 카메라 접근 동의가 필요해요." ,
-    "버디들의 진단 정보 나 상태 정보 제공을 위한 알림 권한 동의가 필요해요"
+    "진단을 위해서 갤러리 및 카메라 접근 동의가 필요해요."
 )
 
 private val imageArray = arrayOf(R.drawable.img_gps, R.drawable.img_gps, R.drawable.img_gps)
-
 
 
 @AndroidEntryPoint
 class OnBoardingViewPagerFragment : Fragment(), PermissionCallback {
 
 
-    companion object{
-        var viewpagerNum = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) 3 else 2
-    }
-
-
+    var viewpagerNum = 2
     private var _binding: FragmentOnBoardingViewPagerBinding? = null
     private val binding
-    get() = _binding!!
-    private val requestPermissionLauncher = PermissionObject.checkPermission(this, { onSuccess() }, { onFail() })
+        get() = _binding!!
+    private val requestPermissionLauncher =
+        PermissionObject.checkPermission(this, { onSuccess() }, { onFail() })
 
 
     override fun onCreateView(
@@ -80,26 +75,28 @@ class OnBoardingViewPagerFragment : Fragment(), PermissionCallback {
     }
 
 
-
     private inner class OnBoardingViewPagerAdapter(fragment: Fragment) :
         FragmentStateAdapter(fragment) {
 
         override fun getItemCount(): Int = viewpagerNum
         override fun createFragment(position: Int): Fragment {
             return when (position) {
-                0 -> OnBoarding1Fragment.newInstance()
-                1 -> OnBoarding2Fragment.newInstance()
-                else -> OnBoarding3Fragment.newInstance()
+                0 -> {
+                    binding.onboardingBack.setBackgroundResource(R.drawable.img_onboarding1)
+                    OnBoarding1Fragment.newInstance()
+                }
+                else -> {
+                    binding.onboardingBack.setBackgroundResource(R.drawable.img_onboarding2)
+                    OnBoarding2Fragment.newInstance()
+                }
             }
         }
-
-
     }
 
     override fun onSuccess() {
         if (binding.viewpager2.currentItem == viewpagerNum - 1) {
             findNavController().navigate(R.id.next)
-        }else{
+        } else {
             binding.viewpager2.currentItem++
         }
     }
