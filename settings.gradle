@@ -10,7 +10,20 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/' }
+        maven { url 'https://jitpack.io' }
+
     }
 }
 rootProject.name = "buddyvet"
 include ':app'
+include ':home'
+include ':common'
+include ':common-ui'
+include ':onboarding'
+include ':foundation'
+include ':eye-check'
+include ':diary'
+include ':community'
+include ':setting'
+include ':buddy'

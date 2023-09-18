@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.nocapstone.buddyvet.buddy.ui.BuddyViewModel" />
+
+        <variable
+            name="adapter"
+            type="com.nocapstone.buddyvet.buddy.BuddyListAdapter" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#EAEDFB"
+        android:padding="16dp"
+        tools:context=".ui.MyBuddyFragment">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/masterInfo_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="1dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="16dp">
+
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/master_iv"
+                    photoUrl="@{viewModel.masterInfo.profile}"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    app:civ_border_overlay="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/cafe24_ssurround_air"
+                    android:text="@{viewModel.masterInfo.nickname}"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:drawableEndCompat="@drawable/img_right_arrow"
+                    app:layout_constraintEnd_toEndOf="@id/master_iv"
+                    app:layout_constraintStart_toStartOf="@id/master_iv"
+                    app:layout_constraintTop_toBottomOf="@id/master_iv"
+                    tools:text="강아지사랑해" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/buddyList_rv"
+            adapter="@{adapter}"
+            submitList="@{viewModel.buddyList}"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="40dp"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/masterInfo_layout" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

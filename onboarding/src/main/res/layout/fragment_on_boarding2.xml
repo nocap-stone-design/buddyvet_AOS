@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.OnBoarding2Fragment">
+        <TextView
+            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/cafe24_ssurround"
+            android:gravity="center"
+            android:text="휴대폰 카메라로 간단하게\n 우리 아이의 안구 질환을 검사해요"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="22sp" />
+    </FrameLayout>
+
+</layout>

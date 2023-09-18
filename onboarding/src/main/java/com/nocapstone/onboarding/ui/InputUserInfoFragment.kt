@@ -1,0 +1,59 @@
+package com.nocapstone.onboarding.ui
+
+import android.net.Uri
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.nocapstone.onboarding.R
+import com.nocapstone.onboarding.databinding.FragmentInputUserInfoBinding
+import dagger.hilt.android.AndroidEntryPoint
+import gun0912.tedimagepicker.builder.TedImagePicker
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+
+@AndroidEntryPoint
+class InputUserInfoFragment : Fragment() {
+
+    private var _binding: FragmentInputUserInfoBinding? = null
+    private val binding get() = _binding!!
+
+    private val splashViewModel: SplashViewModel by viewModels()
+
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+
+    ): View? {
+        _binding = FragmentInputUserInfoBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.apply {
+            viewModel = splashViewModel
+            lifecycleOwner = viewLifecycleOwner
+        }
+        binding.next.setOnClickListener {
+            splashViewModel.postUserInfo(binding.nameEt.text.toString()){
+                findNavController().navigate(R.id.next)
+            }
+        }
+
+        binding.imgSelect.setOnClickListener {
+            TedImagePicker.with(requireContext())
+                .start {
+                    splashViewModel.setSelectImgUri(it)
+                }
+        }
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+}

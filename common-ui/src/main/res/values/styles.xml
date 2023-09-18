@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <style name="Contour">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">#EAEAEA</item>
+    </style>
+
+    <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="colorOnSurface">@color/edit_text_surface</item>
+    </style>
+
+    <style name="basic_btn">
+        <item name="android:background">@drawable/btn_shape</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/bold_text_color</item>
+    </style>
+
+    <style name="bold_text">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="birthDay_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@drawable/edit_shape</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:textSize">21sp</item>
+    </style>
+
+
+
+</resources>

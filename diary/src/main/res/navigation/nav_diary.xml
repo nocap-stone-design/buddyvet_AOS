@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_diary"
+    app:startDestination="@id/diaryFragment">
+
+    <fragment
+        android:id="@+id/diaryFragment"
+        android:name="com.nocapstone.diary.ui.DiaryFragment"
+        android:label="DiaryFragment">
+        <action
+            android:id="@+id/next"
+            app:destination="@id/writeDiaryFragment" />
+        <action
+            android:id="@+id/detailDiary"
+            app:destination="@id/detailDiaryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/writeDiaryFragment"
+        android:name="com.nocapstone.diary.ui.WriteDiaryFragment"
+        android:label="WriteDiaryFragment" />
+    <fragment
+        android:id="@+id/detailDiaryFragment"
+        android:name="com.nocapstone.diary.ui.DetailDiaryFragment"
+        android:label="DetailDiaryFragment">
+        <argument
+            android:name="diaryId"
+            app:argType="long" />
+        <action
+            android:id="@+id/putDiaryFragment"
+            app:destination="@id/putDiaryFragment"
+            app:popUpTo="@id/diaryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/putDiaryFragment"
+        android:name="com.nocapstone.diary.ui.PutDiaryFragment"
+        android:label="PutDiaryFragment" >
+        <argument
+            android:name="diaryId"
+            app:argType="long" />
+    </fragment>
+</navigation>

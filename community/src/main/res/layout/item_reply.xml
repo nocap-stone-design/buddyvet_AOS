@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="reply"
+            type="com.nocapstone.community.dto.Reply" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:padding="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+    >
+
+        <ImageView
+            android:id="@+id/poster_profile"
+            photoUrl="@{reply.authorProfile}"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:layout_constraintBottom_toBottomOf="@id/date"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/poster_name"
+            tools:src="@drawable/img_no_diary" />
+
+        <TextView
+            android:id="@+id/poster_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@{reply.authorNickname}"
+            android:textSize="10sp"
+            app:layout_constraintStart_toEndOf="@id/poster_profile"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="작성자" />
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@{reply.date}"
+            android:textSize="10sp"
+            app:layout_constraintStart_toEndOf="@id/poster_profile"
+            app:layout_constraintTop_toBottomOf="@id/poster_name"
+            tools:text="2023.04.05" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@{reply.content}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/date"
+            tools:text="안녕하세요" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

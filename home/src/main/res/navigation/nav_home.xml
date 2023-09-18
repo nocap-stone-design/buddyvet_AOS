@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_home"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.nocapstone.home.ui.HomeFragment"
+        android:label="HomeFragment">
+
+        <action
+            android:id="@+id/toEyeCheck"
+            app:destination="@id/nav_eyecheck"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/toBuddy"
+            app:destination="@id/nav_buddy" />
+        <action
+            android:id="@+id/to_findHospital"
+            app:destination="@id/hospitalFragment" />
+    </fragment>
+    <include app:graph="@navigation/nav_eyecheck" />
+    <include app:graph="@navigation/nav_buddy" />
+    <fragment
+        android:id="@+id/hospitalFragment"
+        android:name="com.nocapstone.home.ui.HospitalFragment"
+        android:label="HospitalFragment" />
+
+
+</navigation>

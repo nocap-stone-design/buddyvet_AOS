@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+
+        <variable
+            name="viewModel"
+            type="com.nocapstone.buddyvet.buddy.ui.BuddyViewModel" />
+
+        <variable
+            name="homeViewModel"
+            type="com.nocapstone.home.ui.HomeViewModel" />
+
+        <variable
+            name="adapter"
+            type="com.nocapstone.buddyvet.buddy.HomeBuddyProfileListAdapter" />
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/basic_parent_padding">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/buddy_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/butter"
+            app:cardCornerRadius="16dp"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp">
+
+                <ImageView
+                    android:id="@+id/buddy_setting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/img_setting"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/myBuddy_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/cafe24_ssurround_air"
+                    android:text="My Buddy"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/basic_main_textSize"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/myBuddy_recyclerView"
+                    adapter="@{adapter}"
+                    submitList="@{viewModel.buddyList}"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintTop_toBottomOf="@id/myBuddy_tv"
+                    tools:listitem="@layout/item_buddy_profile" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/today_weather_score"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="16dp"
+            app:cardBackgroundColor="@color/good_weather"
+            app:cardCornerRadius="16dp"
+            app:layout_constraintBottom_toTopOf="@id/health_check_tv"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/buddy_layout">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/city_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{homeViewModel.nowWeatherInfo.cityName}"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="창원시" />
+
+                <TextView
+                    android:id="@+id/temperatures"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="8dp"
+                    android:text="@{homeViewModel.nowWeatherInfo.temperatures}"
+                    android:textColor="@color/white"
+                    android:textSize="50sp"
+                    app:layout_constraintBottom_toTopOf="@id/max_temperatures"
+                    app:layout_constraintStart_toStartOf="@id/city_name"
+                    app:layout_constraintTop_toBottomOf="@id/city_name"
+                    tools:text="18º" />
+
+                <TextView
+                    android:id="@+id/max_temperatures"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{`최고 ` + homeViewModel.nowWeatherInfo.maxTemperatures}"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/temperatures"
+                    tools:text="최고 20º" />
+
+                <TextView
+                    android:id="@+id/min_temperatures"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@{`최저 ` + homeViewModel.nowWeatherInfo.minTemperatures}"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/max_temperatures"
+                    tools:text="최저 14º" />
+
+                <TextView
+                    android:id="@+id/showText"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{homeViewModel.nowWeatherInfo.showText}"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="산책은 힘들어요" />
+
+                <TextView
+                    android:layout_marginEnd="8dp"
+                    android:textSize="30sp"
+                    android:textColor="@color/white"
+                    android:id="@+id/score_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="@id/score"
+                    app:layout_constraintEnd_toStartOf="@id/score"
+                    app:layout_constraintTop_toTopOf="@id/score"
+                    android:text="점수:" />
+
+                <TextView
+                    android:id="@+id/score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@{homeViewModel.nowWeatherInfo.walkScore}"
+                    android:textColor="@color/white"
+                    android:textSize="45sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/showText"
+                    tools:text="70점" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/health_check_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:fontFamily="@font/cafe24_ssurround_air"
+            android:text="건강 체크"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/today_weather_score" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/health_check_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/health_check_tv">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/eye_check_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:layout_weight="1"
+                app:cardBackgroundColor="@color/butter"
+                app:cardCornerRadius="21dp"
+                app:layout_constraintEnd_toStartOf="@id/fine_hospital_btn"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_weight="1"
+                    android:padding="16dp">
+
+                    <ImageView
+                        android:id="@+id/eye_check_image"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/baseline_remove_red_eye_24"
+                        app:layout_constraintBottom_toTopOf="@id/eye_check_tv"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/eye_check_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/cafe24_ssurround_air"
+                        android:gravity="center"
+                        android:text="눈 검사하기"
+                        android:textColor="@color/black"
+                        android:textSize="17sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@id/eye_check_image"
+                        app:layout_constraintStart_toStartOf="@id/eye_check_image"
+                        app:layout_constraintTop_toBottomOf="@id/eye_check_image" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/fine_hospital_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:layout_weight="1"
+                app:cardBackgroundColor="@color/butter"
+                app:cardCornerRadius="21dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/eye_check_btn"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:padding="16dp">
+
+                    <ImageView
+                        android:id="@+id/find_hospital_image"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/baseline_local_hospital_24"
+                        app:layout_constraintBottom_toTopOf="@id/find_hospital_tv"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/find_hospital_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/cafe24_ssurround_air"
+                        android:text="동물병원 찾기"
+                        android:textColor="@color/black"
+                        android:textSize="17sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@id/find_hospital_image"
+                        app:layout_constraintStart_toStartOf="@id/find_hospital_image"
+                        app:layout_constraintTop_toBottomOf="@id/find_hospital_image" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
