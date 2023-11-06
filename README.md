@@ -24,7 +24,8 @@
 
 ### Multi Module 
 
-![image](https://github.com/nocap-stone-design/buddyvet_AOS/assets/109224863/f13ff8d9-868e-4885-af76-35d845d84c93)
+<img width="1148" alt="image" src="https://github.com/nocap-stone-design/buddyvet_AOS/assets/109224863/8a51ee13-8602-499a-a7bd-d4ac53f5eeb1">
+
 
 
 
