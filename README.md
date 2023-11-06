@@ -22,7 +22,10 @@
 
 ## 🪧 프로젝트 구조
 
-### Multi Module TODO
+### Multi Module 
+
+![image](https://github.com/nocap-stone-design/buddyvet_AOS/assets/109224863/f13ff8d9-868e-4885-af76-35d845d84c93)
+
 
 
 
@@ -33,7 +36,9 @@
 
 <br>
 
-## AI TODO
+## AI 
+
+[Details about AI...](https://velog.io/@kingdo/Mineme-AI-detailed-information)
 
 <br>
 
